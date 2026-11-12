@@ -1,0 +1,17 @@
+{
+  "name": "Crock&Roll HQ",
+  "short_name": "Crock&Roll",
+  "description": "La app de la charanga Crock&Roll: bolos, calendario, bote, banda y repertorio.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#120d1f",
+  "theme_color": "#120d1f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

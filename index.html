@@ -1,0 +1,1467 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Crock&amp;Roll HQ</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Crock&amp;Roll">
+<script src="firebase-config.js"></script>
+<meta name="theme-color" content="#120d1f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style id="leaflet-css">.leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}.leaflet-container{overflow:hidden}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}.leaflet-tile::selection{background:0 0}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}.leaflet-marker-icon,.leaflet-marker-shadow{display:block}.leaflet-container .leaflet-overlay-pane svg{max-width:none!important;max-height:none!important}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer{max-width:none!important;max-height:none!important;width:auto;padding:0}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none}.leaflet-container{-webkit-tap-highlight-color:transparent}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,.4)}.leaflet-tile{filter:inherit;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}.leaflet-overlay-pane svg{-moz-user-select:none}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}.leaflet-vml-shape{width:1px;height:1px}.lvml{behavior:url(#default#VML);display:inline-block;position:absolute}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}.leaflet-bottom,.leaflet-top{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}svg.leaflet-zoom-animated{will-change:transform}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}.leaflet-control,.leaflet-popup-pane{cursor:auto}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}.leaflet-image-layer.leaflet-interactive,.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}.leaflet-container{background:#ddd;outline-offset:1px}.leaflet-container a{color:#0078a8}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}.leaflet-container{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px;font-size:.75rem;line-height:1.5}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#000}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}.leaflet-bar a:focus,.leaflet-bar a:hover{background-color:#f4f4f4}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,.4);background:#fff;border-radius:5px}.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px}.leaflet-default-icon-path{background-image:url(images/marker-icon.png)}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,.8);margin:0}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4}.leaflet-control-attribution a{text-decoration:none}.leaflet-control-attribution a:focus,.leaflet-control-attribution a:hover{text-decoration:underline}.leaflet-attribution-flag{display:inline!important;vertical-align:baseline!important;width:1em;height:.6669em}.leaflet-left .leaflet-control-scale{margin-left:5px}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,.8);text-shadow:1px 1px #fff}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers{box-shadow:none}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-layers{border:2px solid rgba(0,0,0,.2);background-clip:padding-box}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#fff;color:#333;box-shadow:0 3px 14px rgba(0,0,0,.4)}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:0 0}.leaflet-container a.leaflet-popup-close-button:focus,.leaflet-container a.leaflet-popup-close-button:hover{color:#585858}.leaflet-popup-scrolled{overflow:auto}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto}.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}.leaflet-div-icon{background:#fff;border:1px solid #666}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before,.leaflet-tooltip-top:before{position:absolute;pointer-events:none;border:6px solid transparent;background:0 0;content:""}.leaflet-tooltip-bottom{margin-top:6px}.leaflet-tooltip-top{margin-top:-6px}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff}.leaflet-tooltip-left{margin-left:-6px}.leaflet-tooltip-right{margin-left:6px}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+/* Escena de juego a pantalla completa, aspecto oscuro único (habitación al atardecer) */
+:root{
+  --bg:#120d1f; --panel:#1b1430; --panel2:#251c3e; --line:rgba(255,255,255,.09);
+  --green:#a3e635; --green-d:#5f8f12; --orange:#ffa245; --text:#f4effc; --muted:#a99cc4; --red:#ff5d6e; --gold:#f3c14b;
+  --sea:#a9c4d6; --land:#f2ead8; --border:#9b8f78;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Nunito,system-ui,sans-serif;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------- ESCENA ---------- */
+#viewport{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#2a1d45 0%,var(--bg) 70%)}
+#stage{position:absolute;transition:transform .55s cubic-bezier(.6,.05,.3,1),filter .55s;will-change:transform}
+#stage.zoomed{filter:brightness(.55) blur(1px)}
+#room{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;border-radius:6px}
+.fx{position:absolute;pointer-events:none}
+
+.sun{left:0;top:0;width:75%;height:100%;mix-blend-mode:screen;
+  background:linear-gradient(120deg,rgba(255,160,70,0) 8%,rgba(255,170,80,.20) 28%,rgba(255,140,60,.05) 48%,rgba(255,140,60,0) 60%);
+  animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.45}50%{opacity:1}}
+
+.glow{border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%)}
+.lamp{left:49.9%;top:8.1%;width:70%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,190,110,.38) 0%,rgba(255,160,80,.12) 35%,transparent 65%);animation:flicker 4s infinite}
+.cone{left:27.4%;top:8.3%;width:45%;height:40%;mix-blend-mode:screen;clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);
+  background:linear-gradient(rgba(255,190,120,.16),transparent 85%);animation:breathe 5s ease-in-out infinite}
+.globe{left:19.1%;top:27.1%;width:22%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,215,130,.75) 0%,rgba(255,170,80,.2) 40%,transparent 70%);animation:pulse 3.2s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:1}45%{opacity:.85}48%{opacity:.6}50%{opacity:.95}70%{opacity:.88}}
+@keyframes pulse{0%,100%{opacity:.65;transform:translate(-50%,-50%) scale(.92)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+
+.screen{left:27.4%;top:45%;width:23.8%;height:8.1%;mix-blend-mode:soft-light;border-radius:2px;
+  background:linear-gradient(180deg,rgba(255,120,200,.5),rgba(255,200,90,.4),rgba(90,60,200,.5));background-size:100% 300%;animation:sky 9s ease-in-out infinite}
+@keyframes sky{0%,100%{background-position:0 0}50%{background-position:0 100%}}
+
+#dust span{position:absolute;border-radius:50%;background:#ffd9a0;box-shadow:0 0 6px #ffb860;opacity:0;animation:dust linear infinite}
+@keyframes dust{0%{opacity:0;transform:translate(0,0)}15%{opacity:.8}85%{opacity:.6}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+
+/* notas musicales */
+.note{position:absolute;font-size:clamp(14px,4.5vw,26px);color:var(--green);text-shadow:0 0 8px rgba(163,230,53,.8),0 2px 0 #1a2a05;pointer-events:none;
+  animation:noteUp 2.6s ease-out forwards}
+@keyframes noteUp{0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--nx),-110px) scale(1.2) rotate(var(--nr))}}
+
+/* zonas interactivas */
+.hs{position:absolute;background:none;border:0;padding:0;border-radius:10px}
+.hs::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid rgba(163,230,53,0);transition:.2s}
+.hs:hover::after,.hs:focus-visible::after{border-color:rgba(163,230,53,.8);box-shadow:0 0 18px rgba(163,230,53,.5),inset 0 0 18px rgba(163,230,53,.25)}
+.hs:focus{outline:none}
+.tag{position:absolute;left:50%;top:0;transform:translate(-50%,-115%);white-space:nowrap;pointer-events:none;
+  font-family:Bangers,cursive;letter-spacing:1px;font-size:clamp(10px,2.7vw,14px);color:#14200a;background:var(--green);
+  padding:1px 7px 0;border-radius:7px;border:2px solid #14200a;box-shadow:0 2px 0 #14200a;animation:bob 2.4s ease-in-out infinite}
+.tag::after{content:"";position:absolute;left:50%;bottom:-7px;margin-left:-5px;border:5px solid transparent;border-top-color:#14200a}
+@keyframes bob{0%,100%{transform:translate(-50%,-115%)}50%{transform:translate(-50%,-140%)}}
+.hide-tags .tag{opacity:0;transition:opacity .4s}
+.badge{position:absolute;right:-6px;top:-6px;min-width:22px;height:22px;border-radius:11px;background:var(--red);color:#fff;font-weight:800;font-size:12px;
+  display:grid;place-items:center;border:2px solid #2a0f14;box-shadow:0 0 10px rgba(255,93,110,.7);animation:pop 1.8s ease-in-out infinite}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+#hs-pc{left:26.4%;top:44.6%;width:25.6%;height:9.1%}
+#hs-safe{left:54.7%;top:45.2%;width:17.3%;height:10.2%}
+#hs-armario{left:79.8%;top:17.4%;width:20.2%;height:52.7%}
+#hs-armario .tag{top:30%;left:35%}
+#hs-cal{left:32.3%;top:20.2%;width:19%;height:13.4%}
+#hs-poster{left:54%;top:18.4%;width:22.9%;height:15.1%}
+#hs-rep{left:7.6%;top:11.3%;width:15.2%;height:7.1%}
+#hs-phone{left:82.3%;top:84.8%;width:11.8%;height:2.6%}
+#hs-phone .tag{top:-40%}
+
+/* móvil de la cama: la pantalla se enciende con notificaciones */
+.phone-glow{left:88.1%;top:86.1%;width:13%;height:3.5%;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(170,140,255,.9) 0%,rgba(120,90,255,.35) 40%,transparent 70%);opacity:0;animation:notif 7s ease-in-out infinite}
+@keyframes notif{0%,62%,100%{opacity:0}66%{opacity:1}88%{opacity:.85}}
+.phone-pop{left:88.1%;top:84.4%;font-size:clamp(12px,3.5vw,18px);transform:translate(-50%,0);opacity:0;animation:pop-heart 7s ease-out infinite}
+@keyframes pop-heart{0%,64%{opacity:0;transform:translate(-50%,0) scale(.4)}68%{opacity:1;transform:translate(-50%,-40%) scale(1.1)}85%{opacity:1;transform:translate(-50%,-140%) scale(1)}92%,100%{opacity:0;transform:translate(-50%,-200%) scale(.9)}}
+
+/* redes sociales */
+.social{display:flex;align-items:center;gap:14px;padding:18px 16px;border-radius:20px;text-decoration:none;color:#fff;font-weight:800;margin-bottom:12px;border:2px solid #14200a;box-shadow:0 5px 0 #0b0716}
+.social:active{transform:translateY(3px);box-shadow:0 2px 0 #0b0716}
+.social .logo-s{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.18)}
+.social .logo-s svg{width:30px;height:30px}
+.social b{display:block;font-family:Bangers,cursive;font-weight:400;font-size:26px;letter-spacing:1px;line-height:1}
+.social small{opacity:.85;font-size:13px}
+.social .go{margin-left:auto;font-size:22px}
+.ig{background:linear-gradient(45deg,#f9a73e 0%,#e1306c 45%,#833ab4 100%)}
+.tt{background:#111;border-color:#000;box-shadow:0 5px 0 #000,-3px 0 0 #25f4ee inset,3px 0 0 #fe2c55 inset}
+.edit-links{display:block;margin:6px auto 0;background:none;border:1px dashed var(--line);color:var(--muted);padding:10px 16px;border-radius:12px;font-weight:700}
+
+
+/* cuadro del mapa en la pared */
+#hs-mapa{left:9.4%;top:32.8%;width:22.1%;height:10.7%}
+
+/* página del mapa */
+.map-search{display:flex;gap:6px;margin-bottom:10px}
+.map-search input{margin:0;flex:1}
+.map-search button{flex:none}
+.map-wrap{position:relative;height:50vh;min-height:260px;border-radius:16px;overflow:hidden;border:2px solid #3a2d5c;margin-bottom:12px}
+#map-el{position:absolute;inset:0;background:var(--sea)}
+.city-lbl{background:none;border:0;box-shadow:none;padding:0 2px;color:#3d3220;font-weight:700;font-size:11px;text-shadow:0 0 3px #fff,0 0 3px #fff}
+.city-lbl::before{display:none}
+.map-hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:500;background:rgba(18,13,31,.85);color:var(--text);font-size:12px;
+  padding:6px 12px;border-radius:10px;white-space:nowrap;pointer-events:none}
+.pin{width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--green);border:2px solid #14200a;box-shadow:0 3px 6px rgba(0,0,0,.45);display:grid;place-items:center}
+.pin span{transform:rotate(45deg);font-weight:800;font-size:12px;color:#14200a;font-family:Nunito,sans-serif}
+.pin.empty-pin{background:#c4b5fd}
+.leaflet-popup-content-wrapper{background:var(--panel);color:var(--text);border:2px solid #3a2d5c;border-radius:14px}
+.leaflet-popup-tip{background:var(--panel)}
+.leaflet-popup-content{margin:12px 14px;font-family:Nunito,sans-serif}
+.leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
+.pop h4{margin:0 0 6px;font-size:15px;color:var(--green)}
+.pop ul{margin:0 0 8px;padding-left:16px;font-size:12.5px;color:var(--muted)}
+.fld{margin-bottom:10px}
+.hm{display:flex;align-items:center;gap:4px;margin-top:4px}
+.hm select{margin:0;flex:1;min-width:0;padding-left:8px;padding-right:4px}
+.hm b{color:var(--muted)}
+.fld>span{display:block;font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.checks{max-height:210px;overflow:auto;border:1px solid #3a2d5c;border-radius:12px;padding:4px;margin-top:4px;background:#120d1f}
+.checks label{display:flex;gap:10px;align-items:center;margin:0;padding:8px 6px;font-size:14px;text-transform:none;letter-spacing:0;color:var(--text);font-weight:600}
+.checks input{width:18px;height:18px;margin:0;display:inline-block;accent-color:var(--green);flex:none}
+
+/* botón de música */
+.music{position:fixed;left:14px;bottom:max(12px,env(safe-area-inset-bottom));z-index:6;width:46px;height:46px;border-radius:50%;border:2px solid var(--muted);
+  background:rgba(18,13,31,.85);display:flex;align-items:flex-end;justify-content:center;gap:3px;padding:13px 0;transition:opacity .3s}
+.music i{width:4px;height:30%;background:var(--muted);border-radius:2px}
+.music::after{content:"";position:absolute;left:50%;top:50%;width:2px;height:30px;background:var(--red);transform:translate(-50%,-50%) rotate(45deg)}
+.music.on{border-color:var(--green);box-shadow:0 0 12px rgba(163,230,53,.4)}
+.music.on::after{display:none}
+.music.on i{background:var(--green);animation:eq .9s ease-in-out infinite}
+.music.on i:nth-child(2){animation-delay:-.3s}.music.on i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+body.in-menu .music{opacity:0;pointer-events:none}
+
+/* calendario */
+.cal-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cal-head h4{flex:1;text-align:center;margin:0;font-family:Bangers,cursive;font-size:26px;letter-spacing:1px;font-weight:400}
+.cal-head button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);font-size:18px}
+.cal-sub{text-align:center;color:var(--muted);font-size:12.5px;margin-bottom:10px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dow{text-align:center;font-size:11px;font-weight:800;color:var(--muted);padding:4px 0}
+.cal .d{min-height:54px;min-width:0;border-radius:10px;border:1px solid var(--line);background:var(--panel2);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;padding-top:6px!important;font-weight:800;font-size:14px;padding:0}
+.cal .d.out{visibility:hidden}
+.cal .d.today{border-color:var(--orange);color:var(--orange)}
+.cal .d.sel{background:var(--green);color:#14200a;border-color:var(--green)}
+/* barras de bolos en cada día: verde los que están por tocar, naranja los ya realizados */
+:root{--prox:#4fc3ff}
+.bars{display:flex;flex-direction:column;gap:2px;width:78%;margin-top:1px}
+.bars i{display:block;height:4px;border-radius:3px;background:var(--green)}
+.bars i.hecho{background:var(--orange)}
+.bars em{font-style:normal;font-size:9px;line-height:1;color:var(--muted);font-weight:800;text-align:center}
+.d.sel .bars i{box-shadow:0 0 0 1.5px #14200a}.d.sel .bars i:not(.hecho){background:#14200a}.d.sel .bars em{color:#14200a}
+.cal-legend{display:flex;justify-content:center;gap:14px;margin:10px 0 2px;font-size:11.5px;color:var(--muted);font-weight:700}
+.cal-legend span{display:flex;align-items:center;gap:5px}
+.cal-legend i{width:16px;height:4px;border-radius:3px;background:var(--green)}
+.cal-legend i.hecho{background:var(--orange)}
+
+/* repertorio */
+.folders{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin-bottom:2px;scrollbar-width:none}
+.folders::-webkit-scrollbar{display:none}
+.folder{flex:none;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-weight:800;font-size:13px;white-space:nowrap}
+.folder i{font-style:normal;font-size:11px;color:var(--muted);background:#120d1f;border-radius:8px;padding:1px 6px}
+.folder.on{background:var(--green);color:#14200a;border-color:var(--green);box-shadow:0 3px 0 var(--green-d)}
+.folder.on i{background:rgba(20,32,10,.15);color:#14200a}
+.folder.new{border-style:dashed;color:var(--muted);background:transparent}
+.folder-bar{display:flex;align-items:center;justify-content:space-between;margin:0 2px 8px}
+.folder-bar h5{margin:0}
+.song-n{font-family:Bangers,cursive;font-size:20px;color:var(--green);letter-spacing:1px}
+.ico-box svg{width:22px;height:22px}
+.songlink{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#120d1f;border:1px solid var(--line);text-decoration:none;color:var(--green);font-weight:800}
+
+/* tarjetas de bolo */
+.card.bolo{flex-direction:column;align-items:stretch;gap:8px;padding:14px 14px 12px;position:relative}
+.bolo-top{display:flex;align-items:flex-start;gap:10px}
+.bolo-top h4{flex:1;min-width:0;margin:0;font-size:17px;line-height:1.25}
+.bolo-ev{margin:-4px 0 0;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bolo-when{margin:0;font-size:13.5px;color:var(--text)}
+.bolo-chips{display:flex;gap:6px;flex-wrap:wrap}
+.bchip.ok{color:var(--green);border-color:rgba(163,230,53,.35);background:rgba(163,230,53,.1)}
+.bchip{font-size:12px;font-weight:800;padding:3px 9px;border-radius:9px;background:#120d1f;border:1px solid var(--line);color:var(--muted)}
+.bolo-foot{display:flex;align-items:baseline;justify-content:space-between;border-top:1px dashed rgba(255,255,255,.14);padding-top:9px;margin-top:2px}
+.bolo-foot span{color:var(--muted);font-size:13px}
+.bolo-foot b{font-size:21px;color:var(--green)}
+.est{flex:none;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:5px 10px;border-radius:10px;border:1px solid transparent}
+.est::after{content:"▾";font-size:10px;opacity:.8}
+.est.proximo{background:rgba(79,195,255,.14);color:var(--prox);border-color:rgba(79,195,255,.4)}
+.est.pendiente{background:rgba(255,162,69,.14);color:var(--orange);border-color:rgba(255,162,69,.35)}
+.est.cobrado{background:rgba(163,230,53,.14);color:var(--green);border-color:rgba(163,230,53,.35)}
+.est-menu{position:absolute;right:12px;top:46px;z-index:3;background:var(--panel);border:2px solid #3a2d5c;border-radius:14px;padding:5px;display:flex;flex-direction:column;gap:2px;box-shadow:0 10px 24px rgba(0,0,0,.5);min-width:200px}
+.est-menu button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:none;border:0;border-radius:10px;padding:8px 10px;font-weight:800;font-size:13.5px}
+.est-menu button small{font-weight:600;font-size:11.5px;color:var(--muted)}
+.est-menu button.on,.est-menu button:hover{background:var(--panel2)}
+.sum .warnbox{background:linear-gradient(135deg,#3d2a12,#24180a);border-color:rgba(255,162,69,.45)}
+.warnbox b{color:var(--orange);font-size:24px}
+.sum .bluebox{background:linear-gradient(135deg,#1b2547,#121833);border-color:rgba(120,160,255,.4)}
+.bluebox b{color:#9db8ff;font-size:24px}
+.stat .sub{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.bchip.conv{color:var(--prox);border-color:rgba(79,195,255,.4);background:rgba(79,195,255,.1)}
+.bchip.warn{color:var(--orange);border-color:rgba(255,162,69,.4);background:rgba(255,162,69,.1)}
+.resp-row{display:flex;gap:6px}
+.resp{flex:1;padding:9px;border-radius:11px;border:1px solid var(--line);background:#120d1f;color:var(--muted);font-weight:800;font-size:13px}
+.resp.si.on{background:var(--green);color:#14200a;border-color:var(--green)}
+.resp.no.on{background:rgba(255,93,110,.18);color:var(--red);border-color:rgba(255,93,110,.5)}
+.conv-box{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.conv-head{display:flex;align-items:center;gap:8px}.conv-head b{flex:1;font-size:14px}
+.conv-tip{margin:0;color:var(--muted);font-size:12px}
+.conv-list{display:flex;flex-direction:column}
+.conv-row{display:flex;align-items:center;gap:10px;margin:0;padding:8px 2px;border-top:1px solid var(--line);font-size:14px;text-transform:none;letter-spacing:0;color:var(--text);font-weight:700;cursor:pointer}
+.conv-row:first-child{border-top:0}
+.conv-row input{width:20px;height:20px;margin:0;display:inline-block;accent-color:var(--green);flex:none}
+.conv-row span{flex:1;min-width:0;display:flex;flex-direction:column}
+.conv-row small{color:var(--muted);font-size:11.5px;font-weight:600}
+.conv-row .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.conv-row .dot.on{background:var(--green);border-color:var(--green)}
+/* detalles del bolo */
+.det-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.det-head h3{flex:1;margin:0}
+.det-place{display:flex;align-items:flex-start;gap:10px;margin:4px 0 12px}
+.det-place h4{flex:1;margin:0;font-size:20px;line-height:1.2}
+.det-rows{display:flex;flex-direction:column;gap:0;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:4px 14px;margin-bottom:10px}
+.det-rows div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.det-rows div:last-child{border-bottom:0}
+.det-rows span{color:var(--muted);font-weight:700}
+.det-rows b{text-align:right}
+.det-rows .tot{font-size:16px}
+.det-rows .tot b{color:var(--green);font-size:18px}
+.det-rows .bote-row{align-items:center}
+.det-rows .bote-row span{flex:1}
+.mini.undo{border-color:rgba(255,93,110,.5);color:var(--red);margin-left:6px}
+.bote-ok{font-style:normal;font-size:11px;font-weight:800;color:var(--green);background:rgba(163,230,53,.14);border:1px solid rgba(163,230,53,.35);border-radius:9px;padding:3px 8px}
+.det-notes{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:10px;font-size:14px;white-space:pre-wrap}
+.det-notes small{display:block;color:var(--muted);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+
+/* estadísticas */
+.stats-map{height:230px;min-height:0}
+.sum.sum2{grid-template-columns:1fr 1fr}
+#stats-map{position:absolute;inset:0;background:var(--sea)}
+.chart{display:flex;align-items:flex-end;gap:4px;height:130px;padding:0 2px;margin-bottom:6px}
+.chart .col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%}
+.chart .bar{flex:1;width:100%;max-width:26px;display:flex;flex-direction:column;justify-content:flex-end;gap:1px}
+.chart .bar i{display:block;width:100%;background:var(--orange);border-radius:4px 4px 2px 2px;min-height:3px}
+.chart .bar i.fut{background:var(--green)}
+.chart em{font-style:normal;font-size:10.5px;font-weight:800;color:var(--muted);height:12px}
+.chart span{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase}
+.polaroids{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.polaroid{background:#f2ead8;color:#2a2018;border-radius:4px;padding:10px 10px 12px;box-shadow:0 4px 10px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:2px}
+.polaroid:nth-child(odd){transform:rotate(-1.5deg)}.polaroid:nth-child(even){transform:rotate(1.2deg)}
+.polaroid small{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#7a6a55}
+.polaroid b{font-family:Bangers,cursive;font-weight:400;font-size:24px;letter-spacing:.5px;color:#2a2018}
+.polaroid span{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* miembros */
+.avatar{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:19px;color:#14200a;border:2px solid #14200a}
+.right.acts{flex-direction:row}
+.acts a{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#120d1f;border:1px solid var(--line);text-decoration:none;font-size:16px}
+
+/* caja fuerte: piloto del teclado parpadeando + destello dorado al abrir */
+.safe-led{left:66.2%;top:49.5%;width:1.1%;aspect-ratio:1;border-radius:50%;background:#7dff5a;box-shadow:0 0 6px 2px rgba(125,255,90,.8);transform:translate(-50%,-50%);animation:led 2.2s steps(1) infinite}
+@keyframes led{0%,60%{opacity:1}61%,100%{opacity:.15}}
+.safe-glow{left:63.3%;top:50.3%;width:45%;aspect-ratio:1;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%) scale(.3);opacity:0;
+  background:radial-gradient(circle,rgba(255,225,120,.9) 0%,rgba(255,180,60,.35) 35%,transparent 65%);transition:opacity .4s,transform .5s cubic-bezier(.3,1.5,.5,1)}
+#stage.safe-open .safe-glow{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#stage.safe-open .safe-led{background:#ffd34d;box-shadow:0 0 8px 3px rgba(255,211,77,.9);animation:none}
+
+/* HUD */
+.hud{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:max(10px,env(safe-area-inset-top)) 14px 18px;
+  background:linear-gradient(rgba(18,13,31,.92),rgba(18,13,31,.6) 65%,transparent);transition:opacity .3s}
+.brand{display:flex;align-items:center;gap:8px;margin-right:auto;background:none;border:0;padding:0;text-align:left;color:inherit}
+.logo{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:#1a2a05;border:2px solid var(--green);box-shadow:0 0 12px rgba(163,230,53,.5)}
+.brand b{font-family:Bangers,cursive;font-size:20px;letter-spacing:1px;color:var(--green);display:block;line-height:1}
+.brand small{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px}
+.chip{display:flex;align-items:center;gap:5px;background:rgba(37,28,62,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;font-weight:800;font-size:13px;white-space:nowrap}
+.hint{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:5;background:rgba(18,13,31,.75);border:1px solid var(--line);
+  padding:7px 14px;border-radius:20px;font-size:13px;color:var(--muted);white-space:nowrap;transition:opacity .3s;backdrop-filter:blur(4px)}
+body.in-menu .hud,body.in-menu .hint{opacity:0;pointer-events:none}
+
+/* ---------- PANEL (bottom sheet) ---------- */
+.sheet{position:fixed;left:50%;bottom:0;z-index:10;width:min(100%,520px);height:88%;transform:translate(-50%,105%);transition:transform .45s cubic-bezier(.2,.9,.3,1);
+  background:var(--panel);border:2px solid #3a2d5c;border-bottom:0;border-radius:22px 22px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.6)}
+.sheet.show{transform:translate(-50%,0)}
+.sheet-head{display:flex;align-items:center;gap:10px;padding:16px 16px 10px}
+.sheet-head .ico{font-size:28px}
+.sheet-head h2{margin:0;font-family:Bangers,cursive;font-weight:400;letter-spacing:1.5px;font-size:30px;color:var(--green);text-shadow:0 2px 0 #14200a;flex:1}
+.x{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);font-size:16px}
+.tabs{display:flex;gap:6px;padding:0 16px 10px}
+.tabs button{flex:1;padding:9px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--muted);font-weight:800}
+.tabs button.on{background:var(--green);color:#14200a;border-color:var(--green);box-shadow:0 3px 0 var(--green-d)}
+.body{flex:1;overflow:auto;padding:4px 16px 100px}
+.fab{position:absolute;right:18px;bottom:max(20px,env(safe-area-inset-bottom));width:58px;height:58px;border-radius:18px;border:2px solid #14200a;background:var(--green);color:#14200a;
+  font-size:32px;font-weight:800;line-height:1;box-shadow:0 5px 0 #14200a,0 0 20px rgba(163,230,53,.4)}
+.fab:active{transform:translateY(3px);box-shadow:0 2px 0 #14200a}
+
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.stat small{display:block;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px}
+.stat b{font-size:20px}
+.big{background:linear-gradient(135deg,#2e4a0a,#1a2a05);border-color:var(--green-d)}
+.big b{font-size:30px;color:var(--green)}
+.pos{color:var(--green)}.neg{color:var(--red)}
+
+.list{display:flex;flex-direction:column;gap:8px}
+.card{display:flex;gap:12px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:11px 12px;text-align:left;width:100%}
+.card:active{background:#2f2450}
+.date{flex:none;width:52px;text-align:center;border-radius:12px;background:#120d1f;border:1px solid var(--line);padding:5px 0}
+.date b{display:block;font-size:22px;line-height:1.1}
+.date small{color:var(--orange);font-weight:800;font-size:11px;text-transform:uppercase}
+.info{flex:1;min-width:0}
+.info h4{margin:0 0 2px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info p{margin:0;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.right{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.right b{font-size:15px}
+.pill{font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;background:rgba(255,255,255,.08);color:var(--muted)}
+.pill.ok{background:rgba(163,230,53,.15);color:var(--green)}
+.pill.warn{background:rgba(255,162,69,.15);color:var(--orange)}
+.pill.bad{background:rgba(255,93,110,.15);color:var(--red)}
+.mini{border:1px solid var(--green);background:transparent;color:var(--green);border-radius:9px;font-size:11px;font-weight:800;padding:3px 8px}
+.ico-box{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:#120d1f;border:1px solid var(--line)}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:#120d1f;font-weight:800}
+.qty b{min-width:22px;text-align:center}
+.empty{text-align:center;color:var(--muted);padding:36px 10px}
+.empty span{font-size:40px;display:block;margin-bottom:6px}
+h5{margin:16px 2px 8px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.2px}
+.members{display:flex;flex-wrap:wrap;gap:6px}
+.member{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:6px 10px;font-size:13px}
+.member b{color:var(--green);margin-left:4px}
+.search{width:100%;margin-bottom:10px}
+
+/* modal formulario */
+.modal{position:fixed;inset:0;z-index:20;background:rgba(8,5,15,.7);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px)}
+.modal.show{display:flex}
+.modal form{width:min(100%,520px);background:var(--panel);border:2px solid #3a2d5c;border-radius:22px 22px 0 0;padding:18px 16px max(18px,env(safe-area-inset-bottom));max-height:90%;overflow:auto;animation:up .3s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.modal textarea[readonly]{font-size:12px;color:var(--muted)}
+.modal h3{margin:0 0 12px;font-family:Bangers,cursive;font-weight:400;letter-spacing:1px;font-size:24px;color:var(--green)}
+label{display:block;margin-bottom:10px;font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+input,select,textarea{display:block;width:100%;margin-top:4px;padding:11px 12px;border-radius:12px;border:1px solid #3a2d5c;background:#120d1f;color:var(--text);font:inherit;font-size:16px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-color:transparent}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.row{display:flex;gap:8px;margin-top:8px}
+.btn{padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);font-weight:800}
+.btn.primary{background:var(--green);color:#14200a;border-color:#14200a;box-shadow:0 3px 0 #14200a}
+.btn.danger{color:var(--red);border-color:rgba(255,93,110,.4);background:transparent}
+
+#toast{position:fixed;left:50%;top:18px;z-index:30;transform:translate(-50%,-250%);background:var(--green);color:#14200a;font-weight:800;padding:10px 16px;border-radius:14px;
+  border:2px solid #14200a;box-shadow:0 4px 0 #14200a;transition:transform .35s cubic-bezier(.3,1.5,.5,1);white-space:nowrap}
+#toast.show{transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:0s!important;animation-iteration-count:1!important;transition:none!important}}
+</style>
+<style>
+[hidden]{display:none!important}
+/* pantalla de entrada (solo con la nube activada) */
+#login{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(42,29,69,.92),rgba(18,13,31,.97) 70%);backdrop-filter:blur(4px)}
+#login form{width:min(100%,380px);background:var(--panel);border:2px solid #3a2d5c;border-radius:22px;padding:22px 18px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.login-logo{width:64px;height:64px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font-size:36px;background:#1a2a05;border:2px solid var(--green);box-shadow:0 0 18px rgba(163,230,53,.5)}
+#login h1{margin:0;text-align:center;font-family:Bangers,cursive;font-weight:400;letter-spacing:1.5px;font-size:34px;color:var(--green)}
+.login-sub{margin:0 0 14px;text-align:center;color:var(--muted);font-size:13px}
+.login-tabs{padding:0;margin-bottom:12px}
+.login-tip{margin:-4px 0 10px;color:var(--muted);font-size:12px}
+.login-err{margin:0 0 10px;color:var(--red);font-size:13px;font-weight:700;min-height:0}
+.login-err:empty{display:none}
+#login-estado{margin:10px 0 0;text-align:center}
+#login-estado:empty{display:none}
+#login .btn[disabled]{opacity:.5}
+</style>
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <img id="room" src="habitacion.webp" alt="Habitación de la charanga">
+    <div class="fx sun"></div>
+    <div class="fx cone"></div>
+    <div class="fx glow lamp"></div>
+    <div class="fx glow globe"></div>
+    <div class="fx screen"></div>
+    <div class="fx" id="dust" style="inset:0"></div>
+
+    <div class="fx safe-glow"></div>
+    <div class="fx safe-led"></div>
+    <div class="fx phone-glow"></div>
+    <div class="fx phone-pop">❤️</div>
+
+    <div class="fx" id="notes" style="inset:0"></div>
+
+    <button class="hs" id="hs-pc" data-open="bolos" aria-label="Ordenador: bolos"><span class="tag">Bolos</span><span class="badge" id="badge-bolos" hidden></span></button>
+    <button class="hs" id="hs-armario" data-open="inv" aria-label="Armario: inventario"><span class="tag">Inventario</span></button>
+    <button class="hs" id="hs-safe" data-open="cuentas" aria-label="Caja fuerte: cuentas"><span class="tag">Cuentas</span></button>
+    <button class="hs" id="hs-cal" data-open="cal" aria-label="Calendario"><span class="tag">Calendario</span></button>
+    <button class="hs" id="hs-poster" data-open="miembros" aria-label="Póster: la banda"><span class="tag">La banda</span></button>
+    <button class="hs" id="hs-rep" data-open="repertorio" aria-label="Libros de la estantería: repertorio"><span class="tag">Repertorio</span></button>
+    <button class="hs" id="hs-phone" data-open="redes" aria-label="Móvil: redes sociales"><span class="tag">Redes</span></button>
+    <button class="hs" id="hs-mapa" data-open="stats" aria-label="Corcho: estadísticas"><span class="tag">Estadísticas</span></button>
+  </div>
+</div>
+<button class="music" id="music" aria-label="Música on/off"><i></i><i></i><i></i></button>
+
+<header class="hud">
+  <button class="brand" id="brand" aria-label="Ajustes y copia de seguridad"><span class="logo">🐸</span><span><b>Crock&amp;Roll</b><small id="brand-sub">Charanga</small></span></button>
+  <button class="chip" data-open="cuentas">🪙 <span id="hud-saldo"></span></button>
+  <button class="chip" data-open="bolos">🎺 <span id="hud-next"></span></button>
+</header>
+<div class="hint">👆 Toca los objetos</div>
+
+<section class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-head"><span class="ico" id="s-ico"></span><h2 id="s-title"></h2><button class="x" id="s-close" aria-label="Cerrar">✕</button></div>
+  <div class="tabs" id="s-tabs"></div>
+  <div class="body" id="s-body"></div>
+  <button class="fab" id="s-add" aria-label="Añadir">+</button>
+</section>
+
+<div class="modal" id="modal"><form id="form" autocomplete="off"></form></div>
+<div id="toast"></div>
+
+<script>
+/* ================= UTILIDADES ================= */
+const $ = s => document.querySelector(s);
+const uid = () => Math.random().toString(36).slice(2, 9);
+const z = n => String(n).padStart(2, '0');
+const iso = d => `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`;
+const addDays = n => { const d = new Date(); d.setDate(d.getDate() + n); return iso(d); };
+const TODAY = () => iso(new Date());
+const eur = n => (n || 0).toLocaleString('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const fdate = s => { const [y, m, d] = s.split('-'); return `${+d} ${MES[m - 1]} ${y}`; };
+const daysTo = s => Math.round((new Date(s + 'T00:00') - new Date(TODAY() + 'T00:00')) / 864e5);
+
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ================= DATOS (localStorage) ================= */
+const KEY = 'crocknroll-v1';
+function seed() {
+  return {
+    miembros: [['Óscar', 'Trompeta'], ['Lucía', 'Saxo alto'], ['Pablo', 'Trombón'], ['Marta', 'Trompeta'], ['Javi', 'Tuba'], ['Carmen', 'Clarinete'], ['Dani', 'Bombo'], ['Irene', 'Caja']]
+      .map(([nombre, instrumento], i) => ({ id: uid(), nombre, instrumento, telefono: '600 000 00' + (i + 1), notas: '' })),
+    bolos: [
+      { id: uid(), fecha: addDays(4), hora: '18:30', horaFin: '22:30', titulo: 'Fiestas de San Martín', lugar: 'Plaza Mayor', cachet: 650, cacheMusico: 60, musicos: 8, gasolina: 40, presBote: 90, estado: 'proximo', notas: 'Pasacalles + concierto' },
+      { id: uid(), fecha: addDays(11), hora: '13:00', horaFin: '17:00', titulo: 'Boda Ana & Luis', lugar: 'Finca El Olivar', cachet: 900, cacheMusico: 90, musicos: 8, gasolina: 60, presBote: 120, estado: 'proximo', notas: 'Entrada de novios' },
+      { id: uid(), fecha: addDays(23), hora: '20:00', horaFin: '23:00', titulo: 'Cena peña Los Tranquis', lugar: 'Bar La Charca', cachet: 300, cacheMusico: 45, musicos: 6, gasolina: 0, presBote: 30, estado: 'proximo', notas: '' },
+      { id: uid(), fecha: addDays(-9), hora: '12:00', horaFin: '15:00', titulo: 'Romería del Pilar', lugar: 'Ermita', cachet: 500, cacheMusico: 50, musicos: 8, gasolina: 20, presBote: 80, estado: 'cobrado', notas: '' }
+    ],
+    inventario: [
+      { id: uid(), cat: 'ropa', nombre: 'Camiseta verde Crock&Roll', cant: 14, detalle: 'Tallas S–XL', asignado: '', estado: 'bien' },
+      { id: uid(), cat: 'ropa', nombre: 'Sudadera negra', cant: 9, detalle: 'Logo bordado', asignado: '', estado: 'bien' },
+      { id: uid(), cat: 'ropa', nombre: 'Gafas de sol rana', cant: 6, detalle: 'Atrezo', asignado: '', estado: 'reparar' },
+      { id: uid(), cat: 'inst', nombre: 'Trompeta Yamaha', cant: 1, detalle: 'Nº serie 4471', asignado: 'Óscar', estado: 'bien' },
+      { id: uid(), cat: 'inst', nombre: 'Bombo', cant: 1, detalle: 'Parche nuevo', asignado: 'Dani', estado: 'bien' },
+      { id: uid(), cat: 'inst', nombre: 'Caja', cant: 2, detalle: '', asignado: 'Irene', estado: 'reparar' },
+      { id: uid(), cat: 'inst', nombre: 'Trombón', cant: 1, detalle: '', asignado: 'Pablo', estado: 'bien' },
+      { id: uid(), cat: 'mat', nombre: 'Atriles plegables', cant: 8, detalle: '', asignado: '', estado: 'bien' },
+      { id: uid(), cat: 'mat', nombre: 'Pancarta Crock&Roll', cant: 1, detalle: '3 x 1 m', asignado: '', estado: 'bien' }
+    ],
+    movimientos: [
+      { id: uid(), fecha: addDays(-9), concepto: 'Cachet: Romería del Pilar', importe: 500 },
+      { id: uid(), fecha: addDays(-20), concepto: 'Camisetas nuevas', importe: -210 },
+      { id: uid(), fecha: addDays(-35), concepto: 'Cachet: Fiestas del barrio', importe: 700 },
+      { id: uid(), fecha: addDays(-40), concepto: 'Reparación bombo', importe: -45 }
+    ],
+    bote: [
+      { id: uid(), fecha: addDays(-35), concepto: 'Bolo: Fiestas del barrio', importe: 100 },
+      { id: uid(), fecha: addDays(-9), concepto: 'Bolo: Romería del Pilar', importe: 80 },
+      { id: uid(), fecha: addDays(-9), concepto: 'Cañas post-romería', importe: -18.5 }
+    ]
+  };
+}
+let DB;
+try { DB = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+// con la nube configurada no se inventan datos de ejemplo: llegan de Firestore
+const NUBE = !!(window.FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+if (!DB) DB = NUBE ? { miembros: [], bolos: [], inventario: [], movimientos: [], bote: [], repertorio: { carpetas: [], canciones: [] } } : seed();
+// migración: versiones anteriores guardaban los miembros como texto
+if (DB.miembros.length && typeof DB.miembros[0] === 'string') DB.miembros = DB.miembros.map(n => ({ id: uid(), nombre: n, instrumento: '', telefono: '', notas: '' }));
+// migración: el estado del bolo ahora es próximo / pendiente (de cobro) / cobrado
+DB.bolos.forEach(b => {
+  if (b.cobro !== undefined || b.cobrado !== undefined || !['proximo', 'pendiente', 'cobrado'].includes(b.estado) || b.horaFin === undefined) {
+    if (b.cobro !== undefined || b.cobrado !== undefined) {
+      const cobrado = b.cobro === 'total' || b.cobrado === true;
+      if (!b.presBote && +b.fianza) b.presBote = +b.fianza;
+      b.estado = cobrado ? 'cobrado' : b.fecha >= TODAY() ? 'proximo' : 'pendiente';
+    }
+    delete b.cobro; delete b.cobrado; delete b.fianza;
+    if (!['proximo', 'pendiente', 'cobrado'].includes(b.estado)) b.estado = b.fecha >= TODAY() ? 'proximo' : 'pendiente';
+    ['horaFin', 'musicos', 'gasolina', 'presBote', 'cacheMusico'].forEach(k => { if (b[k] === undefined) b[k] = k === 'horaFin' ? '' : k === 'musicos' ? DB.miembros.length : 0; });
+  }
+});
+DB.bolos.forEach(b => { if (b.cacheMusico === undefined) b.cacheMusico = 0; });
+// convocatoria de cada bolo: quién se apunta (resp), quién va (sel) y a quién se ha pagado (pagos)
+DB.bolos.forEach(b => { if (!b.conv) b.conv = { abierta: b.fecha >= TODAY(), resp: {}, sel: [], pagos: {} }; });
+// un bolo "próximo" cuya fecha ya pasó queda pendiente de cobro
+const avanzarEstados = () => DB.bolos.forEach(b => { if (b.estado === 'proximo' && b.fecha < TODAY()) b.estado = 'pendiente'; });
+avanzarEstados();
+const nombres = () => DB.miembros.map(m => m.nombre);
+if (!DB.repertorio) {
+  const c = [['Pasacalles'], ['Fiestas'], ['Bodas']].map(([nombre]) => ({ id: uid(), nombre }));
+  const can = (titulo, autor, i, tono) => ({ id: uid(), titulo, autor, carpeta: c[i].id, tono, enlace: '', notas: '' });
+  DB.repertorio = { carpetas: c, canciones: [
+    can('Paquito el Chocolatero', 'Gustavo Pascual Falcó', 0, 'Sib'),
+    can('Amparito Roca', 'Jaime Texidor', 0, 'Fa'),
+    can('Sarandonga', 'Popular', 1, 'Do'),
+    can('Vamos a la playa', 'Righeira', 1, 'Sol'),
+    can('Marcha nupcial', 'Mendelssohn', 2, 'Do')
+  ] };
+}
+if (!DB.redes) DB.redes = { instagram: 'charanga_crocknroll', tiktok: 'charanga_crocknroll' };
+if (!DB.geo) DB.geo = {};
+function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} if (window.Nube) Nube.push(); refreshHud(); }
+// sin nube (o en la página de Claude) quien usa la app es la directiva; con nube, depende de la sesión
+const esAdmin = () => !window.Nube || Nube.esAdmin();
+const yo = () => window.Nube ? Nube.miembroId() : null;
+
+const totalBote = () => DB.bote.reduce((a, m) => a + m.importe, 0);
+const proximos = () => DB.bolos.filter(b => b.fecha >= TODAY()).sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
+
+function refreshHud() {
+  $('#hud-saldo').textContent = eur(totalBote());
+  const p = proximos()[0];
+  const d = p ? daysTo(p.fecha) : null;
+  $('#hud-next').textContent = p ? (d === 0 ? '¡Hoy!' : d === 1 ? 'Mañana' : `en ${d} días`) : 'Sin bolos';
+  const n = proximos().filter(b => daysTo(b.fecha) <= 30).length;
+  const bd = $('#badge-bolos'); bd.hidden = !n; bd.textContent = n;
+}
+
+/* ================= ESCENA ================= */
+const stage = $('#stage'), img = $('#room');
+let IW = 942, IH = 1670;
+function layout() {
+  const W = innerWidth, H = innerHeight;
+  const s = Math.min(W / IW, H / IH);
+  const w = IW * s, h = IH * s;
+  Object.assign(stage.style, { width: w + 'px', height: h + 'px', left: (W - w) / 2 + 'px', top: Math.max(0, (H - h) / 2) + 'px' });
+}
+img.onload = () => { IW = img.naturalWidth; IH = img.naturalHeight; layout(); };
+
+
+addEventListener('resize', layout); layout();
+
+// partículas de polvo en el haz de luz
+(() => {
+  const box = $('#dust');
+  for (let i = 0; i < 24; i++) {
+    const s = document.createElement('span'), sz = 1.5 + Math.random() * 2.5;
+    Object.assign(s.style, {
+      left: Math.random() * 55 + '%', top: 25 + Math.random() * 60 + '%', width: sz + 'px', height: sz + 'px',
+      animationDuration: 7 + Math.random() * 8 + 's', animationDelay: -Math.random() * 12 + 's'
+    });
+    s.style.setProperty('--dx', (Math.random() * 60 - 20) + 'px');
+    s.style.setProperty('--dy', (Math.random() * -80 - 10) + 'px');
+    box.appendChild(s);
+  }
+})();
+
+// notas musicales saliendo de la trompeta
+function spawnNote() {
+  const n = document.createElement('span');
+  n.className = 'note';
+  n.textContent = ['♪', '♫', '♬', '♩'][Math.random() * 4 | 0];
+  n.style.left = (71 + Math.random() * 3) + '%';
+  n.style.top = (65.5 + Math.random() * 2) + '%';
+  n.style.setProperty('--nx', (Math.random() * 50 - 40) + 'px');
+  n.style.setProperty('--nr', (Math.random() * 60 - 30) + 'deg');
+  $('#notes').appendChild(n);
+  setTimeout(() => n.remove(), 2700);
+}
+setInterval(() => { if (!document.hidden) spawnNote(); }, 1400);
+
+let actx;
+const getCtx = () => actx || (actx = new (window.AudioContext || window.webkitAudioContext)());
+/* ===== Música lo-fi generada en directo (sin archivos, sin derechos, sin crepitar de vinilo) ===== */
+const Lofi = (() => {
+  let ctx, out, bus, noise, timer, playing = false, step = 0, next = 0;
+  const BPM = 72, S16 = 60 / BPM / 4, VOL = .55;
+  const PROG = [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60, 64], [48, 52, 55, 59]]; // Fmaj7 Em7 Dm9 Cmaj7
+  const PENTA = [72, 74, 76, 79, 81, 84];
+  const f = m => 440 * Math.pow(2, (m - 69) / 12);
+  function init() {
+    ctx = getCtx();
+    out = ctx.createGain(); out.gain.value = 0;
+    const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3;
+    out.connect(comp).connect(ctx.destination);
+    bus = ctx.createBiquadFilter(); bus.type = 'lowpass'; bus.frequency.value = 2400; bus.connect(out);
+    noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+    const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  const env = (g, t, a, peak, dur) => { g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + dur); };
+  function key(m, t, dur, v) { // piano eléctrico suave con "cinta" desafinada
+    const g = ctx.createGain(); env(g, t, .03, v, dur);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1300;
+    const wow = 8 * Math.sin(t * .3 * 2 * Math.PI);
+    [['triangle', 0], ['sine', 7], ['sine', -6]].forEach(([type, det]) => {
+      const o = ctx.createOscillator(); o.type = type; o.frequency.value = f(m); o.detune.value = det + wow;
+      o.connect(lp); o.start(t); o.stop(t + dur + .05);
+    });
+    lp.connect(g).connect(bus);
+  }
+  function bass(m, t, dur) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f(m); env(g, t, .02, .3, dur); o.connect(g).connect(bus); o.start(t); o.stop(t + dur + .05); }
+  function kick(t) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(42, t + .12); env(g, t, .003, .7, .32); o.connect(g).connect(out); o.start(t); o.stop(t + .35); }
+  function nz(t, type, fr, v, dur, dest) {
+    const s = ctx.createBufferSource(), fl = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = noise; fl.type = type; fl.frequency.value = fr; env(g, t, .002, v, dur);
+    s.connect(fl).connect(g).connect(dest || bus); s.start(t, Math.random() * 1.5); s.stop(t + dur + .02);
+  }
+  const snare = t => { nz(t, 'bandpass', 1500, .22, .18); nz(t, 'bandpass', 3500, .03, .06, out); };
+  const hat = (t, v) => nz(t, 'bandpass', 8000, v * .6, .035, out);
+  function tick(s, t) {
+    const i = s % 16, ch = PROG[Math.floor(s / 16) % 4];
+    if (i === 0) { ch.forEach((m, k) => key(m, t + k * .015, S16 * 15, .065)); bass(ch[0] - 12, t, S16 * 6); }
+    if (i === 8) bass(ch[0] - 12 + (Math.random() < .5 ? 7 : 0), t, S16 * 5);
+    if (i === 10 && Math.random() < .4) ch.slice(1).forEach(m => key(m, t, S16 * 5, .035));
+    if (i === 0 || i === 10 || (i === 7 && Math.random() < .35)) kick(t);
+    if (i === 4 || i === 12) snare(t);
+    if (i % 2 === 0) hat(t, i % 4 === 0 ? .045 : .025);
+    if (s >= 32 && i % 2 === 0 && Math.random() < .17) key(PENTA[Math.random() * PENTA.length | 0], t, S16 * 3, .045);
+  }
+  function loop() { while (next < ctx.currentTime + .2) { tick(step, next); next += step % 2 === 0 ? S16 * 1.18 : S16 * .82; step++; } }
+  return {
+    start() {
+      if (!ctx) init(); ctx.resume(); if (playing) return; playing = true;
+      next = ctx.currentTime + .1; timer = setInterval(loop, 40);
+      out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(VOL, ctx.currentTime, .8);
+    },
+    stop() { if (!playing) return; playing = false; clearInterval(timer); out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(0, ctx.currentTime, .25); },
+    duck(sec) { if (!playing) return; const t = ctx.currentTime; out.gain.cancelScheduledValues(t); out.gain.setTargetAtTime(.1, t, .05); out.gain.setTargetAtTime(VOL, t + sec, .6); },
+    get on() { return playing; }
+  };
+})();
+
+let musicWanted = true;
+try { musicWanted = localStorage.getItem('crock-music') !== 'off'; } catch (e) {}
+function setMusic(on) {
+  musicWanted = on;
+  try { localStorage.setItem('crock-music', on ? 'on' : 'off'); } catch (e) {}
+  on ? Lofi.start() : Lofi.stop();
+  $('#music').classList.toggle('on', on);
+}
+$('#music').addEventListener('click', () => setMusic(!Lofi.on));
+// los navegadores no dejan sonar nada hasta el primer toque del usuario
+let unlocked = false;
+addEventListener('pointerdown', e => {
+  if (unlocked) return; unlocked = true;
+  if (musicWanted && !e.target.closest('#music')) setMusic(true);
+}, true);
+document.addEventListener('visibilitychange', () => { if (actx) document.hidden ? actx.suspend() : actx.resume(); });
+
+/* ================= NAVEGACIÓN ================= */
+const SECTIONS = {
+  bolos:   { title: 'Bolos', ico: '💻', spot: '#hs-pc', tabs: [['proximo', 'Próximos'], ['pendiente', 'Pendientes'], ['cobrado', 'Cobrados']], render: renderBolos, add: () => formBolo() },
+  inv:     { title: 'Inventario', ico: '🚪', spot: '#hs-armario', tabs: [['ropa', '👕 Ropa'], ['inst', '🎺 Instrum.'], ['mat', '📦 Material']], render: renderInv, add: () => formInv() },
+  cuentas: { title: 'Caja fuerte', ico: '💰', spot: '#hs-safe', tabs: [], render: renderCuentas, add: () => formBote() },
+  cal:     { title: 'Calendario', ico: '📅', spot: '#hs-cal', tabs: [], render: renderCal, add: () => formBolo(null, calSel || undefined) },
+  repertorio:{ title: 'Repertorio', ico: '🎼', spot: '#hs-rep', tabs: [], render: renderRep, add: () => formCancion() },
+  miembros:{ title: 'La banda', ico: '🎸', spot: '#hs-poster', tabs: [], render: renderMiembros, add: () => formMiembro() },
+  redes:   { title: 'Redes sociales', ico: '📱', spot: '#hs-phone', tabs: [], render: renderRedes, add: null },
+  stats:   { title: 'Estadísticas', ico: '📊', spot: '#hs-mapa', tabs: [], render: renderStats, add: null }
+};
+let cur = { sec: null, tab: null };
+
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => openSection(b.dataset.open)));
+
+function openSection(key) {
+  const S = SECTIONS[key]; if (!S) return;
+  cur = { sec: key, tab: S.tabs.length ? S.tabs[0][0] : null };
+  if (key === 'cal') calSel = null;
+  const spot = $(S.spot), r = spot.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+  stage.style.transformOrigin = `${r.left - sr.left + r.width / 2}px ${r.top - sr.top + r.height / 2}px`;
+  stage.style.transform = 'scale(1.9)';
+  stage.classList.add('zoomed');
+  document.body.classList.add('in-menu');
+  if (key === 'cuentas') stage.classList.add('safe-open');
+  setTimeout(() => {
+    $('#s-ico').textContent = S.ico; $('#s-title').textContent = S.title;
+    renderTabs(); S.render(cur.tab);
+    $('#s-add').style.display = S.add && esAdmin() ? '' : 'none';
+    $('#sheet').classList.add('show'); $('#sheet').setAttribute('aria-hidden', 'false');
+  }, key === 'cuentas' ? 650 : 420);
+}
+function closeSection() {
+  $('#sheet').classList.remove('show'); $('#sheet').setAttribute('aria-hidden', 'true');
+  stage.style.transform = ''; stage.classList.remove('zoomed');
+  document.body.classList.remove('in-menu');
+  setTimeout(() => stage.classList.remove('safe-open'), 300);
+  cur.sec = null;
+}
+$('#s-close').onclick = closeSection;
+$('#s-add').onclick = () => SECTIONS[cur.sec].add();
+
+function renderTabs() {
+  const S = SECTIONS[cur.sec];
+  $('#s-tabs').style.display = S.tabs.length ? '' : 'none';
+  $('#s-tabs').innerHTML = S.tabs.map(([k, l]) => `<button data-tab="${k}" class="${k === cur.tab ? 'on' : ''}">${l}</button>`).join('');
+}
+$('#s-tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return;
+  cur.tab = b.dataset.tab; renderTabs(); rerender();
+});
+const rerender = () => cur.sec && SECTIONS[cur.sec].render(cur.tab);
+
+// acciones dentro de las listas (delegación)
+$('#s-body').addEventListener('click', e => {
+  if (e.target.closest('a')) return; // llamadas / WhatsApp
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  e.stopPropagation();
+  if (a.dataset.act === 'calprev' || a.dataset.act === 'calnext') {
+    calM += a.dataset.act === 'calnext' ? 1 : -1;
+    if (calM < 0) { calM = 11; calY--; } if (calM > 11) { calM = 0; calY++; }
+    return rerender();
+  }
+  if (a.dataset.act === 'calday') { calSel = calSel === a.dataset.d ? null : a.dataset.d; return rerender(); } // tocar otra vez el mismo día vuelve a los próximos
+  if (a.dataset.act === 'calprox') { calSel = null; return rerender(); }
+  if (a.dataset.act === 'miembro') return formMiembro(DB.miembros.find(x => x.id === a.dataset.id));
+  if (a.dataset.act === 'redesedit') return formRedes();
+  if (a.dataset.act === 'repfolder') { repFolder = a.dataset.id; return rerender(); }
+  if (a.dataset.act === 'repnewfolder') return formCarpeta();
+  if (a.dataset.act === 'repeditfolder') return formCarpeta(DB.repertorio.carpetas.find(x => x.id === repFolder));
+  if (a.dataset.act === 'cancion') return formCancion(DB.repertorio.canciones.find(x => x.id === a.dataset.id));
+  if (a.dataset.act === 'statyear') { statYear = a.dataset.y; return rerender(); }
+  const id = a.dataset.id, act = a.dataset.act;
+  if (!esAdmin() && ['estmenu', 'setest', 'mas', 'menos'].includes(act)) return toast('Solo la directiva puede cambiar esto');
+  if (act === 'resp') return responder(id, a.dataset.v);
+  if (act === 'estmenu') { estAbierto = estAbierto === id ? null : id; return rerender(); }
+  if (act === 'setest') return cambiarEstado(DB.bolos.find(x => x.id === id), a.dataset.est);
+  if (act === 'bolo') { if (estAbierto) { estAbierto = null; return rerender(); } return verBolo(DB.bolos.find(x => x.id === id)); }
+  if (act === 'item') formInv(DB.inventario.find(x => x.id === id));
+  if (act === 'mas' || act === 'menos') { const it = DB.inventario.find(x => x.id === id); it.cant = Math.max(0, it.cant + (act === 'mas' ? 1 : -1)); save(); rerender(); }
+  if (act === 'botemov') formBote(DB.bote.find(x => x.id === id));
+});
+$('#s-body').addEventListener('input', e => { if (e.target.id === 'inv-q') { invQuery = e.target.value; renderInvList(); } if (e.target.id === 'rep-q') { repQuery = e.target.value; renderRepList(); } });
+
+/* ================= BOLOS ================= */
+const ESTADOS = { proximo: ['Próximo', 'Bolo aún no realizado'], pendiente: ['Pendiente', 'Realizado, pendiente de cobrar'], cobrado: ['Cobrado', 'Ya cobrado'] };
+const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const nombreBolo = b => b.lugar || b.titulo || 'Bolo';
+const fechaLarga = s => { const [y, m, d] = s.split('-'); return `${DIAS[new Date(s + 'T00:00').getDay()]}, ${d}/${m}/${y}`; };
+function duracion(b) { // minutos entre inicio y fin (si acaba pasada la medianoche, cuenta el día siguiente)
+  if (!b.hora || !b.horaFin) return 0;
+  const [h1, m1] = b.hora.split(':').map(Number), [h2, m2] = b.horaFin.split(':').map(Number);
+  let d = (h2 * 60 + m2) - (h1 * 60 + m1); if (d <= 0) d += 1440; return d;
+}
+const durTxt = min => min ? `${Math.floor(min / 60)}h${min % 60 ? ' ' + (min % 60) + 'min' : ''}` : '';
+const horarioTxt = b => b.hora ? (b.horaFin ? `${b.hora} - ${b.horaFin}` : b.hora) : '';
+// total = lo que cobra la charanga; cacheMusico = lo que se lleva cada músico
+function reparto(b) {
+  const total = +b.cachet || 0, n = +b.musicos || 0, cm = +b.cacheMusico || 0;
+  return { total, n, cm };
+}
+// el bote de un bolo está cobrado si hay una aportación en la caja fuerte ligada a ese bolo
+const boteCobrado = b => DB.bote.some(m => m.bolo === b.id && m.importe > 0);
+const boteDe = b => DB.bote.filter(m => m.bolo === b.id && m.importe > 0).reduce((a, m) => a + m.importe, 0);
+// lo que queda por cobrar del bolo: el total menos lo que ya pasó al bote
+const porCobrar = b => b.estado === 'cobrado' ? 0 : Math.max(0, (+b.cachet || 0) - boteDe(b));
+let estAbierto = null;
+function renderBolos(tab) {
+  avanzarEstados();
+  const list = DB.bolos.filter(b => b.estado === tab)
+    .sort((a, b) => (tab === 'proximo' ? 1 : -1) * (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
+  const suma = est => DB.bolos.filter(b => est.includes(b.estado)).reduce((a, b) => a + porCobrar(b), 0);
+  const vacio = { proximo: 'No hay bolos próximos.', pendiente: 'No hay bolos pendientes de cobro.', cobrado: 'Aún no hay bolos cobrados.' }[tab];
+  $('#s-body').innerHTML = `
+    <div class="sum">
+      <div class="stat warnbox"><small>Pendiente de cobro</small><b>${eur(suma(['pendiente']))}</b><span class="sub">Bolos tocados sin cobrar</span></div>
+      <div class="stat bluebox"><small>Ganancia estimada</small><b>${eur(suma(['pendiente', 'proximo']))}</b><span class="sub">Pendientes + próximos</span></div>
+    </div>
+    <div class="list">${list.map(boloCard).join('') || `<div class="empty"><span>🗓️</span>${vacio}<br>Pulsa + para añadir uno.</div>`}</div>`;
+}
+function boloCard(b) {
+  const dur = durTxt(duracion(b)), hor = horarioTxt(b), e = ESTADOS[b.estado] ? b.estado : 'proximo';
+  return `<div class="card bolo" data-act="bolo" data-id="${b.id}" role="button">
+    <div class="bolo-top"><h4>📍 ${esc(nombreBolo(b))}</h4>
+      <button class="est ${e}" data-act="estmenu" data-id="${b.id}" aria-label="Cambiar estado">${ESTADOS[e][0]}</button></div>
+    ${b.titulo && b.lugar ? `<p class="bolo-ev">${esc(b.titulo)}</p>` : ''}
+    <p class="bolo-when">📅 ${fechaLarga(b.fecha)}${hor ? ` (${esc(hor)})` : ''}</p>
+    ${dur || +b.cacheMusico || boteCobrado(b) ? `<div class="bolo-chips">${dur ? `<span class="bchip">⏱️ ${dur}</span>` : ''}${+b.cacheMusico ? `<span class="bchip">🎺 ${eur(+b.cacheMusico)} / músico</span>` : ''}${boteCobrado(b) ? '<span class="bchip ok">🫙 Bote cobrado</span>' : ''}</div>` : ''}
+    ${convChips(b)}
+    <div class="bolo-foot"><span>Total charanga</span><b>${eur(+b.cachet)}</b></div>
+    ${estAbierto === b.id ? `<div class="est-menu">${Object.entries(ESTADOS).map(([k, [t, d]]) =>
+      `<button class="${k === e ? 'on' : ''}" data-act="setest" data-id="${b.id}" data-est="${k}">${t}<small>${d}</small></button>`).join('')}</div>` : ''}
+  </div>`;
+}
+/* ---- convocatoria, selección y pagos ---- */
+const convDe = b => b.conv || (b.conv = { abierta: true, resp: {}, sel: [], pagos: {} });
+const nombreMiembro = id => (DB.miembros.find(m => m.id === id) || {}).nombre || '¿?';
+function convChips(b) {
+  const c = convDe(b), si = Object.keys(c.resp || {}).filter(k => c.resp[k] === 'si').length, me = yo();
+  const chips = [];
+  if (c.abierta) chips.push(`<span class="bchip conv">✋ ${si} apuntado${si === 1 ? '' : 's'}</span>`);
+  else if ((c.sel || []).length) chips.push(`<span class="bchip">👥 Van ${c.sel.length}</span>`);
+  if (me && !c.abierta) chips.push((c.sel || []).includes(me) ? '<span class="bchip ok">✅ Vas</span>' : '<span class="bchip">No vas</span>');
+  if (b.estado === 'cobrado' && (c.sel || []).length) {
+    const pag = c.sel.filter(id => c.pagos && c.pagos[id]).length;
+    chips.push(`<span class="bchip ${pag === c.sel.length ? 'ok' : 'warn'}">💶 Pagados ${pag}/${c.sel.length}</span>`);
+  }
+  const botones = me && c.abierta ? `<div class="resp-row">
+      <button class="resp si ${c.resp[me] === 'si' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="si">✋ Me apunto</button>
+      <button class="resp no ${c.resp[me] === 'no' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="no">No puedo</button></div>` : '';
+  return (chips.length ? `<div class="bolo-chips">${chips.join('')}</div>` : '') + botones;
+}
+// un músico responde a la convocatoria (solo su propia respuesta)
+function responder(id, v) {
+  const b = DB.bolos.find(x => x.id === id), me = yo(); if (!b || !me) return;
+  const c = convDe(b); if (!c.abierta) return toast('La convocatoria ya está cerrada');
+  c.resp = c.resp || {}; c.resp[me] = c.resp[me] === v ? null : v; if (!c.resp[me]) delete c.resp[me];
+  if (window.Nube) Nube.campo('bolos', b.id, 'conv.resp.' + me, c.resp[me] || null);
+  try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {}
+  rerender(); if ($('#modal').classList.contains('show') && $('#d-x')) verBolo(b);
+  toast(c.resp[me] === 'si' ? '✋ Te has apuntado' : c.resp[me] === 'no' ? 'Anotado: no puedes' : 'Respuesta quitada');
+}
+function convHtml(b) {
+  const c = convDe(b), admin = esAdmin(), me = yo(), sel = c.sel || [], resp = c.resp || {};
+  const orden = { si: 0, undefined: 1, no: 2 };
+  const ms = [...DB.miembros].sort((a, z) => (orden[resp[a.id]] - orden[resp[z.id]]) || a.nombre.localeCompare(z.nombre, 'es'));
+  const pill = r => r === 'si' ? '<span class="pill ok">Se apunta</span>' : r === 'no' ? '<span class="pill bad">No puede</span>' : '<span class="pill">Sin responder</span>';
+  let h = `<div class="conv-box"><div class="conv-head"><b>✋ Convocatoria</b><span class="pill ${c.abierta ? 'warn' : ''}">${c.abierta ? 'Abierta' : 'Cerrada'}</span>
+    ${admin ? `<button type="button" class="mini" data-dact="toggleconv">${c.abierta ? 'Cerrar' : 'Reabrir'}</button>` : ''}</div>`;
+  if (me && c.abierta) h += `<div class="resp-row">
+      <button type="button" class="resp si ${resp[me] === 'si' ? 'on' : ''}" data-dact="resp" data-v="si">✋ Me apunto</button>
+      <button type="button" class="resp no ${resp[me] === 'no' ? 'on' : ''}" data-dact="resp" data-v="no">No puedo</button></div>`;
+  if (admin) h += `<p class="conv-tip">${c.abierta ? 'Marca quién va de entre los que se apuntan y cierra la convocatoria.' : 'Seleccionados: ' + sel.length}</p>`;
+  h += `<div class="conv-list">${ms.map(m => {
+    const on = sel.includes(m.id);
+    return `<label class="conv-row ${on ? 'on' : ''}">${admin ? `<input type="checkbox" data-dact="sel" data-m="${m.id}" ${on ? 'checked' : ''}>` : `<i class="dot ${on ? 'on' : ''}"></i>`}
+      <span>${esc(m.nombre)}<small>${esc(m.instrumento || '')}</small></span>${pill(resp[m.id])}</label>`;
+  }).join('') || '<p class="conv-tip">No hay músicos en La banda.</p>'}</div></div>`;
+  // pagos: una vez cobrado el bolo, lista de los que fueron
+  if (sel.length && b.estado === 'cobrado') {
+    const pag = sel.filter(id => c.pagos && c.pagos[id]).length;
+    h += `<div class="conv-box"><div class="conv-head"><b>💶 Pagos a músicos</b><span class="pill ${pag === sel.length ? 'ok' : 'warn'}">${pag}/${sel.length}</span></div>
+      <div class="conv-list">${sel.map(id => `<label class="conv-row ${c.pagos && c.pagos[id] ? 'on' : ''}">
+        ${admin ? `<input type="checkbox" data-dact="pago" data-m="${id}" ${c.pagos && c.pagos[id] ? 'checked' : ''}>` : `<i class="dot ${c.pagos && c.pagos[id] ? 'on' : ''}"></i>`}
+        <span>${esc(nombreMiembro(id))}</span><b>${+b.cacheMusico ? eur(+b.cacheMusico) : ''}</b></label>`).join('')}</div></div>`;
+  }
+  return h;
+}
+function cambiarEstado(b, est) {
+  const antes = b.estado; b.estado = est; estAbierto = null;
+  save(); rerender();
+  if (est === 'cobrado' && antes !== 'cobrado' && +b.presBote > 0 && !boteCobrado(b)) preguntarBote(b);
+  else toast(`${ESTADOS[est][0]}: ${nombreBolo(b)}`);
+}
+// detalles del bolo (al tocar la tarjeta)
+function verBolo(b) {
+  if (!b) return;
+  b = DB.bolos.find(x => x.id === b.id); if (!b) return closeForm(); // la nube puede haber traído una versión más nueva (o haberlo borrado)
+  window.__det = b.id;
+  const id = b.id, B = () => DB.bolos.find(x => x.id === id), admin = esAdmin();
+  const r = reparto(b), dur = durTxt(duracion(b)), hor = horarioTxt(b), e = ESTADOS[b.estado] ? b.estado : 'proximo';
+  const cobradoBote = boteCobrado(b), queda = porCobrar(b);
+  const form = $('#form');
+  form.innerHTML = `
+    <div class="det-head"><h3>Detalles del bolo</h3><button type="button" class="x" id="d-x" aria-label="Cerrar">✕</button></div>
+    <div class="det-place"><h4>📍 ${esc(nombreBolo(b))}</h4><span class="est ${e}" style="pointer-events:none">${ESTADOS[e][0]}</span></div>
+    <div class="det-rows">
+      ${b.titulo && b.lugar ? `<div><span>Evento</span><b>${esc(b.titulo)}</b></div>` : ''}
+      <div><span>📅 Fecha</span><b>${fechaLarga(b.fecha)}</b></div>
+      <div><span>⏱️ Horario</span><b>${hor ? esc(hor.replace(' - ', ' a ')) : '—'}${dur ? ` (${dur})` : ''}</b></div>
+    </div>
+    <div class="det-rows">
+      <div class="tot"><span>💰 Total charanga</span><b>${eur(r.total)}</b></div>
+      ${b.estado !== 'cobrado' && cobradoBote ? `<div><span>⏳ Queda por cobrar</span><b style="color:var(--orange)">${eur(queda)}</b></div>` : ''}
+      <div><span>🎺 Caché por músico</span><b>${r.cm ? eur(r.cm) : '—'}</b></div>
+      <div><span>👥 Músicos</span><b>${r.n || '—'}</b></div>
+      <div><span>⛽ Gasolina</span><b>${eur(+b.gasolina)}</b></div>
+      <div class="bote-row"><span>🫙 Bote</span><b>${eur(+b.presBote)}</b>
+        ${cobradoBote ? '<em class="bote-ok">✅ Cobrado</em>' + (admin ? '<button type="button" class="mini undo" id="d-undo">Deshacer</button>' : '') : +b.presBote && admin ? '<button type="button" class="mini" id="d-bote">Cobrar bote</button>' : ''}</div>
+    </div>
+    ${b.notas ? `<div class="det-notes"><small>Notas</small>${esc(b.notas)}</div>` : ''}
+    ${convHtml(b)}
+    ${admin ? `<div class="row">
+      <button type="button" class="btn primary" id="d-edit" style="flex:1">✏️ Editar bolo</button>
+      <button type="button" class="btn danger" id="d-del" aria-label="Eliminar bolo">🗑️</button>
+    </div>` : ''}`;
+  form.onclick = ev => {
+    const t = ev.target.closest('[data-dact]'); if (!t) return;
+    const bb = B(); if (!bb) return; const c = convDe(bb);
+    if (t.dataset.dact === 'resp') return responder(id, t.dataset.v);
+    if (!esAdmin()) return;
+    if (t.dataset.dact === 'toggleconv') {
+      c.abierta = !c.abierta;
+      if (!c.abierta && (c.sel || []).length) bb.musicos = c.sel.length;
+      toast(c.abierta ? 'Convocatoria reabierta' : `Convocatoria cerrada · van ${(c.sel || []).length}`);
+    }
+    if (t.dataset.dact === 'sel') { c.sel = c.sel || []; c.sel = t.checked ? [...new Set(c.sel.concat(t.dataset.m))] : c.sel.filter(x => x !== t.dataset.m); if (!c.abierta) bb.musicos = c.sel.length; }
+    if (t.dataset.dact === 'pago') { c.pagos = c.pagos || {}; if (t.checked) c.pagos[t.dataset.m] = true; else delete c.pagos[t.dataset.m]; }
+    save(); rerender(); verBolo(bb);
+  };
+  form.onsubmit = e => e.preventDefault();
+  $('#d-x').onclick = closeForm;
+  if ($('#d-edit')) $('#d-edit').onclick = () => formBolo(B());
+  // deshacer el cobro del bote: se borra de la caja fuerte la aportación ligada a este bolo (pide confirmación)
+  if ($('#d-undo')) $('#d-undo').onclick = ev => {
+    const btn = ev.currentTarget;
+    if (!btn.dataset.sure) { btn.dataset.sure = 1; btn.textContent = '¿Seguro?'; return; }
+    DB.bote = DB.bote.filter(m => !(m.bolo === id && m.importe > 0));
+    save(); rerender(); verBolo(B()); toast('↩️ Cobro del bote deshecho');
+  };
+  // cobrar bote: se abre el movimiento del bote ya rellenado; al guardarlo se vuelve a los detalles
+  if ($('#d-bote')) $('#d-bote').onclick = () => formBote(null,
+    { tipo: 'aporte', fecha: TODAY(), bolo: b.id, concepto: 'Bote: ' + nombreBolo(b), importe: +b.presBote },
+    () => setTimeout(() => { verBolo(B()); toast('🫙 Bote cobrado'); }, 0));
+  if ($('#d-del')) $('#d-del').onclick = ev => {
+    const btn = ev.currentTarget;
+    if (!btn.dataset.sure) { btn.dataset.sure = 1; btn.textContent = '¿Seguro?'; return; }
+    DB.bolos = DB.bolos.filter(x => x.id !== id); save(); closeForm(); rerender(); toast('🗑️ Eliminado');
+  };
+  $('#modal').classList.add('show');
+}
+
+/* ================= CALENDARIO (pared) ================= */
+const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+let calY = null, calM, calSel;
+function renderCal() {
+  if (calY === null) { const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); calSel = null; }
+  const off = (new Date(calY, calM, 1).getDay() + 6) % 7, days = new Date(calY, calM + 1, 0).getDate();
+  const pref = `${calY}-${z(calM + 1)}`, by = {};
+  DB.bolos.forEach(b => (by[b.fecha] = by[b.fecha] || []).push(b));
+  const mes = DB.bolos.filter(b => b.fecha.startsWith(pref));
+  let cells = ['L', 'M', 'X', 'J', 'V', 'S', 'D'].map(d => `<span class="dow">${d}</span>`).join('') + '<span class="d out"></span>'.repeat(off);
+  for (let d = 1; d <= days; d++) {
+    const k = `${pref}-${z(d)}`, bs = by[k] || [];
+    cells += `<button class="d ${k === TODAY() ? 'today' : ''} ${k === calSel ? 'sel' : ''}" data-act="calday" data-d="${k}">${d}
+      <span class="bars">${[...bs].sort((a, b) => (a.hora || '').localeCompare(b.hora || '')).slice(0, 3).map(b => `<i class="${b.fecha < TODAY() ? 'hecho' : ''}"></i>`).join('')}${bs.length > 3 ? `<em>+${bs.length - 3}</em>` : ''}</span></button>`;
+  }
+  // debajo: los bolos del día tocado o, si no hay ninguno tocado, los próximos bolos
+  const sel = calSel ? (by[calSel] || []).sort((a, b) => (a.hora || '').localeCompare(b.hora || '')) : proximos();
+  $('#s-body').innerHTML = `
+    <div class="cal-head"><button data-act="calprev" aria-label="Mes anterior">‹</button><h4>${MESES[calM]} ${calY}</h4><button data-act="calnext" aria-label="Mes siguiente">›</button></div>
+    <div class="cal-sub">${mes.length} bolo${mes.length === 1 ? '' : 's'} este mes · ${eur(mes.reduce((a, b) => a + (+b.cachet || 0), 0))}</div>
+    <div class="cal">${cells}</div>
+    <div class="cal-legend"><span><i></i>Por tocar</span><span><i class="hecho"></i>Ya realizado</span></div>
+    ${calSel
+      ? `<div class="folder-bar"><h5>${fechaLarga(calSel)}</h5><button class="mini" data-act="calprox">Ver próximos</button></div>`
+      : `<h5>Próximos bolos</h5>`}
+    <div class="list">${sel.map(boloCard).join('') || (calSel
+      ? '<div class="empty"><span>🎉</span>Día libre.<br>Pulsa + para meter un bolo este día.</div>'
+      : '<div class="empty"><span>🗓️</span>No hay bolos próximos.<br>Pulsa + para añadir uno.</div>')}</div>`;
+}
+
+/* ================= ESTADÍSTICAS (corcho de la pared) ================= */
+const CIUDADES = [
+  ['A Coruña', 43.362, -8.411], ['Santiago de Compostela', 42.878, -8.544], ['Lugo', 43.012, -7.556], ['Ourense', 42.336, -7.864],
+  ['Pontevedra', 42.431, -8.644], ['Vigo', 42.240, -8.720], ['Oviedo', 43.361, -5.849], ['Gijón', 43.532, -5.661], ['Santander', 43.462, -3.810],
+  ['Bilbao', 43.263, -2.935], ['San Sebastián', 43.318, -1.981], ['Vitoria-Gasteiz', 42.847, -2.672], ['Pamplona', 42.812, -1.645],
+  ['Logroño', 42.465, -2.445], ['León', 42.599, -5.567], ['Ponferrada', 42.546, -6.598], ['Palencia', 42.010, -4.528], ['Burgos', 42.344, -3.697],
+  ['Aranda de Duero', 41.670, -3.689], ['Miranda de Ebro', 42.686, -2.947], ['Zamora', 41.503, -5.744], ['Benavente', 42.003, -5.678],
+  ['Valladolid', 41.652, -4.724], ['Medina del Campo', 41.311, -4.914], ['Soria', 41.764, -2.464], ['Salamanca', 40.965, -5.664],
+  ['Ciudad Rodrigo', 40.600, -6.528], ['Béjar', 40.386, -5.763], ['Ávila', 40.656, -4.682], ['Segovia', 40.943, -4.108], ['Madrid', 40.417, -3.704],
+  ['Alcalá de Henares', 40.482, -3.364], ['Guadalajara', 40.633, -3.167], ['Toledo', 39.863, -4.027], ['Talavera de la Reina', 39.963, -4.830],
+  ['Cuenca', 40.070, -2.137], ['Ciudad Real', 38.985, -3.927], ['Albacete', 38.994, -1.858], ['Cáceres', 39.475, -6.372], ['Plasencia', 40.030, -6.088],
+  ['Badajoz', 38.879, -6.970], ['Mérida', 38.916, -6.344], ['Huesca', 42.136, -0.409], ['Zaragoza', 41.649, -0.889], ['Teruel', 40.345, -1.106],
+  ['Lleida', 41.617, 0.620], ['Girona', 41.979, 2.821], ['Barcelona', 41.385, 2.173], ['Tarragona', 41.119, 1.245], ['Castellón de la Plana', 39.986, -0.051],
+  ['Valencia', 39.470, -0.376], ['Alicante', 38.345, -0.481], ['Elche', 38.267, -0.698], ['Murcia', 37.992, -1.131], ['Cartagena', 37.606, -0.986],
+  ['Almería', 36.834, -2.464], ['Granada', 37.177, -3.599], ['Jaén', 37.779, -3.785], ['Córdoba', 37.888, -4.779], ['Sevilla', 37.389, -5.984],
+  ['Huelva', 37.261, -6.944], ['Cádiz', 36.527, -6.289], ['Jerez de la Frontera', 36.686, -6.137], ['Málaga', 36.721, -4.421], ['Marbella', 36.510, -4.883],
+  ['Palma', 39.570, 2.650], ['Ibiza', 38.907, 1.432], ['Mahón', 39.889, 4.265], ['Las Palmas de Gran Canaria', 28.124, -15.430],
+  ['Santa Cruz de Tenerife', 28.464, -16.251], ['Ceuta', 35.889, -5.321], ['Melilla', 35.292, -2.938]
+];
+const norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+let provPromise = null;
+const cargarProvincias = () => provPromise || (provPromise = fetch('espana.json').then(r => r.ok ? r.json() : null).catch(() => null));
+
+// --- coordenadas de cada lugar (se guardan para no buscarlas dos veces) ---
+// se aprovechan los sitios que se marcaron a mano en el antiguo mapa de bolos
+(DB.ubicaciones || []).forEach(u => {
+  if (!DB.geo[norm(u.nombre)]) DB.geo[norm(u.nombre)] = [u.lat, u.lng];
+  (u.bolos || []).forEach(id => { const b = DB.bolos.find(x => x.id === id); if (b && b.lugar && !DB.geo[norm(b.lugar)]) DB.geo[norm(b.lugar)] = [u.lat, u.lng]; });
+});
+let geoCola = Promise.resolve();
+function geolocalizar(lugar) {
+  const k = norm(lugar);
+  if (!k || DB.geo[k] !== undefined) return Promise.resolve(DB.geo[k] || null);
+  const c = CIUDADES.find(([n]) => norm(n) === k);
+  if (c) { DB.geo[k] = [c[1], c[2]]; return Promise.resolve(DB.geo[k]); }
+  // buscador de OpenStreetMap, de uno en uno y con pausa para respetar su uso justo
+  geoCola = geoCola.then(async () => {
+    if (DB.geo[k] !== undefined) return;
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=es&accept-language=es&q=${encodeURIComponent(lugar)}`);
+      const [p] = await r.json();
+      DB.geo[k] = p ? [+p.lat, +p.lon] : 0;
+    } catch (e) { /* sin conexión: se reintentará otro día */ }
+    await new Promise(r => setTimeout(r, 1100));
+  });
+  return geoCola.then(() => DB.geo[k] || null);
+}
+
+let statYear = String(new Date().getFullYear()), smap = null;
+const hecho = b => b.fecha < TODAY();
+function renderStats() {
+  const years = [...new Set(DB.bolos.map(b => b.fecha.slice(0, 4)).concat(String(new Date().getFullYear())))].sort().reverse();
+  if (statYear !== 'todo' && !years.includes(statYear)) statYear = years[0];
+  const delAño = DB.bolos.filter(b => statYear === 'todo' || b.fecha.startsWith(statYear));
+  const tocados = delAño.filter(hecho), futuros = delAño.filter(b => !hecho(b));
+  const facturado = tocados.reduce((a, b) => a + (+b.cachet || 0), 0);
+  const minutos = tocados.reduce((a, b) => a + duracion(b), 0);
+  const alBote = DB.bote.filter(m => m.importe > 0 && (statYear === 'todo' || m.fecha.startsWith(statYear))).reduce((a, m) => a + m.importe, 0);
+  // pueblos (por lugar del bolo)
+  const pueblos = {};
+  delAño.forEach(b => { const k = norm(b.lugar || ''); if (!k) return; (pueblos[k] = pueblos[k] || { nombre: b.lugar, tocados: 0, futuros: 0 })[hecho(b) ? 'tocados' : 'futuros']++; });
+  const nPueblos = Object.values(pueblos).filter(p => p.tocados).length;
+  // bolos por mes
+  let meses;
+  if (statYear === 'todo') {
+    const porAño = {}; delAño.forEach(b => { const y = b.fecha.slice(0, 4); (porAño[y] = porAño[y] || [0, 0])[hecho(b) ? 0 : 1]++; });
+    meses = Object.keys(porAño).sort().map(y => [y, ...porAño[y]]);
+  } else {
+    meses = MES.map((m, i) => { const bs = delAño.filter(b => +b.fecha.slice(5, 7) === i + 1); return [m, bs.filter(hecho).length, bs.filter(b => !hecho(b)).length]; });
+  }
+  const maxMes = Math.max(1, ...meses.map(([, a, b]) => a + b));
+  // destacados
+  const base = tocados.length ? tocados : delAño;
+  const mejor = base.reduce((a, b) => (+b.cachet || 0) > (+(a && a.cachet) || 0) ? b : a, null);
+  const largo = base.reduce((a, b) => duracion(b) > (a ? duracion(a) : 0) ? b : a, null);
+  const rep = Object.values(pueblos).sort((a, b) => (b.tocados + b.futuros) - (a.tocados + a.futuros))[0];
+  const chip = (y, l) => `<button class="folder ${statYear === y ? 'on' : ''}" data-act="statyear" data-y="${y}">${l}</button>`;
+  const foto = (t, h, p) => `<div class="polaroid"><small>${t}</small><b>${h}</b><span>${p}</span></div>`;
+  const etiqueta = statYear === 'todo' ? 'en total' : 'en ' + statYear;
+
+  $('#s-body').innerHTML = `
+    <div class="folders">${years.map(y => chip(y, y)).join('')}${chip('todo', 'Todo')}</div>
+    <div class="map-wrap stats-map"><div id="stats-map"></div><div class="map-hint" id="stats-hint">${Object.keys(pueblos).length ? 'Buscando los pueblos…' : 'Aún no hay bolos ' + etiqueta}</div></div>
+    <div class="sum sum2">
+      <div class="stat big" style="grid-column:1/-1"><small>Facturado ${etiqueta}</small><b>${eur(facturado)}</b><span class="sub">${tocados.length} bolo${tocados.length === 1 ? '' : 's'} tocado${tocados.length === 1 ? '' : 's'}${futuros.length ? ` · ${futuros.length} por tocar` : ''}</span></div>
+      <div class="stat"><small>Horas tocadas</small><b>${durTxt(minutos) || '0h'}</b></div>
+      <div class="stat"><small>Pueblos</small><b>${nPueblos}</b></div>
+      <div class="stat"><small>Al bote</small><b>${eur(alBote)}</b></div>
+      <div class="stat"><small>Media por bolo</small><b>${eur(tocados.length ? facturado / tocados.length : 0)}</b></div>
+    </div>
+    <h5>Bolos por ${statYear === 'todo' ? 'año' : 'mes'}</h5>
+    <div class="chart" role="img" aria-label="Bolos por ${statYear === 'todo' ? 'año' : 'mes'}">
+      ${meses.map(([m, a, b]) => `<div class="col"><em>${a + b || ''}</em><div class="bar">${b ? `<i class="fut" style="height:${b / maxMes * 100}%"></i>` : ''}${a ? `<i style="height:${a / maxMes * 100}%"></i>` : ''}</div><span>${m}</span></div>`).join('')}
+    </div>
+    <div class="cal-legend"><span><i class="hecho"></i>Tocados</span><span><i></i>Por tocar</span></div>
+    <h5>Destacados</h5>
+    <div class="polaroids">
+      ${mejor && +mejor.cachet ? foto('Mejor pagado', eur(+mejor.cachet), esc(nombreBolo(mejor))) : ''}
+      ${largo && duracion(largo) ? foto('El más largo', durTxt(duracion(largo)), esc(nombreBolo(largo))) : ''}
+      ${rep ? foto('Más repetido', `${rep.tocados + rep.futuros} bolo${rep.tocados + rep.futuros === 1 ? '' : 's'}`, esc(rep.nombre)) : ''}
+    </div>
+    ${!delAño.length ? '<div class="empty"><span>📊</span>No hay bolos en esta temporada.</div>' : ''}`;
+  pintarMapaStats(pueblos);
+}
+async function pintarMapaStats(pueblos) {
+  if (smap) { smap.remove(); smap = null; }
+  const el = $('#stats-map'); if (!el) return;
+  if (!window.L) { $('#stats-hint').textContent = 'No se pudo cargar el mapa'; return; }
+  const m = smap = L.map(el, { zoomControl: false, attributionControl: false, zoomSnap: .25 });
+  m.fitBounds([[36, -9.3], [43.8, 3.3]]);
+  m.createPane('base'); m.getPane('base').style.zIndex = 150;
+  cargarProvincias().then(geo => { if (geo && smap === m) L.geoJSON(geo, { pane: 'base', interactive: false, style: { color: '#9b8f78', weight: 1, fillColor: '#f2ead8', fillOpacity: 1 } }).addTo(m); });
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(m);
+  setTimeout(() => smap === m && m.invalidateSize(), 450);
+  const lista = Object.values(pueblos);
+  let puestos = 0, sinSitio = [];
+  const puntos = [];
+  for (const p of lista) {
+    const c = await geolocalizar(p.nombre);
+    if (smap !== m) return; // se cambió de temporada o se cerró la página
+    if (!c) { sinSitio.push(p.nombre); continue; }
+    const n = p.tocados + p.futuros, color = p.tocados ? '#ffa245' : '#a3e635';
+    L.circleMarker(c, { radius: 6 + Math.min(10, n * 2), color: '#14200a', weight: 2, fillColor: color, fillOpacity: .9 })
+      .bindTooltip(`${esc(p.nombre)} · ${n} bolo${n === 1 ? '' : 's'}`, { direction: 'top' }).addTo(m);
+    puntos.push(c); puestos++;
+  }
+  try { save(); } catch (e) {}
+  const hint = $('#stats-hint'); if (!hint) return;
+  if (puntos.length) m.fitBounds(L.latLngBounds(puntos).pad(.6), { maxZoom: 9 });
+  hint.textContent = !lista.length ? hint.textContent : sinSitio.length ? `No encuentro: ${sinSitio.slice(0, 3).join(', ')}${sinSitio.length > 3 ? '…' : ''}` : '';
+  hint.style.display = hint.textContent ? '' : 'none';
+}
+
+/* ================= REPERTORIO (libros de la estantería) ================= */
+let repFolder = 'all', repQuery = '';
+const ICON_SONG = '<svg viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+const nombreCarpeta = id => (DB.repertorio.carpetas.find(c => c.id === id) || {}).nombre || '';
+function renderRep() {
+  const R = DB.repertorio;
+  if (repFolder !== 'all' && repFolder !== 'none' && !R.carpetas.some(c => c.id === repFolder)) repFolder = 'all';
+  const cnt = id => R.canciones.filter(s => id === 'none' ? !nombreCarpeta(s.carpeta) : s.carpeta === id).length;
+  const sinCarpeta = cnt('none');
+  const chip = (id, label, n) => `<button class="folder ${repFolder === id ? 'on' : ''}" data-act="repfolder" data-id="${id}">${esc(label)} <i>${n}</i></button>`;
+  const actual = repFolder === 'all' ? 'Todas las canciones' : repFolder === 'none' ? 'Sin carpeta' : nombreCarpeta(repFolder);
+  $('#s-body').innerHTML = `
+    <div class="sum">
+      <div class="stat"><small>Canciones</small><b>${R.canciones.length}</b></div>
+      <div class="stat"><small>Carpetas</small><b>${R.carpetas.length}</b></div>
+    </div>
+    <div class="folders">
+      ${chip('all', 'Todas', R.canciones.length)}
+      ${R.carpetas.map(c => chip(c.id, c.nombre, cnt(c.id))).join('')}
+      ${sinCarpeta ? chip('none', 'Sin carpeta', sinCarpeta) : ''}
+      ${esAdmin() ? '<button class="folder new" data-act="repnewfolder">+ Carpeta</button>' : ''}
+    </div>
+    <div class="folder-bar"><h5>${esc(actual)}</h5>${repFolder !== 'all' && repFolder !== 'none' ? '<button class="mini" data-act="repeditfolder">Editar carpeta</button>' : ''}</div>
+    <input class="search" id="rep-q" placeholder="Buscar canción o autor…" value="${esc(repQuery)}">
+    <div class="list" id="rep-list"></div>`;
+  const on = $('.folder.on'), bar = $('.folders');
+  if (on && bar) bar.scrollLeft = on.offsetLeft - bar.offsetLeft - 16;
+  renderRepList();
+}
+function renderRepList() {
+  const q = repQuery.toLowerCase();
+  const list = DB.repertorio.canciones
+    .filter(s => repFolder === 'all' || (repFolder === 'none' ? !nombreCarpeta(s.carpeta) : s.carpeta === repFolder))
+    .filter(s => (s.titulo + ' ' + (s.autor || '')).toLowerCase().includes(q))
+    .sort((a, b) => a.titulo.localeCompare(b.titulo, 'es'));
+  $('#rep-list').innerHTML = list.map(s => {
+    const sub = [s.autor, s.tono && 'Tono: ' + s.tono].filter(Boolean).map(esc).join(' · ');
+    const fold = nombreCarpeta(s.carpeta);
+    return `<div class="card" data-act="cancion" data-id="${s.id}" role="button">
+      <div class="ico-box">${ICON_SONG}</div>
+      <div class="info"><h4>${esc(s.titulo)}</h4><p>${sub || '&nbsp;'}</p></div>
+      <div class="right acts">${repFolder === 'all' && fold ? `<span class="pill">${esc(fold)}</span>` : ''}
+        ${s.enlace ? `<a class="songlink" href="${esc(s.enlace)}" target="_blank" rel="noopener" aria-label="Abrir enlace">↗</a>` : ''}</div>
+    </div>`;
+  }).join('') || `<div class="empty">${q ? 'No hay canciones que coincidan.' : 'No hay canciones aquí todavía.<br>Pulsa + para añadir una.'}</div>`;
+}
+function formCancion(c) {
+  const carpetas = [['', '— Sin carpeta']].concat(DB.repertorio.carpetas.map(x => [x.id, x.nombre]));
+  const def = repFolder !== 'all' && repFolder !== 'none' ? repFolder : '';
+  openForm({
+    title: c ? 'Editar canción' : 'Nueva canción', data: c || { carpeta: def },
+    fields: [
+      { k: 'titulo', l: 'Título', req: 1 }, { k: 'autor', l: 'Autor / versión' },
+      [{ k: 'carpeta', l: 'Carpeta', t: 'select', o: carpetas }, { k: 'tono', l: 'Tono' }],
+      { k: 'enlace', l: 'Enlace (partitura, vídeo…)', t: 'url' },
+      { k: 'notas', l: 'Notas (estructura, quién canta…)', t: 'textarea' }
+    ],
+    onSave: v => { if (c) Object.assign(c, v); else DB.repertorio.canciones.push({ id: uid(), ...v }); },
+    onDelete: c && (() => DB.repertorio.canciones = DB.repertorio.canciones.filter(x => x !== c))
+  });
+}
+function formCarpeta(f) {
+  openForm({
+    title: f ? 'Editar carpeta' : 'Nueva carpeta', data: f || {},
+    fields: [{ k: 'nombre', l: 'Nombre de la carpeta', req: 1 }],
+    onSave: v => { if (f) Object.assign(f, v); else { const n = { id: uid(), nombre: v.nombre }; DB.repertorio.carpetas.push(n); repFolder = n.id; } },
+    // al borrar una carpeta, sus canciones pasan a "Sin carpeta"
+    onDelete: f && (() => {
+      DB.repertorio.canciones.forEach(s => { if (s.carpeta === f.id) s.carpeta = ''; });
+      DB.repertorio.carpetas = DB.repertorio.carpetas.filter(x => x !== f); repFolder = 'all';
+    })
+  });
+}
+
+/* ================= REDES SOCIALES (móvil) ================= */
+const handle = v => String(v || '').trim().replace(/^@/, '');
+const redUrl = (v, base) => /^https?:\/\//i.test(String(v).trim()) ? String(v).trim() : base + handle(v);
+const ICON_IG = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg>';
+const ICON_TT = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M16.5 3c.3 2.2 1.7 3.8 4 4v3.1c-1.5 0-2.9-.4-4-1.2v6.3c0 3.4-2.6 5.8-5.8 5.8S5 18.6 5 15.3c0-3.4 2.9-6 6.4-5.6v3.2c-1.6-.4-3.2.8-3.2 2.4 0 1.4 1.1 2.5 2.5 2.5s2.6-1 2.6-2.7V3h3.2z"/></svg>';
+function renderRedes() {
+  const ig = DB.redes.instagram, tt = DB.redes.tiktok;
+  const card = (cls, ico, name, v, url) => v
+    ? `<a class="social ${cls}" href="${esc(url)}" target="_blank" rel="noopener"><span class="logo-s">${ico}</span>
+         <span><b>${name}</b><small>@${esc(handle(v).replace(/^https?:\/\/[^/]+\/@?/i, ''))}</small></span><span class="go">↗</span></a>`
+    : '';
+  $('#s-body').innerHTML = `
+    <p style="color:var(--muted);margin:0 2px 14px">¡Síguenos y comparte nuestros bolos! 🐸🎺</p>
+    ${card('ig', ICON_IG, 'Instagram', ig, redUrl(ig, 'https://www.instagram.com/'))}
+    ${card('tt', ICON_TT, 'TikTok', tt, redUrl(tt, 'https://www.tiktok.com/@'))}
+    ${!ig && !tt ? '<div class="empty"><span>📵</span>No hay redes configuradas.</div>' : ''}
+    <button class="edit-links" data-act="redesedit">✏️ Editar enlaces</button>`;
+}
+function formRedes() {
+  openForm({
+    title: 'Enlaces de redes', data: DB.redes,
+    fields: [{ k: 'instagram', l: 'Instagram (usuario o enlace)' }, { k: 'tiktok', l: 'TikTok (usuario o enlace)' }],
+    onSave: v => Object.assign(DB.redes, v)
+  });
+}
+
+/* ================= MIEMBROS (póster) ================= */
+const avatarColor = s => `hsl(${[...s].reduce((a, c) => a + c.charCodeAt(0), 0) * 37 % 360} 70% 65%)`;
+function renderMiembros() {
+  const inst = new Set(DB.miembros.map(m => (m.instrumento || '').toLowerCase()).filter(Boolean)).size;
+  $('#s-body').innerHTML = `
+    <div class="sum">
+      <div class="stat"><small>Miembros</small><b>${DB.miembros.length}</b></div>
+      <div class="stat"><small>Instrumentos</small><b>${inst}</b></div>
+    </div>
+    <div class="list">${DB.miembros.map(m => {
+      const items = DB.inventario.filter(i => i.asignado === m.nombre).length;
+      const tel = (m.telefono || '').replace(/\D/g, ''), wa = tel.length === 9 ? '34' + tel : tel;
+      return `<div class="card" data-act="miembro" data-id="${m.id}" role="button">
+        <div class="avatar" style="background:${avatarColor(m.nombre)}">${esc((m.nombre || '?')[0])}</div>
+        <div class="info"><h4>${esc(m.nombre)}</h4><p>🎵 ${esc(m.instrumento) || '—'}</p><p>🎒 ${items} cosas</p></div>
+        <div class="right acts">${tel ? `<a href="tel:${tel}" aria-label="Llamar">📞</a><a href="https://wa.me/${wa}" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>` : '<span class="pill">Sin tlf</span>'}</div>
+      </div>`;
+    }).join('') || '<div class="empty"><span>🐸</span>Aún no hay nadie en la banda.</div>'}</div>`;
+}
+function formMiembro(m) {
+  openForm({
+    title: m ? 'Editar miembro' : 'Nuevo miembro', data: m || {},
+    fields: [{ k: 'nombre', l: 'Nombre', req: 1 }, [{ k: 'instrumento', l: 'Instrumento' }, { k: 'telefono', l: 'Teléfono', t: 'tel' }], { k: 'notas', l: 'Notas (talla, alergias…)', t: 'textarea' }],
+    onSave: v => {
+      if (m) {
+        if (m.nombre !== v.nombre) // renombrar también en el inventario
+          DB.inventario.forEach(i => { if (i.asignado === m.nombre) i.asignado = v.nombre; });
+        Object.assign(m, v);
+      } else DB.miembros.push({ id: uid(), ...v });
+    },
+    onDelete: m && (() => DB.miembros = DB.miembros.filter(x => x !== m))
+  });
+}
+// al marcar un bolo como cobrado: pregunta si se apunta su presupuesto en el bote (nunca obligatorio)
+function preguntarBote(b) {
+  const form = $('#form');
+  form.innerHTML = `<h3>¿Apuntar algo en el bote?</h3>
+    <p style="color:var(--muted);margin:0 0 14px">${esc(nombreBolo(b))} ya figura como <b style="color:var(--text)">cobrado</b>.
+    El presupuesto para el bote es de <b style="color:var(--text)">${eur(+b.presBote)}</b>. Si ya lo metisteis antes (por ejemplo, con la fianza), no hace falta apuntar nada.</p>
+    <div class="row"><span style="flex:1"></span><button type="button" class="btn" id="q-no">No, solo marcar</button><button type="button" class="btn primary" id="q-si">Sí, apuntar</button></div>`;
+  form.onsubmit = e => e.preventDefault();
+  $('#q-no').onclick = () => { closeForm(); toast('✅ Bolo cobrado'); };
+  $('#q-si').onclick = () => formBote(null, { tipo: 'aporte', fecha: TODAY(), bolo: b.id, concepto: 'Bolo: ' + nombreBolo(b), importe: +b.presBote });
+  $('#modal').classList.add('show');
+}
+function formBolo(b, fecha) {
+  openForm({
+    title: b ? 'Editar bolo' : 'Nuevo bolo',
+    data: b || { fecha: fecha || addDays(7), hora: '18:00', horaFin: '', estado: 'proximo', musicos: DB.miembros.length, gasolina: 0, presBote: 0, cacheMusico: '' },
+    fields: [
+      { k: 'lugar', l: 'Lugar', req: 1 }, { k: 'titulo', l: 'Evento (opcional)' },
+      [{ k: 'fecha', l: 'Fecha', t: 'date', req: 1 }, { k: 'estado', l: 'Estado', t: 'select', o: Object.entries(ESTADOS).map(([k, [t]]) => [k, t]) }],
+      [{ k: 'hora', l: 'Hora inicio', t: 'hm' }, { k: 'horaFin', l: 'Hora fin', t: 'hm' }],
+      [{ k: 'cachet', l: 'Total charanga (€)', t: 'number' }, { k: 'cacheMusico', l: 'Caché por músico (€)', t: 'number' }],
+      { k: 'musicos', l: 'Nº de músicos', t: 'number' },
+      [{ k: 'gasolina', l: 'Gasolina (€)', t: 'number' }, { k: 'presBote', l: 'Para el bote (€)', t: 'number' }],
+      { k: 'notas', l: 'Notas', t: 'textarea' }
+    ],
+    onSave: v => {
+      ['cachet', 'cacheMusico', 'musicos', 'gasolina', 'presBote'].forEach(k => v[k] = +v[k] || 0);
+      if (b) Object.assign(b, v); else DB.bolos.push({ id: uid(), conv: { abierta: true, resp: {}, sel: [], pagos: {} }, ...v });
+    },
+    onDelete: b && (() => DB.bolos = DB.bolos.filter(x => x !== b))
+  });
+}
+
+/* ================= INVENTARIO ================= */
+let invQuery = '';
+const CAT_ICO = { ropa: '👕', inst: '🎺', mat: '📦' };
+function renderInv(tab) {
+  const items = DB.inventario.filter(i => i.cat === tab);
+  const units = items.reduce((a, i) => a + (+i.cant || 0), 0);
+  const rep = items.filter(i => i.estado !== 'bien').length;
+  $('#s-body').innerHTML = `
+    <div class="sum">
+      <div class="stat"><small>Artículos</small><b>${items.length}</b></div>
+      <div class="stat"><small>Unidades</small><b>${units}</b></div>
+      <div class="stat"><small>A revisar</small><b class="${rep ? 'neg' : ''}">${rep}</b></div>
+    </div>
+    <input class="search" id="inv-q" placeholder="🔎 Buscar…" value="${esc(invQuery)}">
+    <div class="list" id="inv-list"></div>`;
+  renderInvList();
+}
+function renderInvList() {
+  const q = invQuery.toLowerCase();
+  const items = DB.inventario.filter(i => i.cat === cur.tab && (i.nombre + i.detalle + i.asignado).toLowerCase().includes(q));
+  const pill = e => e === 'bien' ? '<span class="pill ok">Bien</span>' : e === 'reparar' ? '<span class="pill warn">Reparar</span>' : '<span class="pill bad">Falta</span>';
+  $('#inv-list').innerHTML = items.map(i => `
+    <div class="card" data-act="item" data-id="${i.id}" role="button">
+      <div class="ico-box">${CAT_ICO[i.cat]}</div>
+      <div class="info"><h4>${esc(i.nombre)}</h4><p>${esc(i.detalle) || '&nbsp;'}</p>${i.asignado ? `<p>👤 ${esc(i.asignado)}</p>` : ''}</div>
+      <div class="right">${pill(i.estado)}
+        <div class="qty"><button data-act="menos" data-id="${i.id}">−</button><b>${i.cant}</b><button data-act="mas" data-id="${i.id}">+</button></div></div>
+    </div>`).join('') || `<div class="empty"><span>🕸️</span>El armario está vacío aquí.<br>Pulsa + para añadir.</div>`;
+}
+function formInv(i) {
+  openForm({
+    title: i ? 'Editar artículo' : 'Nuevo artículo', data: i || { cat: cur.tab, cant: 1, estado: 'bien' },
+    fields: [
+      { k: 'nombre', l: 'Nombre', req: 1 },
+      [{ k: 'cat', l: 'Categoría', t: 'select', o: [['ropa', 'Ropa'], ['inst', 'Instrumento'], ['mat', 'Material']] }, { k: 'cant', l: 'Cantidad', t: 'number' }],
+      { k: 'detalle', l: 'Detalle (tallas, nº serie…)' },
+      [{ k: 'asignado', l: 'Lo tiene', t: 'select', o: [['', '— Nadie / local']].concat(nombres().map(m => [m, m])) },
+       { k: 'estado', l: 'Estado', t: 'select', o: [['bien', 'Bien'], ['reparar', 'Reparar'], ['falta', 'Falta']] }]
+    ],
+    onSave: v => { v.cant = +v.cant || 0; if (i) Object.assign(i, v); else DB.inventario.push({ id: uid(), ...v }); },
+    onDelete: i && (() => DB.inventario = DB.inventario.filter(x => x !== i))
+  });
+}
+
+/* ================= CAJA FUERTE: BOTE DE LA CHARANGA ================= */
+function movRow(m, act) {
+  return `<div class="card" data-act="${act}" data-id="${m.id}" role="button">
+    <div class="ico-box">${m.importe >= 0 ? '⬆️' : '⬇️'}</div>
+    <div class="info"><h4>${esc(m.concepto)}</h4><p>${fdate(m.fecha)}${tituloBolo(m.bolo) ? ' · 🎺 ' + esc(tituloBolo(m.bolo)) : ''}</p></div>
+    <div class="right"><b class="${m.importe >= 0 ? 'pos' : 'neg'}">${m.importe >= 0 ? '+' : ''}${eur(m.importe)}</b></div></div>`;
+}
+const tituloBolo = id => { const b = DB.bolos.find(x => x.id === id); return b ? nombreBolo(b) : ''; };
+function renderCuentas() {
+  const ap = DB.bote.filter(m => m.importe > 0).reduce((a, m) => a + m.importe, 0);
+  const gas = DB.bote.filter(m => m.importe < 0).reduce((a, m) => a + m.importe, 0);
+  const list = [...DB.bote].sort((a, b) => b.fecha.localeCompare(a.fecha));
+  $('#s-body').innerHTML = `
+    <div class="sum">
+      <div class="stat big" style="grid-column:1/-1"><small>Dinero en el bote</small><b>${eur(totalBote())}</b></div>
+      <div class="stat"><small>Aportaciones</small><b class="pos">${eur(ap)}</b></div>
+      <div class="stat"><small>Gastos</small><b class="neg">${eur(-gas)}</b></div>
+    </div>
+    <h5>Movimientos del bote</h5>
+    <div class="list">${list.map(m => movRow(m, 'botemov')).join('') || '<div class="empty"><span>🫙</span>El bote está vacío.</div>'}</div>`;
+}
+// pre: datos iniciales (p. ej. al cobrar el bote de un bolo); despues: se ejecuta al guardar
+function formBote(m, pre, despues) {
+  openForm({
+    title: m ? 'Editar movimiento del bote' : 'Movimiento del bote',
+    data: m ? { ...m, tipo: m.importe < 0 ? 'gasto' : 'aporte', importe: Math.abs(m.importe) } : (pre || { tipo: 'aporte', fecha: TODAY() }),
+    fields: [
+      { k: 'tipo', l: 'Tipo', t: 'select', o: [['aporte', '🫙 Aportación al bote'], ['gasto', '🍻 Gasto del bote']] },
+      { k: 'concepto', l: 'Concepto', req: 1 },
+      [{ k: 'importe', l: 'Importe (€)', t: 'number', req: 1 }, { k: 'fecha', l: 'Fecha', t: 'date', req: 1 }],
+      { k: 'bolo', l: 'Bolo relacionado (opcional)', t: 'select', o: [['', '— Ninguno']].concat([...DB.bolos].sort((a, b) => b.fecha.localeCompare(a.fecha)).map(b => [b.id, `${fdate(b.fecha)} · ${nombreBolo(b)}`])) }
+    ],
+    onSave: v => {
+      const o = { fecha: v.fecha, concepto: v.concepto, bolo: v.bolo || '', importe: Math.abs(+v.importe) * (v.tipo === 'gasto' ? -1 : 1) };
+      if (m) { Object.assign(m, o); delete m.miembro; } else DB.bote.push({ id: uid(), ...o });
+      if (despues) despues();
+    },
+    onDelete: m && (() => DB.bote = DB.bote.filter(x => x !== m))
+  });
+}
+
+/* ================= AJUSTES Y COPIA DE SEGURIDAD (tocar el logo) ================= */
+function abrirAjustes() {
+  const form = $('#form'), datos = JSON.stringify(DB);
+  form.onclick = null;
+  form.innerHTML = `<div class="det-head"><h3>Ajustes</h3><button type="button" class="x" id="aj-x" aria-label="Cerrar">✕</button></div>
+    ${window.Nube ? Nube.ajustesHtml() : ''}
+    <div class="conv-box"><div class="conv-head"><b>💾 Copia de seguridad</b></div>
+      <p class="conv-tip">Todos los datos (bolos, bote, inventario, banda, repertorio…). Sirve para pasarlos a la app de la charanga o guardarlos aparte.</p>
+      <textarea id="aj-export" rows="3" readonly>${esc(datos)}</textarea>
+      <div class="row" style="margin:0"><button type="button" class="btn" id="aj-copy" style="flex:1">📋 Copiar</button><button type="button" class="btn" id="aj-down" style="flex:1">⬇️ Descargar</button></div>
+    </div>
+    ${esAdmin() ? `<div class="conv-box"><div class="conv-head"><b>📥 Importar datos</b></div>
+      <p class="conv-tip">Pega aquí una copia de seguridad. <b style="color:var(--red)">Sustituye todos los datos actuales.</b></p>
+      <textarea id="aj-import" rows="3" placeholder="Pega la copia aquí…"></textarea>
+      <button type="button" class="btn danger" id="aj-imp">Importar y sustituir</button>
+    </div>` : ''}`;
+  form.onsubmit = e => e.preventDefault();
+  $('#aj-x').onclick = closeForm;
+  $('#aj-copy').onclick = async () => {
+    const t = $('#aj-export'); t.select();
+    try { await navigator.clipboard.writeText(datos); toast('📋 Copiado'); }
+    catch (e) { try { document.execCommand('copy'); toast('📋 Copiado'); } catch (e2) { toast('Selecciona el texto y cópialo'); } }
+  };
+  $('#aj-down').onclick = async () => {
+    // dentro de Claude se descarga con su permiso de descargas; en la app, con un enlace normal
+    try {
+      const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+      if (dl) { await dl.save({ filename: `crocknroll-copia-${TODAY()}.json`, data: datos }); return; }
+    } catch (e) { return toast('Descarga cancelada: usa Copiar'); }
+    try {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([datos], { type: 'application/json' }));
+      a.download = `crocknroll-copia-${TODAY()}.json`; document.body.appendChild(a); a.click(); a.remove();
+    } catch (e) { toast('No se pudo descargar: usa Copiar'); }
+  };
+  if ($('#aj-imp')) $('#aj-imp').onclick = async ev => {
+    let d; try { d = JSON.parse($('#aj-import').value); } catch (e) { return toast('⚠️ El texto no es una copia válida'); }
+    if (!d || !Array.isArray(d.bolos) || !Array.isArray(d.miembros)) return toast('⚠️ El texto no es una copia válida');
+    const btn = ev.currentTarget;
+    if (!btn.dataset.sure) { btn.dataset.sure = 1; btn.textContent = '¿Seguro? Se sustituye todo'; return; }
+    btn.disabled = true; btn.textContent = 'Importando…';
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {}
+    if (window.Nube) { try { await Nube.reemplazarTodo(d); } catch (e) { toast('⚠️ No se pudo subir a la nube'); btn.disabled = false; return; } }
+    location.reload();
+  };
+  if (window.Nube) Nube.ajustesBind(form);
+  $('#modal').classList.add('show');
+}
+$('#brand').addEventListener('click', abrirAjustes);
+
+/* ================= FORMULARIO GENÉRICO ================= */
+function fieldHtml(f, data) {
+  if (f.t === 'hm') { // hora en dos desplegables: horas y minutos (00, 15, 30, 45)
+    const [h, m] = String(data[f.k] || '').split(':');
+    const mins = ['00', '15', '30', '45'].concat(m && !['00', '15', '30', '45'].includes(m) ? [m] : []);
+    const opt = (val, lab, cur) => `<option value="${val}" ${val === (cur || '') ? 'selected' : ''}>${lab}</option>`;
+    return `<div class="fld"><span>${f.l}</span><div class="hm">
+      <select name="${f.k}__h" aria-label="${f.l}: horas">${opt('', '—', h)}${Array.from({ length: 24 }, (_, i) => opt(z(i), z(i), h)).join('')}</select>
+      <b>:</b>
+      <select name="${f.k}__m" aria-label="${f.l}: minutos">${h ? '' : opt('', '—', m)}${mins.map(x => opt(x, x, h ? (m || '00') : m)).join('')}</select>
+    </div></div>`;
+  }
+  if (f.t === 'checks') {
+    const sel = data[f.k] || [];
+    return `<div class="fld"><span>${f.l}</span><div class="checks">${f.o.map(([val, lab]) =>
+      `<label><input type="checkbox" name="${f.k}" value="${esc(val)}" ${sel.includes(val) ? 'checked' : ''}>${esc(lab)}</label>`).join('')
+      || '<p style="color:var(--muted);margin:6px">No hay bolos todavía.</p>'}</div></div>`;
+  }
+  const v = esc(data[f.k] ?? '');
+  const req = f.req ? 'required' : '';
+  let input;
+  if (f.t === 'select') input = `<select name="${f.k}">${f.o.map(([val, lab]) => `<option value="${esc(val)}" ${String(data[f.k] ?? '') === String(val) ? 'selected' : ''}>${esc(lab)}</option>`).join('')}</select>`;
+  else if (f.t === 'textarea') input = `<textarea name="${f.k}" rows="2">${v}</textarea>`;
+  else input = `<input name="${f.k}" type="${f.t || 'text'}" value="${v}" ${f.t === 'number' ? 'step="any" inputmode="decimal"' : ''} ${req}>`;
+  return `<label>${f.l}${input}</label>`;
+}
+function openForm({ title, fields, data, onSave, onDelete, libre }) {
+  if (!libre && !esAdmin()) return toast('Solo la directiva puede editar');
+  $('#form').onclick = null;
+  const form = $('#form');
+  form.innerHTML = `<h3>${title}</h3>` +
+    fields.map(f => Array.isArray(f) ? `<div class="grid2">${f.map(x => fieldHtml(x, data)).join('')}</div>` : fieldHtml(f, data)).join('') +
+    `<div class="row">${onDelete ? '<button type="button" class="btn danger" id="f-del">🗑️</button>' : ''}<span style="flex:1"></span>
+     <button type="button" class="btn" id="f-cancel">Cancelar</button><button class="btn primary">Guardar</button></div>`;
+  form.onsubmit = e => {
+    e.preventDefault();
+    const fd = new FormData(form), v = Object.fromEntries(fd);
+    fields.flat().forEach(f => {
+      if (f.t === 'checks') v[f.k] = fd.getAll(f.k);
+      if (f.t === 'hm') { const h = v[f.k + '__h'], m = v[f.k + '__m'] || '00'; v[f.k] = h ? `${h}:${m}` : ''; delete v[f.k + '__h']; delete v[f.k + '__m']; }
+    });
+    onSave(v); save(); closeForm(); rerender(); toast('✅ Guardado');
+  };
+  $('#f-cancel').onclick = closeForm;
+  if (onDelete) $('#f-del').onclick = e => {
+    const b = e.currentTarget;
+    if (!b.dataset.sure) { b.dataset.sure = 1; b.textContent = '¿Seguro?'; return; }
+    onDelete(); save(); closeForm(); rerender(); toast('🗑️ Eliminado');
+  };
+  $('#modal').classList.add('show');
+}
+function closeForm() { $('#modal').classList.remove('show'); }
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeForm(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#modal').classList.contains('show')) closeForm(); else if (cur.sec) closeSection(); } });
+
+// las etiquetas se ocultan tras unos segundos para dejar ver la escena; vuelven al tocar el fondo
+let tagTimer;
+function showTags() { $('#viewport').classList.remove('hide-tags'); clearTimeout(tagTimer); tagTimer = setTimeout(() => $('#viewport').classList.add('hide-tags'), 6000); }
+$('#viewport').addEventListener('click', e => { if (!e.target.closest('.hs')) showTags(); });
+showTags();
+
+refreshHud();
+// si la imagen ya estaba cargada antes de llegar aquí, se ajusta ahora
+if (img.complete && img.naturalWidth) img.onload();
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="nube.js"></script>
+<script>
+// app instalable: guarda la app en el móvil para que abra rápido y sin conexión
+if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW', e)));
+</script>
+</body>
+</html>
