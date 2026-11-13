@@ -151,6 +151,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .fld>span{display:block;font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
 .checks{max-height:210px;overflow:auto;border:1px solid #3a2d5c;border-radius:12px;padding:4px;margin-top:4px;background:#120d1f}
 .checks label{display:flex;gap:10px;align-items:center;margin:0;padding:8px 6px;font-size:14px;text-transform:none;letter-spacing:0;color:var(--text);font-weight:600}
+.tags{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px;padding:8px;border-radius:12px;border:1px solid #3a2d5c;background:#120d1f;min-height:48px;cursor:text}
+.tags:focus-within{outline:2px solid var(--green);border-color:transparent}
+.tagx{display:inline-flex;align-items:center;gap:4px;padding:5px 6px 5px 11px;border-radius:999px;background:rgba(163,230,53,.15);border:1px solid rgba(163,230,53,.45);color:var(--green);font-size:14px;font-weight:800;text-transform:none;letter-spacing:0}
+.tagx button{width:22px;height:22px;border-radius:50%;border:0;background:rgba(163,230,53,.2);color:var(--green);font-size:15px;line-height:1;display:grid;place-items:center;padding:0}
+.tags .tag-in{flex:1;min-width:150px;margin:0;padding:6px 4px;border:0;background:transparent;outline:none!important;font-size:16px}
 .checks input{width:18px;height:18px;margin:0;display:inline-block;accent-color:var(--green);flex:none}
 
 /* botón de música */
@@ -364,6 +369,7 @@ body.in-menu .hud,body.in-menu .hint{opacity:0;pointer-events:none}
 .date small{color:var(--orange);font-weight:800;font-size:11px;text-transform:uppercase}
 .info{flex:1;min-width:0}
 .info h4{margin:0 0 2px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info p.wrap{white-space:normal}
 .info p{margin:0;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .right{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .right b{font-size:15px}
@@ -1245,7 +1251,7 @@ function formRedes() {
 /* ================= MIEMBROS (póster) ================= */
 const avatarColor = s => `hsl(${[...s].reduce((a, c) => a + c.charCodeAt(0), 0) * 37 % 360} 70% 65%)`;
 function renderMiembros() {
-  const inst = new Set(DB.miembros.map(m => (m.instrumento || '').toLowerCase()).filter(Boolean)).size;
+  const inst = new Set(DB.miembros.flatMap(m => instrumentosDe(m).map(i => i.toLowerCase()))).size;
   $('#s-body').innerHTML = `
     <div class="sum">
       <div class="stat"><small>Miembros</small><b>${DB.miembros.length}</b></div>
@@ -1256,16 +1262,23 @@ function renderMiembros() {
       const tel = (m.telefono || '').replace(/\D/g, ''), wa = tel.length === 9 ? '34' + tel : tel;
       return `<div class="card" data-act="miembro" data-id="${m.id}" role="button">
         <div class="avatar" style="background:${avatarColor(m.nombre)}">${esc((m.nombre || '?')[0])}</div>
-        <div class="info"><h4>${esc(m.nombre)}</h4><p>🎵 ${esc(m.instrumento) || '—'}</p><p>🎒 ${items} cosas</p></div>
+        <div class="info"><h4>${esc(m.nombre)}</h4><p class="wrap">🎵 ${esc(instrumentosDe(m).join(' · ')) || '—'}</p><p>🎒 ${items} cosas</p></div>
         <div class="right acts">${tel ? `<a href="tel:${tel}" aria-label="Llamar">📞</a><a href="https://wa.me/${wa}" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>` : '<span class="pill">Sin tlf</span>'}</div>
       </div>`;
     }).join('') || '<div class="empty"><span>🐸</span>Aún no hay nadie en la banda.</div>'}</div>`;
 }
+// un músico puede tocar varios instrumentos: se guardan en "instrumentos" (lista) y en "instrumento" (texto para mostrar)
+const INSTRUMENTOS = ['Trompeta', 'Trombón', 'Saxo alto', 'Saxo tenor', 'Clarinete', 'Tuba', 'Bombardino', 'Bombo', 'Caja', 'Platos', 'Percusión', 'Voz'];
+const instrumentosDe = m => Array.isArray(m.instrumentos) ? m.instrumentos : (m.instrumento ? String(m.instrumento).split(/\s*[,·/]\s*|\s+y\s+/).filter(Boolean) : []);
 function formMiembro(m) {
   openForm({
-    title: m ? 'Editar miembro' : 'Nuevo miembro', data: m || {},
-    fields: [{ k: 'nombre', l: 'Nombre', req: 1 }, [{ k: 'instrumento', l: 'Instrumento' }, { k: 'telefono', l: 'Teléfono', t: 'tel' }], { k: 'notas', l: 'Notas (talla, alergias…)', t: 'textarea' }],
+    title: m ? 'Editar miembro' : 'Nuevo miembro',
+    data: m ? { ...m, instrumentos: instrumentosDe(m) } : { instrumentos: [] },
+    fields: [{ k: 'nombre', l: 'Nombre', req: 1 }, { k: 'telefono', l: 'Teléfono', t: 'tel' },
+      { k: 'instrumentos', l: 'Instrumentos', t: 'tags', sug: INSTRUMENTOS, ph: 'Escribe un instrumento y pulsa Intro' },
+      { k: 'notas', l: 'Notas (talla, alergias…)', t: 'textarea' }],
     onSave: v => {
+      v.instrumento = (v.instrumentos || []).join(' · ');
       if (m) {
         if (m.nombre !== v.nombre) // renombrar también en el inventario
           DB.inventario.forEach(i => { if (i.asignado === m.nombre) i.asignado = v.nombre; });
@@ -1445,6 +1458,13 @@ $('#brand').addEventListener('click', abrirAjustes);
 
 /* ================= FORMULARIO GENÉRICO ================= */
 function fieldHtml(f, data) {
+  if (f.t === 'tags') { // etiquetas: se escribe y se añade con Intro (o coma); la × la quita
+    const vals = Array.isArray(data[f.k]) ? data[f.k] : [];
+    return `<div class="fld"><span>${f.l}</span><div class="tags" data-tags="${f.k}">
+      ${vals.map(t => `<span class="tagx" data-v="${esc(t)}">${esc(t)}<button type="button" aria-label="Quitar ${esc(t)}">×</button></span>`).join('')}
+      <input class="tag-in" list="dl-${f.k}" placeholder="${esc(f.ph || 'Escribe y pulsa Intro')}" enterkeyhint="done" autocomplete="off">
+      </div>${f.sug ? `<datalist id="dl-${f.k}">${f.sug.map(x => `<option value="${esc(x)}">`).join('')}</datalist>` : ''}</div>`;
+  }
   if (f.t === 'colores') { // muestrario de colores (radio)
     return `<div class="fld"><span>${f.l}</span><div class="swatches">${f.o.map(([val, lab]) =>
       `<label class="sw" title="${lab}"><input type="radio" name="${f.k}" value="${val}" ${data[f.k] === val ? 'checked' : ''} aria-label="${lab}"><i style="background:${val}"></i></label>`).join('')}</div></div>`;
@@ -1461,7 +1481,7 @@ function fieldHtml(f, data) {
   }
   if (f.t === 'checks') {
     const sel = data[f.k] || [];
-    return `<div class="fld"><span>${f.l}</span><div class="checks">${f.o.map(([val, lab]) =>
+    return `<div class="fld"><span>${f.l}</span><div class="checks ${f.cls || ''}">${f.o.map(([val, lab]) =>
       `<label><input type="checkbox" name="${f.k}" value="${esc(val)}" ${sel.includes(val) ? 'checked' : ''}>${esc(lab)}</label>`).join('')
       || '<p style="color:var(--muted);margin:6px">No hay bolos todavía.</p>'}</div></div>`;
   }
@@ -1473,6 +1493,26 @@ function fieldHtml(f, data) {
   else input = `<input name="${f.k}" type="${f.t || 'text'}" value="${v}" ${f.t === 'number' ? 'step="any" inputmode="decimal"' : ''} ${req}>`;
   return `<label>${f.l}${input}</label>`;
 }
+// comportamiento del campo de etiquetas
+function prepararTags(box) {
+  const inp = box.querySelector('.tag-in');
+  const nueva = txt => {
+    txt.split(',').map(x => x.trim()).filter(Boolean).forEach(t => {
+      t = t.charAt(0).toUpperCase() + t.slice(1);
+      if ([...box.querySelectorAll('.tagx')].some(x => x.dataset.v.toLowerCase() === t.toLowerCase())) return;
+      const el = document.createElement('span'); el.className = 'tagx'; el.dataset.v = t;
+      el.textContent = t; const b = document.createElement('button'); b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'Quitar ' + t);
+      el.appendChild(b); box.insertBefore(el, inp);
+    });
+    inp.value = '';
+  };
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); nueva(inp.value); }
+    else if (e.key === 'Backspace' && !inp.value) { const ult = [...box.querySelectorAll('.tagx')].pop(); if (ult) ult.remove(); }
+  });
+  inp.addEventListener('change', () => { if (inp.value.trim()) nueva(inp.value); }); // al elegir una sugerencia
+  box.addEventListener('click', e => { const b = e.target.closest('.tagx button'); if (b) b.parentElement.remove(); else inp.focus(); });
+}
 function openForm({ title, fields, data, onSave, onDelete, libre }) {
   if (!libre && !esAdmin()) return toast('Solo la directiva puede editar');
   $('#form').onclick = null;
@@ -1481,11 +1521,18 @@ function openForm({ title, fields, data, onSave, onDelete, libre }) {
     fields.map(f => Array.isArray(f) ? `<div class="grid2">${f.map(x => fieldHtml(x, data)).join('')}</div>` : fieldHtml(f, data)).join('') +
     `<div class="row">${onDelete ? '<button type="button" class="btn danger" id="f-del">🗑️</button>' : ''}<span style="flex:1"></span>
      <button type="button" class="btn" id="f-cancel">Cancelar</button><button class="btn primary">Guardar</button></div>`;
+  form.querySelectorAll('.tags').forEach(prepararTags);
   form.onsubmit = e => {
     e.preventDefault();
     const fd = new FormData(form), v = Object.fromEntries(fd);
     fields.flat().forEach(f => {
       if (f.t === 'checks') v[f.k] = fd.getAll(f.k);
+      if (f.t === 'tags') {
+        const box = form.querySelector(`[data-tags="${f.k}"]`), pendiente = box.querySelector('.tag-in').value.trim();
+        const vals = [...box.querySelectorAll('.tagx')].map(t => t.dataset.v);
+        if (pendiente) vals.push(...pendiente.split(',').map(x => x.trim()).filter(Boolean)); // lo escrito sin pulsar Intro también cuenta
+        v[f.k] = [...new Set(vals)];
+      }
       if (f.t === 'hm') { const h = v[f.k + '__h'], m = v[f.k + '__m'] || '00'; v[f.k] = h ? `${h}:${m}` : ''; delete v[f.k + '__h']; delete v[f.k + '__m']; }
     });
     onSave(v); save(); closeForm(); rerender(); toast('✅ Guardado');
