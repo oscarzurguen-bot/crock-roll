@@ -27,10 +27,10 @@ El plan gratuito (Spark) sobra para una charanga.
 
 ## 2. Publicarla en GitHub Pages
 
-1. En GitHub crea un repositorio **público** nuevo, por ejemplo `crock-roll`.
+1. En GitHub crea un repositorio **público** nuevo, por ejemplo `crocknroll`.
 2. *Add file* → *Upload files* → arrastra **todo el contenido** de esta carpeta (incluida la carpeta `icons` y el archivo `.nojekyll`) → *Commit changes*.
 3. *Settings* → *Pages* → *Build and deployment* → *Deploy from a branch* → rama `main`, carpeta `/ (root)` → Save.
-4. En un par de minutos estará en `https://oscarzurguen-bot.github.io/crock-roll/`.
+4. En un par de minutos estará en `https://oscarzurguen-bot.github.io/crocknroll/`.
 5. En Firebase → **Authentication** → *Configuración* → *Dominios autorizados* → *Añadir dominio* → `oscarzurguen-bot.github.io`.
 
 ## 3. Primer arranque (directiva)
