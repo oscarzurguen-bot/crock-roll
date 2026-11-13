@@ -11,7 +11,20 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Crock&amp;Roll">
-<script src="firebase-config.js"></script>
+<script>
+/* Configuración de Firebase de la charanga (proyecto crockandroll-3261a).
+   Estos datos no son secretos (van en cualquier web que use Firebase); lo que protege la base de datos son las reglas.
+   Si se deja vacía, la app funciona en MODO LOCAL: los datos solo se guardan en el dispositivo y no hay inicio de sesión. */
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBcg063fH-CNQvd0R-r2ztmnwv1Vo3CTYk",
+  authDomain: "crockandroll-3261a.firebaseapp.com",
+  projectId: "crockandroll-3261a",
+  storageBucket: "crockandroll-3261a.firebasestorage.app",
+  messagingSenderId: "382221837129",
+  appId: "1:382221837129:web:57ac5e9607e743e0f47098",
+  measurementId: "G-GL4BKXZY02"
+};
+</script>
 <meta name="theme-color" content="#120d1f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
@@ -42,14 +55,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes breathe{0%,100%{opacity:.45}50%{opacity:1}}
 
 .glow{border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%)}
-.lamp{left:49.9%;top:8.1%;width:70%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,190,110,.38) 0%,rgba(255,160,80,.12) 35%,transparent 65%);animation:flicker 4s infinite}
-.cone{left:27.4%;top:8.3%;width:45%;height:40%;mix-blend-mode:screen;clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);
+.lamp{left:49.6%;top:8.1%;width:70%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,190,110,.38) 0%,rgba(255,160,80,.12) 35%,transparent 65%);animation:flicker 4s infinite}
+.cone{left:27.1%;top:8.3%;width:45%;height:40%;mix-blend-mode:screen;clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);
   background:linear-gradient(rgba(255,190,120,.16),transparent 85%);animation:breathe 5s ease-in-out infinite}
-.globe{left:19.1%;top:27.1%;width:22%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,215,130,.75) 0%,rgba(255,170,80,.2) 40%,transparent 70%);animation:pulse 3.2s ease-in-out infinite}
+.globe{left:19.6%;top:26.7%;width:22%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,215,130,.75) 0%,rgba(255,170,80,.2) 40%,transparent 70%);animation:pulse 3.2s ease-in-out infinite}
 @keyframes flicker{0%,100%{opacity:1}45%{opacity:.85}48%{opacity:.6}50%{opacity:.95}70%{opacity:.88}}
 @keyframes pulse{0%,100%{opacity:.65;transform:translate(-50%,-50%) scale(.92)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
 
-.screen{left:27.4%;top:45%;width:23.8%;height:8.1%;mix-blend-mode:soft-light;border-radius:2px;
+.screen{left:26.9%;top:45.3%;width:24.1%;height:7.8%;mix-blend-mode:soft-light;border-radius:2px;
   background:linear-gradient(180deg,rgba(255,120,200,.5),rgba(255,200,90,.4),rgba(90,60,200,.5));background-size:100% 300%;animation:sky 9s ease-in-out infinite}
 @keyframes sky{0%,100%{background-position:0 0}50%{background-position:0 100%}}
 
@@ -76,21 +89,23 @@ button{font:inherit;color:inherit;cursor:pointer}
   display:grid;place-items:center;border:2px solid #2a0f14;box-shadow:0 0 10px rgba(255,93,110,.7);animation:pop 1.8s ease-in-out infinite}
 @keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 
-#hs-pc{left:26.4%;top:44.6%;width:25.6%;height:9.1%}
-#hs-safe{left:54.7%;top:45.2%;width:17.3%;height:10.2%}
-#hs-armario{left:79.8%;top:17.4%;width:20.2%;height:52.7%}
-#hs-armario .tag{top:30%;left:35%}
-#hs-cal{left:32.3%;top:20.2%;width:19%;height:13.4%}
-#hs-poster{left:54%;top:18.4%;width:22.9%;height:15.1%}
-#hs-rep{left:7.6%;top:11.3%;width:15.2%;height:7.1%}
-#hs-phone{left:82.3%;top:84.8%;width:11.8%;height:2.6%}
+#hs-pc{left:25.9%;top:44.7%;width:25.7%;height:9.1%}
+#hs-safe{left:54.6%;top:45.3%;width:17.2%;height:10.2%}
+#hs-armario{left:79.7%;top:16.7%;width:20.3%;height:53.8%}
+#hs-armario .tag{top:30%;left:12%}
+/* en el móvil la imagen llena la pantalla y se recortan un poco los lados: las etiquetas de los bordes se meten hacia dentro */
+#hs-rep .tag{left:80%}
+#hs-cal{left:32.1%;top:20.6%;width:19.8%;height:13.9%}
+#hs-poster{left:54%;top:19.3%;width:23.4%;height:16%}
+#hs-rep{left:7.7%;top:11.8%;width:14.9%;height:6.7%}
+#hs-phone{left:79.3%;top:83.1%;width:11.5%;height:2.5%}
 #hs-phone .tag{top:-40%}
 
 /* móvil de la cama: la pantalla se enciende con notificaciones */
-.phone-glow{left:88.1%;top:86.1%;width:13%;height:3.5%;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%);
+.phone-glow{left:85%;top:84.4%;width:13%;height:3.5%;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%);
   background:radial-gradient(ellipse,rgba(170,140,255,.9) 0%,rgba(120,90,255,.35) 40%,transparent 70%);opacity:0;animation:notif 7s ease-in-out infinite}
 @keyframes notif{0%,62%,100%{opacity:0}66%{opacity:1}88%{opacity:.85}}
-.phone-pop{left:88.1%;top:84.4%;font-size:clamp(12px,3.5vw,18px);transform:translate(-50%,0);opacity:0;animation:pop-heart 7s ease-out infinite}
+.phone-pop{left:85%;top:82.8%;font-size:clamp(12px,3.5vw,18px);transform:translate(-50%,0);opacity:0;animation:pop-heart 7s ease-out infinite}
 @keyframes pop-heart{0%,64%{opacity:0;transform:translate(-50%,0) scale(.4)}68%{opacity:1;transform:translate(-50%,-40%) scale(1.1)}85%{opacity:1;transform:translate(-50%,-140%) scale(1)}92%,100%{opacity:0;transform:translate(-50%,-200%) scale(.9)}}
 
 /* redes sociales */
@@ -107,7 +122,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 
 /* cuadro del mapa en la pared */
-#hs-mapa{left:9.4%;top:32.8%;width:22.1%;height:10.7%}
+#hs-mapa{left:10.2%;top:33.9%;width:21.8%;height:10.2%}
 
 /* página del mapa */
 .map-search{display:flex;gap:6px;margin-bottom:10px}
@@ -296,9 +311,9 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .acts a{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#120d1f;border:1px solid var(--line);text-decoration:none;font-size:16px}
 
 /* caja fuerte: piloto del teclado parpadeando + destello dorado al abrir */
-.safe-led{left:66.2%;top:49.5%;width:1.1%;aspect-ratio:1;border-radius:50%;background:#7dff5a;box-shadow:0 0 6px 2px rgba(125,255,90,.8);transform:translate(-50%,-50%);animation:led 2.2s steps(1) infinite}
+.safe-led{left:66.2%;top:49.6%;width:1.1%;aspect-ratio:1;border-radius:50%;background:#7dff5a;box-shadow:0 0 6px 2px rgba(125,255,90,.8);transform:translate(-50%,-50%);animation:led 2.2s steps(1) infinite}
 @keyframes led{0%,60%{opacity:1}61%,100%{opacity:.15}}
-.safe-glow{left:63.3%;top:50.3%;width:45%;aspect-ratio:1;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%) scale(.3);opacity:0;
+.safe-glow{left:63.2%;top:50.4%;width:45%;aspect-ratio:1;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%) scale(.3);opacity:0;
   background:radial-gradient(circle,rgba(255,225,120,.9) 0%,rgba(255,180,60,.35) 35%,transparent 65%);transition:opacity .4s,transform .5s cubic-bezier(.3,1.5,.5,1)}
 #stage.safe-open .safe-glow{opacity:1;transform:translate(-50%,-50%) scale(1)}
 #stage.safe-open .safe-led{background:#ffd34d;box-shadow:0 0 8px 3px rgba(255,211,77,.9);animation:none}
@@ -314,6 +329,7 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .hint{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:5;background:rgba(18,13,31,.75);border:1px solid var(--line);
   padding:7px 14px;border-radius:20px;font-size:13px;color:var(--muted);white-space:nowrap;transition:opacity .3s;backdrop-filter:blur(4px)}
 body.in-menu .hud,body.in-menu .hint{opacity:0;pointer-events:none}
+@media (max-width:380px){.hud{gap:6px;padding-left:10px;padding-right:10px}.chip{padding:5px 8px;font-size:12px;gap:3px}.logo{width:32px;height:32px;font-size:18px}.brand b{font-size:17px}}
 
 /* ---------- PANEL (bottom sheet) ---------- */
 .sheet{position:fixed;left:50%;bottom:0;z-index:10;width:min(100%,520px);height:88%;transform:translate(-50%,105%);transition:transform .45s cubic-bezier(.2,.9,.3,1);
@@ -568,12 +584,15 @@ function refreshHud() {
 
 /* ================= ESCENA ================= */
 const stage = $('#stage'), img = $('#room');
-let IW = 942, IH = 1670;
+let IW = 941, IH = 1672;
+// en vertical (móvil) la imagen llena toda la pantalla, recortando un poco los lados si hace falta;
+// en horizontal (ordenador) se ve entera, centrada
 function layout() {
-  const W = innerWidth, H = innerHeight;
-  const s = Math.min(W / IW, H / IH);
+  const W = innerWidth, H = innerHeight, vertical = H >= W;
+  const s = vertical ? Math.max(W / IW, H / IH) : Math.min(W / IW, H / IH);
   const w = IW * s, h = IH * s;
-  Object.assign(stage.style, { width: w + 'px', height: h + 'px', left: (W - w) / 2 + 'px', top: Math.max(0, (H - h) / 2) + 'px' });
+  Object.assign(stage.style, { width: w + 'px', height: h + 'px', left: (W - w) / 2 + 'px', top: (H - h) / 2 + 'px' });
+  img.style.borderRadius = vertical ? '0' : '';
 }
 img.onload = () => { IW = img.naturalWidth; IH = img.naturalHeight; layout(); };
 
@@ -600,8 +619,8 @@ function spawnNote() {
   const n = document.createElement('span');
   n.className = 'note';
   n.textContent = ['♪', '♫', '♬', '♩'][Math.random() * 4 | 0];
-  n.style.left = (71 + Math.random() * 3) + '%';
-  n.style.top = (65.5 + Math.random() * 2) + '%';
+  n.style.left = (73 + Math.random() * 3) + '%';
+  n.style.top = (66 + Math.random() * 2) + '%';
   n.style.setProperty('--nx', (Math.random() * 50 - 40) + 'px');
   n.style.setProperty('--nr', (Math.random() * 60 - 30) + 'deg');
   $('#notes').appendChild(n);
