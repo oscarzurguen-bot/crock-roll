@@ -1,4 +1,5 @@
 /* Configuración de Firebase de la charanga (proyecto crockandroll-3261a).
+   OJO: la app ya lleva esta configuración copiada dentro de index.html; este archivo queda solo como referencia.
    Estos datos no son secretos (van en cualquier web que use Firebase); lo que protege la base de datos son las reglas.
    Si se deja vacía, la app funciona en MODO LOCAL: los datos solo se guardan en el dispositivo y no hay inicio de sesión. */
 window.FIREBASE_CONFIG = {

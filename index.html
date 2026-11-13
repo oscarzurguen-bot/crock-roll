@@ -268,6 +268,30 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .polaroid b{font-family:Bangers,cursive;font-weight:400;font-size:24px;letter-spacing:.5px;color:#2a2018}
 .polaroid span{font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+/* repertorio: carpetas grandes de colores */
+.carpetas{display:grid;grid-template-columns:1fr 1fr;gap:32px 30px;padding:20px 28px 0}
+.carpeta{position:relative;aspect-ratio:1.3;border:0;border-radius:4px 16px 16px 16px;padding:14px;text-align:left;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--c) 92%,#fff),color-mix(in srgb,var(--c) 72%,#000));color:#14200a;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 45%,#000),0 8px 18px rgba(0,0,0,.35)}
+.carpeta::before{content:"";position:absolute;left:0;top:-9px;width:46%;height:14px;border-radius:8px 10px 0 0;background:color-mix(in srgb,var(--c) 80%,#000)}
+.carpeta::after{content:"";position:absolute;left:10px;right:10px;top:10px;height:28%;border-radius:8px;background:rgba(255,255,255,.18)}
+.carpeta b{position:relative;font-family:Bangers,cursive;font-weight:400;font-size:19px;letter-spacing:.8px;line-height:1.05;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.carpeta small{position:relative;font-size:12px;font-weight:800;opacity:.75}
+.carpeta-n{position:absolute;right:10px;top:10px;z-index:1;min-width:26px;height:26px;padding:0 8px;border-radius:15px;display:grid;place-items:center;background:rgba(20,32,10,.82);color:#fff;font-weight:800;font-size:13px}
+.carpeta:active{transform:translateY(3px)}
+.carpeta.nueva{background:transparent;border:2px dashed rgba(255,255,255,.18);color:var(--muted);box-shadow:none;align-items:center;justify-content:center}
+.carpeta.nueva::before,.carpeta.nueva::after{display:none}
+.carpeta.nueva b{font-family:Nunito,sans-serif;font-size:34px}
+.rep-head{display:flex;align-items:center;gap:10px;margin:2px 0 12px;padding:8px 10px;border-radius:14px;background:color-mix(in srgb,var(--c) 18%,var(--panel2));border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
+.rep-head h4{flex:1;margin:0;font-family:Bangers,cursive;font-weight:400;font-size:24px;letter-spacing:1px;color:var(--c)}
+.tag-carpeta{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px;
+  color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent);border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.sw{margin:0;cursor:pointer;position:relative}
+.sw input{position:absolute;opacity:0;width:0;height:0}
+.sw i{display:block;width:38px;height:38px;border-radius:12px;border:3px solid transparent;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25)}
+.sw input:checked+i{border-color:#fff;box-shadow:0 0 0 2px #14200a,0 0 12px rgba(255,255,255,.35)}
+.sw input:focus-visible+i{outline:2px solid var(--green);outline-offset:2px}
+
 /* miembros */
 .avatar{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:19px;color:#14200a;border:2px solid #14200a}
 .right.acts{flex-direction:row}
@@ -675,7 +699,8 @@ const SECTIONS = {
   inv:     { title: 'Inventario', ico: '🚪', spot: '#hs-armario', tabs: [['ropa', '👕 Ropa'], ['inst', '🎺 Instrum.'], ['mat', '📦 Material']], render: renderInv, add: () => formInv() },
   cuentas: { title: 'Caja fuerte', ico: '💰', spot: '#hs-safe', tabs: [], render: renderCuentas, add: () => formBote() },
   cal:     { title: 'Calendario', ico: '📅', spot: '#hs-cal', tabs: [], render: renderCal, add: () => formBolo(null, calSel || undefined) },
-  repertorio:{ title: 'Repertorio', ico: '🎼', spot: '#hs-rep', tabs: [], render: renderRep, add: () => formCancion() },
+  repertorio:{ title: 'Repertorio', ico: '🎼', spot: '#hs-rep', tabs: [['todas', 'Todas'], ['carpetas', 'Carpetas']], render: renderRep,
+    add: () => cur.tab === 'carpetas' && !repFolder ? formCarpeta() : formCancion() },
   miembros:{ title: 'La banda', ico: '🎸', spot: '#hs-poster', tabs: [], render: renderMiembros, add: () => formMiembro() },
   redes:   { title: 'Redes sociales', ico: '📱', spot: '#hs-phone', tabs: [], render: renderRedes, add: null },
   stats:   { title: 'Estadísticas', ico: '📊', spot: '#hs-mapa', tabs: [], render: renderStats, add: null }
@@ -688,6 +713,7 @@ function openSection(key) {
   const S = SECTIONS[key]; if (!S) return;
   cur = { sec: key, tab: S.tabs.length ? S.tabs[0][0] : null };
   if (key === 'cal') calSel = null;
+  if (key === 'repertorio') { repFolder = null; repQuery = ''; }
   const spot = $(S.spot), r = spot.getBoundingClientRect(), sr = stage.getBoundingClientRect();
   stage.style.transformOrigin = `${r.left - sr.left + r.width / 2}px ${r.top - sr.top + r.height / 2}px`;
   stage.style.transform = 'scale(1.9)';
@@ -718,7 +744,7 @@ function renderTabs() {
 }
 $('#s-tabs').addEventListener('click', e => {
   const b = e.target.closest('[data-tab]'); if (!b) return;
-  cur.tab = b.dataset.tab; renderTabs(); rerender();
+  cur.tab = b.dataset.tab; repFolder = null; repQuery = ''; renderTabs(); rerender();
 });
 const rerender = () => cur.sec && SECTIONS[cur.sec].render(cur.tab);
 
@@ -736,7 +762,8 @@ $('#s-body').addEventListener('click', e => {
   if (a.dataset.act === 'calprox') { calSel = null; return rerender(); }
   if (a.dataset.act === 'miembro') return formMiembro(DB.miembros.find(x => x.id === a.dataset.id));
   if (a.dataset.act === 'redesedit') return formRedes();
-  if (a.dataset.act === 'repfolder') { repFolder = a.dataset.id; return rerender(); }
+  if (a.dataset.act === 'repfolder') { repFolder = a.dataset.id; repQuery = ''; return rerender(); }
+  if (a.dataset.act === 'repback') { repFolder = null; repQuery = ''; return rerender(); }
   if (a.dataset.act === 'repnewfolder') return formCarpeta();
   if (a.dataset.act === 'repeditfolder') return formCarpeta(DB.repertorio.carpetas.find(x => x.id === repFolder));
   if (a.dataset.act === 'cancion') return formCancion(DB.repertorio.canciones.find(x => x.id === a.dataset.id));
@@ -1095,54 +1122,59 @@ async function pintarMapaStats(pueblos) {
 }
 
 /* ================= REPERTORIO (libros de la estantería) ================= */
-let repFolder = 'all', repQuery = '';
+// dos vistas: "Todas" (lista alfabética con buscador) y "Carpetas" (cuadrícula de carpetas grandes de colores)
+const COLORES_CARPETA = [['#a3e635', 'Verde'], ['#ffa245', 'Naranja'], ['#4fc3ff', 'Azul'], ['#ff5d6e', 'Rojo'], ['#b794f6', 'Morado'], ['#f3c14b', 'Amarillo'], ['#f472b6', 'Rosa'], ['#2dd4bf', 'Turquesa']];
+let repFolder = null, repQuery = '';
 const ICON_SONG = '<svg viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
-const nombreCarpeta = id => (DB.repertorio.carpetas.find(c => c.id === id) || {}).nombre || '';
-function renderRep() {
+const carpetaDe = id => DB.repertorio.carpetas.find(c => c.id === id);
+const nombreCarpeta = id => (carpetaDe(id) || {}).nombre || '';
+const colorCarpeta = c => (c && c.color) || COLORES_CARPETA[Math.max(0, DB.repertorio.carpetas.indexOf(c)) % COLORES_CARPETA.length][0];
+function renderRep(tab) {
   const R = DB.repertorio;
-  if (repFolder !== 'all' && repFolder !== 'none' && !R.carpetas.some(c => c.id === repFolder)) repFolder = 'all';
-  const cnt = id => R.canciones.filter(s => id === 'none' ? !nombreCarpeta(s.carpeta) : s.carpeta === id).length;
-  const sinCarpeta = cnt('none');
-  const chip = (id, label, n) => `<button class="folder ${repFolder === id ? 'on' : ''}" data-act="repfolder" data-id="${id}">${esc(label)} <i>${n}</i></button>`;
-  const actual = repFolder === 'all' ? 'Todas las canciones' : repFolder === 'none' ? 'Sin carpeta' : nombreCarpeta(repFolder);
-  $('#s-body').innerHTML = `
-    <div class="sum">
-      <div class="stat"><small>Canciones</small><b>${R.canciones.length}</b></div>
-      <div class="stat"><small>Carpetas</small><b>${R.carpetas.length}</b></div>
-    </div>
-    <div class="folders">
-      ${chip('all', 'Todas', R.canciones.length)}
-      ${R.carpetas.map(c => chip(c.id, c.nombre, cnt(c.id))).join('')}
-      ${sinCarpeta ? chip('none', 'Sin carpeta', sinCarpeta) : ''}
-      ${esAdmin() ? '<button class="folder new" data-act="repnewfolder">+ Carpeta</button>' : ''}
-    </div>
-    <div class="folder-bar"><h5>${esc(actual)}</h5>${repFolder !== 'all' && repFolder !== 'none' ? '<button class="mini" data-act="repeditfolder">Editar carpeta</button>' : ''}</div>
+  if (repFolder && repFolder !== 'none' && !carpetaDe(repFolder)) repFolder = null;
+  if (tab === 'carpetas' && !repFolder) {
+    const cnt = id => R.canciones.filter(s => id === 'none' ? !carpetaDe(s.carpeta) : s.carpeta === id).length;
+    const tile = (id, nombre, color, n) => `<button class="carpeta" data-act="repfolder" data-id="${id}" style="--c:${color}">
+      <span class="carpeta-n">${n}</span><b>${esc(nombre)}</b><small>${n} canci${n === 1 ? 'ón' : 'ones'}</small></button>`;
+    const sin = cnt('none');
+    $('#s-body').innerHTML = `<div class="carpetas">
+      ${[...R.carpetas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).map(c => tile(c.id, c.nombre, colorCarpeta(c), cnt(c.id))).join('')}
+      ${sin ? tile('none', 'Sin carpeta', '#a99cc4', sin) : ''}
+      ${esAdmin() ? '<button class="carpeta nueva" data-act="repnewfolder"><b>+</b><small>Nueva carpeta</small></button>' : ''}
+    </div>${!R.carpetas.length && !sin && !esAdmin() ? '<div class="empty">Aún no hay carpetas.</div>' : ''}`;
+    return;
+  }
+  // lista de canciones: todas, o las de la carpeta abierta
+  const c = repFolder && repFolder !== 'none' ? carpetaDe(repFolder) : null;
+  const cabecera = tab === 'carpetas' ? `<div class="rep-head" style="--c:${c ? colorCarpeta(c) : '#a99cc4'}">
+      <button class="x" data-act="repback" aria-label="Volver a las carpetas">‹</button>
+      <h4>${esc(c ? c.nombre : 'Sin carpeta')}</h4>
+      ${c && esAdmin() ? '<button class="mini" data-act="repeditfolder">Editar</button>' : ''}</div>` : '';
+  $('#s-body').innerHTML = `${cabecera}
     <input class="search" id="rep-q" placeholder="Buscar canción o autor…" value="${esc(repQuery)}">
     <div class="list" id="rep-list"></div>`;
-  const on = $('.folder.on'), bar = $('.folders');
-  if (on && bar) bar.scrollLeft = on.offsetLeft - bar.offsetLeft - 16;
   renderRepList();
 }
 function renderRepList() {
-  const q = repQuery.toLowerCase();
+  const q = repQuery.toLowerCase(), enCarpeta = cur.tab === 'carpetas' && repFolder;
   const list = DB.repertorio.canciones
-    .filter(s => repFolder === 'all' || (repFolder === 'none' ? !nombreCarpeta(s.carpeta) : s.carpeta === repFolder))
+    .filter(s => !enCarpeta || (repFolder === 'none' ? !carpetaDe(s.carpeta) : s.carpeta === repFolder))
     .filter(s => (s.titulo + ' ' + (s.autor || '')).toLowerCase().includes(q))
     .sort((a, b) => a.titulo.localeCompare(b.titulo, 'es'));
   $('#rep-list').innerHTML = list.map(s => {
     const sub = [s.autor, s.tono && 'Tono: ' + s.tono].filter(Boolean).map(esc).join(' · ');
-    const fold = nombreCarpeta(s.carpeta);
+    const c = carpetaDe(s.carpeta);
     return `<div class="card" data-act="cancion" data-id="${s.id}" role="button">
       <div class="ico-box">${ICON_SONG}</div>
-      <div class="info"><h4>${esc(s.titulo)}</h4><p>${sub || '&nbsp;'}</p></div>
-      <div class="right acts">${repFolder === 'all' && fold ? `<span class="pill">${esc(fold)}</span>` : ''}
-        ${s.enlace ? `<a class="songlink" href="${esc(s.enlace)}" target="_blank" rel="noopener" aria-label="Abrir enlace">↗</a>` : ''}</div>
+      <div class="info"><h4>${esc(s.titulo)}</h4><p>${sub || '&nbsp;'}</p>
+        ${!enCarpeta && c ? `<span class="tag-carpeta" style="--c:${colorCarpeta(c)}">${esc(c.nombre)}</span>` : ''}</div>
+      ${s.enlace ? `<div class="right acts"><a class="songlink" href="${esc(s.enlace)}" target="_blank" rel="noopener" aria-label="Abrir enlace">↗</a></div>` : ''}
     </div>`;
-  }).join('') || `<div class="empty">${q ? 'No hay canciones que coincidan.' : 'No hay canciones aquí todavía.<br>Pulsa + para añadir una.'}</div>`;
+  }).join('') || `<div class="empty">${q ? 'No hay canciones que coincidan.' : 'No hay canciones aquí todavía.' + (esAdmin() ? '<br>Pulsa + para añadir una.' : '')}</div>`;
 }
 function formCancion(c) {
-  const carpetas = [['', '— Sin carpeta']].concat(DB.repertorio.carpetas.map(x => [x.id, x.nombre]));
-  const def = repFolder !== 'all' && repFolder !== 'none' ? repFolder : '';
+  const carpetas = [['', '— Sin carpeta']].concat([...DB.repertorio.carpetas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).map(x => [x.id, x.nombre]));
+  const def = cur.tab === 'carpetas' && repFolder && repFolder !== 'none' ? repFolder : '';
   openForm({
     title: c ? 'Editar canción' : 'Nueva canción', data: c || { carpeta: def },
     fields: [
@@ -1156,14 +1188,16 @@ function formCancion(c) {
   });
 }
 function formCarpeta(f) {
+  const usado = new Set(DB.repertorio.carpetas.map(x => x.color));
+  const libre = (COLORES_CARPETA.find(([h]) => !usado.has(h)) || COLORES_CARPETA[0])[0];
   openForm({
-    title: f ? 'Editar carpeta' : 'Nueva carpeta', data: f || {},
-    fields: [{ k: 'nombre', l: 'Nombre de la carpeta', req: 1 }],
-    onSave: v => { if (f) Object.assign(f, v); else { const n = { id: uid(), nombre: v.nombre }; DB.repertorio.carpetas.push(n); repFolder = n.id; } },
+    title: f ? 'Editar carpeta' : 'Nueva carpeta', data: f ? { nombre: f.nombre, color: colorCarpeta(f) } : { color: libre },
+    fields: [{ k: 'nombre', l: 'Nombre de la carpeta', req: 1 }, { k: 'color', l: 'Color', t: 'colores', o: COLORES_CARPETA }],
+    onSave: v => { if (f) Object.assign(f, v); else DB.repertorio.carpetas.push({ id: uid(), nombre: v.nombre, color: v.color }); },
     // al borrar una carpeta, sus canciones pasan a "Sin carpeta"
     onDelete: f && (() => {
       DB.repertorio.canciones.forEach(s => { if (s.carpeta === f.id) s.carpeta = ''; });
-      DB.repertorio.carpetas = DB.repertorio.carpetas.filter(x => x !== f); repFolder = 'all';
+      DB.repertorio.carpetas = DB.repertorio.carpetas.filter(x => x !== f); repFolder = null;
     })
   });
 }
@@ -1397,6 +1431,10 @@ $('#brand').addEventListener('click', abrirAjustes);
 
 /* ================= FORMULARIO GENÉRICO ================= */
 function fieldHtml(f, data) {
+  if (f.t === 'colores') { // muestrario de colores (radio)
+    return `<div class="fld"><span>${f.l}</span><div class="swatches">${f.o.map(([val, lab]) =>
+      `<label class="sw" title="${lab}"><input type="radio" name="${f.k}" value="${val}" ${data[f.k] === val ? 'checked' : ''} aria-label="${lab}"><i style="background:${val}"></i></label>`).join('')}</div></div>`;
+  }
   if (f.t === 'hm') { // hora en dos desplegables: horas y minutos (00, 15, 30, 45)
     const [h, m] = String(data[f.k] || '').split(':');
     const mins = ['00', '15', '30', '45'].concat(m && !['00', '15', '30', '45'].includes(m) ? [m] : []);

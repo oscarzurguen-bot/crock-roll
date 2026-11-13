@@ -9,7 +9,7 @@ Con la nube activada, cada músico entra desde su móvil, se apunta a los bolos 
 |---|---|
 | `index.html` | La app entera (escena, páginas y lógica). |
 | `nube.js` | Sincronización con Firebase, entrada de la directiva y de los músicos. |
-| `firebase-config.js` | **Aquí pegas la configuración de tu proyecto de Firebase.** Vacío = modo local. |
+| `firebase-config.js` | Configuración del proyecto de Firebase (solo de referencia: ya va copiada dentro de `index.html`). |
 | `sw.js`, `manifest.json`, `icons/` | Lo que hace que se pueda instalar en el móvil y abrir sin conexión. |
 | `habitacion.webp`, `espana.json` | Imagen de la habitación y mapa de provincias. |
 | `firestore.rules` | Reglas de la base de datos (cópialas en Firebase). |
