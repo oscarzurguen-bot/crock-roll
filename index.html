@@ -45,6 +45,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* ---------- ESCENA ---------- */
 #viewport{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#2a1d45 0%,var(--bg) 70%)}
+/* fondo: la misma habitación ampliada y desenfocada, para que no haya franjas negras sin recortar la imagen */
+#fondo{position:absolute;inset:-40px;background:url(habitacion.webp) center/cover no-repeat;filter:blur(22px) brightness(.8) saturate(1.1);transform:scale(1.08)}
+/* bordes de arriba y abajo de la imagen difuminados para que se fundan con el fondo */
+#room{-webkit-mask-image:linear-gradient(transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(transparent,#000 3%,#000 97%,transparent)}
 #stage{position:absolute;transition:transform .55s cubic-bezier(.6,.05,.3,1),filter .55s;will-change:transform}
 #stage.zoomed{filter:brightness(.55) blur(1px)}
 #room{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;border-radius:6px}
@@ -93,9 +97,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 #hs-pc{left:25.9%;top:44.7%;width:25.7%;height:9.1%}
 #hs-safe{left:54.6%;top:45.3%;width:17.2%;height:10.2%}
 #hs-armario{left:79.7%;top:16.7%;width:20.3%;height:53.8%}
-#hs-armario .tag{top:30%;left:12%}
-/* en el móvil la imagen llena la pantalla y se recortan un poco los lados: las etiquetas de los bordes se meten hacia dentro */
-#hs-rep .tag{left:80%}
+#hs-armario .tag{top:30%;left:35%}
 #hs-cal{left:32.1%;top:20.6%;width:19.8%;height:13.9%}
 #hs-poster{left:54%;top:19.3%;width:23.4%;height:16%}
 #hs-rep{left:7.7%;top:11.8%;width:14.9%;height:6.7%}
@@ -432,6 +434,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
 </head>
 <body>
 <div id="viewport">
+  <div id="fondo" aria-hidden="true"></div>
   <div id="stage">
     <img id="room" src="habitacion.webp" alt="Habitación de la charanga">
     <div class="fx sun"></div>
@@ -592,14 +595,14 @@ function refreshHud() {
 /* ================= ESCENA ================= */
 const stage = $('#stage'), img = $('#room');
 let IW = 941, IH = 1672;
-// en vertical (móvil) la imagen llena toda la pantalla, recortando un poco los lados si hace falta;
-// en horizontal (ordenador) se ve entera, centrada
+// la imagen se ve siempre entera (sin recortar los lados); el hueco que sobra arriba y abajo
+// lo rellena el fondo desenfocado de la misma habitación (#fondo)
 function layout() {
-  const W = innerWidth, H = innerHeight, vertical = H >= W;
-  const s = vertical ? Math.max(W / IW, H / IH) : Math.min(W / IW, H / IH);
+  const W = innerWidth, H = innerHeight;
+  const s = Math.min(W / IW, H / IH);
   const w = IW * s, h = IH * s;
   Object.assign(stage.style, { width: w + 'px', height: h + 'px', left: (W - w) / 2 + 'px', top: (H - h) / 2 + 'px' });
-  img.style.borderRadius = vertical ? '0' : '';
+  img.style.borderRadius = '0';
 }
 img.onload = () => { IW = img.naturalWidth; IH = img.naturalHeight; layout(); };
 
