@@ -5,6 +5,7 @@
      entra como Directiva (contraseña) o como Músico (su nombre + PIN de 4 cifras).
    Se carga DESPUÉS del script principal, así que puede usar DB, save, toast, etc.
    ===================================================================== */
+window.APP_VERSION = 'v3'; // se sube a la vez que VERSION en sw.js en cada cambio
 window.Nube = (() => {
   const cfg = window.FIREBASE_CONFIG || {};
   const configurada = !!(cfg.apiKey && cfg.projectId);
@@ -226,12 +227,14 @@ window.Nube = (() => {
   /* ---------- apartado en Ajustes ---------- */
   function ajustesHtml() {
     if (!configurada) return `<div class="conv-box"><div class="conv-head"><b>☁️ Nube</b><span class="pill">Modo local</span></div>
-      <p class="conv-tip">Los datos solo se guardan en este dispositivo. Para compartir la app con la charanga, rellena <b>firebase-config.js</b> (mira el README).</p></div>`;
+      <p class="conv-tip">Los datos solo se guardan en este dispositivo. Para compartir la app con la charanga, rellena <b>firebase-config.js</b> (mira el README).</p>
+      <p class="conv-tip" style="text-align:center">Versión de la app: ${window.APP_VERSION}</p></div>`;
     const admin = esAdmin();
     const txt = { conectando: 'Conectando…', subiendo: 'Guardando…', ok: 'Sincronizado', error: 'Problema de conexión' }[estado] || '';
     return `<div class="conv-box"><div class="conv-head"><b>☁️ Sesión</b><span class="pill ${estado === 'ok' ? 'ok' : estado === 'error' ? 'bad' : 'warn'}">${txt}</span></div>
       <p class="conv-tip">Has entrado como <b style="color:var(--text)">${admin ? 'Directiva' : esc(sesion && sesion.nombre || 'Músico')}</b>.${admin ? '' : ' Puedes ver todo y apuntarte a los bolos; lo demás lo gestiona la directiva.'}</p>
-      <button type="button" class="btn" id="nb-salir">Cerrar sesión</button></div>
+      <button type="button" class="btn" id="nb-salir">Cerrar sesión</button>
+      <p class="conv-tip" style="text-align:center">Versión de la app: ${window.APP_VERSION}</p></div>
     ${admin ? `<div class="conv-box"><div class="conv-head"><b>🔑 Accesos</b></div>
       <label>Nueva contraseña de la directiva<input id="nb-pass" type="password" autocomplete="new-password"></label>
       <button type="button" class="btn" id="nb-pass-ok">Cambiar contraseña</button>

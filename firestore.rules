@@ -1,5 +1,5 @@
 rules_version = '2';
-// Igual que en Yacente: solo puede leer y escribir quien abre la app (inicio de sesión anónimo de Firebase).
+// Solo puede leer y escribir quien abre la app de la charanga (inicio de sesión anónimo de Firebase).
 // La contraseña de la directiva y los PIN de los músicos los comprueba la propia app.
 service cloud.firestore {
   match /databases/{database}/documents {
