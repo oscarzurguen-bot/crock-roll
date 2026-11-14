@@ -254,6 +254,16 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .conv-row .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);flex:none}
 .ext-add{display:flex;gap:6px}.ext-add input{margin:0;flex:1;min-width:0}.ext-add .btn{flex:none;padding:10px 14px}
 .conv-row .dot.on{background:var(--green);border-color:var(--green)}
+.ico-box.flecha.sube{color:var(--green);background:rgba(163,230,53,.12);border-color:rgba(163,230,53,.4)}
+.ico-box.flecha.baja{color:var(--red);background:rgba(255,93,110,.12);border-color:rgba(255,93,110,.4)}
+.tipo-mov{display:inline-flex;align-items:center;gap:6px}.tipo-mov svg{width:16px;height:16px}
+.tipo-mov.sube svg{color:var(--green)}.tipo-mov.baja svg{color:var(--red)}
+.mov-big{font-size:34px;font-weight:800;text-align:center;margin:2px 0 12px}
+.bolo-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--panel2);border:1px solid rgba(79,195,255,.4);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.bolo-link .info small{display:block;color:var(--prox);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.bolo-link .info b{display:block;font-size:15px}
+.bolo-link .info em{display:block;font-style:normal;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bolo-link .go{font-size:26px;color:var(--prox);font-weight:800}
 /* detalles del bolo */
 .det-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .det-head h3{flex:1;margin:0}
@@ -801,7 +811,7 @@ $('#s-body').addEventListener('click', e => {
   if (act === 'bolo') { if (estAbierto) { estAbierto = null; return rerender(); } return verBolo(DB.bolos.find(x => x.id === id)); }
   if (act === 'item') formInv(DB.inventario.find(x => x.id === id));
   if (act === 'mas' || act === 'menos') { const it = DB.inventario.find(x => x.id === id); it.cant = Math.max(0, it.cant + (act === 'mas' ? 1 : -1)); save(); rerender(); }
-  if (act === 'botemov') formBote(DB.bote.find(x => x.id === id));
+  if (act === 'botemov') verMov(DB.bote.find(x => x.id === id));
 });
 $('#s-body').addEventListener('input', e => { if (e.target.id === 'inv-q') { invQuery = e.target.value; renderInvList(); } if (e.target.id === 'rep-q') { repQuery = e.target.value; renderRepList(); } });
 
@@ -1406,7 +1416,7 @@ function formInv(i) {
 /* ================= CAJA FUERTE: BOTE DE LA CHARANGA ================= */
 function movRow(m, act) {
   return `<div class="card" data-act="${act}" data-id="${m.id}" role="button">
-    <div class="ico-box">${m.importe >= 0 ? '⬆️' : '⬇️'}</div>
+    <div class="ico-box flecha ${m.importe >= 0 ? 'sube' : 'baja'}">${flecha(m.importe >= 0)}</div>
     <div class="info"><h4>${esc(m.concepto)}</h4><p>${fdate(m.fecha)}${tituloBolo(m.bolo) ? ' · 🎺 ' + esc(tituloBolo(m.bolo)) : ''}</p></div>
     <div class="right"><b class="${m.importe >= 0 ? 'pos' : 'neg'}">${m.importe >= 0 ? '+' : ''}${eur(m.importe)}</b></div></div>`;
 }
@@ -1423,6 +1433,32 @@ function renderCuentas() {
     </div>
     <h5>Movimientos del bote</h5>
     <div class="list">${list.map(m => movRow(m, 'botemov')).join('') || '<div class="empty"><span>🫙</span>El bote está vacío.</div>'}</div>`;
+}
+// flecha de los movimientos del bote: verde hacia arriba (aportación), roja hacia abajo (gasto)
+const flecha = sube => `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${sube ? '<path d="M12 19V5M5 12l7-7 7 7"/>' : '<path d="M12 5v14M5 12l7 7 7-7"/>'}</svg>`;
+// detalles de un movimiento del bote (al tocar su tarjeta)
+function verMov(m) {
+  if (!m) return;
+  const form = $('#form'), b = m.bolo && DB.bolos.find(x => x.id === m.bolo), aporte = m.importe >= 0;
+  form.onclick = null;
+  form.innerHTML = `
+    <div class="det-head"><h3>${aporte ? 'Aportación al bote' : 'Gasto del bote'}</h3><button type="button" class="x" id="mv-x" aria-label="Cerrar">✕</button></div>
+    <div class="mov-big ${aporte ? 'pos' : 'neg'}">${aporte ? '+' : ''}${eur(m.importe)}</div>
+    <div class="det-rows">
+      <div><span>📝 Concepto</span><b>${esc(m.concepto)}</b></div>
+      <div><span>📅 Fecha</span><b>${fechaLarga(m.fecha)}</b></div>
+      <div><span class="tipo-mov ${aporte ? 'sube' : 'baja'}">${flecha(aporte)} Tipo</span><b>${aporte ? 'Aportación' : 'Gasto'}</b></div>
+      ${m.miembro && m.miembro !== '— Bote común' ? `<div><span>👤 Miembro</span><b>${esc(m.miembro)}</b></div>` : ''}
+    </div>
+    ${b ? `<button type="button" class="bolo-link" id="mv-bolo">
+        <span class="ico-box">🎺</span><span class="info"><small>Bolo relacionado</small><b>${esc(nombreBolo(b))}</b><em>${fechaLarga(b.fecha)}${b.titulo && b.lugar ? ' · ' + esc(b.titulo) : ''}</em></span><span class="go">›</span></button>`
+      : m.bolo ? '<p class="conv-tip">El bolo relacionado ya no existe.</p>' : ''}
+    ${esAdmin() ? '<div class="row"><button type="button" class="btn primary" id="mv-edit" style="flex:1">✏️ Editar</button></div>' : ''}`;
+  form.onsubmit = e => e.preventDefault();
+  $('#mv-x').onclick = closeForm;
+  if ($('#mv-edit')) $('#mv-edit').onclick = () => formBote(m);
+  if ($('#mv-bolo')) $('#mv-bolo').onclick = () => verBolo(b);
+  $('#modal').classList.add('show');
 }
 // pre: datos iniciales (p. ej. al cobrar el bote de un bolo); despues: se ejecuta al guardar
 function formBote(m, pre, despues) {
