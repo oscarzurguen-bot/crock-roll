@@ -191,6 +191,7 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .bars i.hecho{background:var(--orange)}
 .bars em{font-style:normal;font-size:9px;line-height:1;color:var(--muted);font-weight:800;text-align:center}
 .d.sel .bars i{box-shadow:0 0 0 1.5px #14200a}.d.sel .bars i:not(.hecho){background:#14200a}.d.sel .bars em{color:#14200a}
+.cal-hint{text-align:center;color:var(--muted);font-size:12.5px;margin:14px 0 0}
 .cal-legend{display:flex;justify-content:center;gap:14px;margin:10px 0 2px;font-size:11.5px;color:var(--muted);font-weight:700}
 .cal-legend span{display:flex;align-items:center;gap:5px}
 .cal-legend i{width:16px;height:4px;border-radius:3px;background:var(--green)}
@@ -1130,19 +1131,16 @@ function renderCal() {
     cells += `<button class="d ${k === TODAY() ? 'today' : ''} ${k === calSel ? 'sel' : ''}" data-act="calday" data-d="${k}">${d}
       <span class="bars">${[...bs].sort((a, b) => (a.hora || '').localeCompare(b.hora || '')).slice(0, 3).map(b => `<i class="${b.fecha < TODAY() ? 'hecho' : ''}"></i>`).join('')}${bs.length > 3 ? `<em>+${bs.length - 3}</em>` : ''}</span></button>`;
   }
-  // debajo: los bolos del día tocado o, si no hay ninguno tocado, los próximos bolos
-  const sel = calSel ? (by[calSel] || []).sort((a, b) => (a.hora || '').localeCompare(b.hora || '')) : proximos();
+  // debajo solo aparecen bolos si se ha tocado un día: los de ese día
+  const sel = calSel ? (by[calSel] || []).sort((a, b) => (a.hora || '').localeCompare(b.hora || '')) : [];
   $('#s-body').innerHTML = `
     <div class="cal-head"><button data-act="calprev" aria-label="Mes anterior">‹</button><h4>${MESES[calM]} ${calY}</h4><button data-act="calnext" aria-label="Mes siguiente">›</button></div>
     <div class="cal-sub">${mes.length} bolo${mes.length === 1 ? '' : 's'} este mes · ${eur(mes.reduce((a, b) => a + (+b.cachet || 0), 0))}</div>
     <div class="cal">${cells}</div>
     <div class="cal-legend"><span><i></i>Por tocar</span><span><i class="hecho"></i>Ya realizado</span></div>
-    ${calSel
-      ? `<div class="folder-bar"><h5>${fechaLarga(calSel)}</h5><button class="mini" data-act="calprox">Ver próximos</button></div>`
-      : `<h5>Próximos bolos</h5>`}
-    <div class="list">${sel.map(boloCard).join('') || (calSel
-      ? '<div class="empty"><span>🎉</span>Día libre.<br>Pulsa + para meter un bolo este día.</div>'
-      : '<div class="empty"><span>🗓️</span>No hay bolos próximos.<br>Pulsa + para añadir uno.</div>')}</div>`;
+    ${calSel ? `<div class="folder-bar"><h5>${fechaLarga(calSel)}</h5><button class="mini" data-act="calprox">Cerrar</button></div>
+    <div class="list">${sel.map(boloCard).join('') || `<div class="empty"><span>🎉</span>Día libre.${esAdmin() ? '<br>Pulsa + para meter un bolo este día.' : ''}</div>`}</div>`
+      : '<p class="cal-hint">Toca un día para ver sus bolos.</p>'}`;
 }
 
 /* ================= ESTADÍSTICAS (corcho de la pared) ================= */
