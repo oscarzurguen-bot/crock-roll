@@ -2,10 +2,10 @@
    Crock&Roll HQ · Nube (Firebase) y sesiones
    - Sin configuración en firebase-config.js: modo local, todo en este dispositivo.
    - Con configuración: los datos se sincronizan en Firestore y cada persona
-     entra como Directiva (contraseña) o como Músico (su nombre + PIN de 4 cifras).
+     entra como Administrador (contraseña) o como Músico (su nombre + PIN de 4 cifras).
    Se carga DESPUÉS del script principal, así que puede usar DB, save, toast, etc.
    ===================================================================== */
-window.APP_VERSION = 'v18'; // se sube a la vez que VERSION en sw.js en cada cambio
+window.APP_VERSION = 'v27'; // se sube a la vez que VERSION en sw.js en cada cambio
 window.Nube = (() => {
   const cfg = window.FIREBASE_CONFIG || {};
   const configurada = !!(cfg.apiKey && cfg.projectId);
@@ -128,7 +128,7 @@ window.Nube = (() => {
   function pintarMarca() {
     const el = document.getElementById('brand-sub'); if (!el) return;
     if (!configurada) { el.textContent = 'Charanga · local'; return; }
-    const quien = !sesion ? 'Sin sesión' : sesion.rol === 'admin' ? 'Directiva' : (sesion.nombre || 'Músico');
+    const quien = !sesion ? 'Sin sesión' : sesion.rol === 'admin' ? 'Administrador' : (sesion.nombre || 'Músico');
     const icono = { conectando: '…', subiendo: '↑', ok: '☁️', error: '⚠️' }[estado] || '';
     el.textContent = `${quien} ${icono}`;
   }
@@ -159,14 +159,14 @@ window.Nube = (() => {
       <div class="login-logo">🐸</div>
       <h1>Crock&amp;Roll HQ</h1>
       <p class="login-sub">La app de la charanga</p>
-      <div class="tabs login-tabs"><button type="button" data-lt="musico">Músico</button><button type="button" data-lt="admin">Directiva</button></div>
+      <div class="tabs login-tabs"><button type="button" data-lt="musico">Músico</button><button type="button" data-lt="admin">Administrador</button></div>
       <div id="login-musico">
         <label>¿Quién eres?<select id="login-quien"></select></label>
         <label>PIN (4 cifras)<input id="login-pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
         <p class="login-tip" id="login-tip-pin"></p>
       </div>
       <div id="login-admin">
-        <label>Contraseña de la directiva<input id="login-pass" type="password" autocomplete="current-password"></label>
+        <label>Contraseña del administrador<input id="login-pass" type="password" autocomplete="current-password"></label>
         <p class="login-tip" id="login-tip-admin"></p>
       </div>
       <p class="login-err" id="login-err"></p>
@@ -191,11 +191,11 @@ window.Nube = (() => {
     l.querySelector('#login-tip-pin').textContent = !sel.value ? '' : pins[sel.value]
       ? 'Pon tu PIN personal.' : 'Es tu primera vez: el PIN que pongas quedará como tu PIN personal.';
     l.querySelector('#login-tip-admin').textContent = seguridad && !seguridad.adminHash
-      ? 'Aún no hay contraseña: la que pongas ahora será la de la directiva.' : '';
+      ? 'Aún no hay contraseña: la que pongas ahora será la del administrador.' : '';
     const ok = listo && seguridad && cargado.miembros;
     l.querySelector('#login-ok').disabled = !ok;
     l.querySelector('#login-estado').textContent = !ok ? (estado === 'error' ? '⚠️ No se puede conectar con la nube.' : 'Conectando con la nube…')
-      : pestaña === 'musico' && !(DB.miembros || []).length ? 'Aún no hay músicos: la directiva tiene que crear La banda primero.' : '';
+      : pestaña === 'musico' && !(DB.miembros || []).length ? 'Aún no hay músicos: el administrador tiene que crear La banda primero.' : '';
   }
   async function entrar(e) {
     e.preventDefault();
@@ -216,7 +216,7 @@ window.Nube = (() => {
         if (!/^\d{4}$/.test(pin)) return err.textContent = 'El PIN son 4 cifras.';
         const h = await sha('crocknroll|' + id + '|' + pin), pins = seguridad.pins || {};
         if (!pins[id]) await ref.set({ pins: { [id]: h } }, { merge: true });
-        else if (pins[id] !== h) return err.textContent = 'PIN incorrecto. Si no lo recuerdas, pide a la directiva que lo resetee.';
+        else if (pins[id] !== h) return err.textContent = 'PIN incorrecto. Si no lo recuerdas, pide al administrador que lo resetee.';
         guardarSesion({ rol: 'musico', miembroId: id, nombre: (DB.miembros.find(m => m.id === id) || {}).nombre });
       }
       document.getElementById('login-pin').value = ''; document.getElementById('login-pass').value = '';
@@ -232,11 +232,11 @@ window.Nube = (() => {
     const admin = esAdmin();
     const txt = { conectando: 'Conectando…', subiendo: 'Guardando…', ok: 'Sincronizado', error: 'Problema de conexión' }[estado] || '';
     return `<div class="conv-box"><div class="conv-head"><b>☁️ Sesión</b><span class="pill ${estado === 'ok' ? 'ok' : estado === 'error' ? 'bad' : 'warn'}">${txt}</span></div>
-      <p class="conv-tip">Has entrado como <b style="color:var(--text)">${admin ? 'Directiva' : esc(sesion && sesion.nombre || 'Músico')}</b>.${admin ? '' : ' Puedes ver todo y apuntarte a los bolos; lo demás lo gestiona la directiva.'}</p>
+      <p class="conv-tip">Has entrado como <b style="color:var(--text)">${admin ? 'Administrador' : esc(sesion && sesion.nombre || 'Músico')}</b>.${admin ? '' : ' Puedes ver todo y apuntarte a los bolos; lo demás lo gestional administrador.'}</p>
       <button type="button" class="btn" id="nb-salir">Cerrar sesión</button>
       <p class="conv-tip" style="text-align:center">Versión de la app: ${window.APP_VERSION}</p></div>
     ${admin ? `<div class="conv-box"><div class="conv-head"><b>🔑 Accesos</b></div>
-      <label>Nueva contraseña de la directiva<input id="nb-pass" type="password" autocomplete="new-password"></label>
+      <label>Nueva contraseña del administrador<input id="nb-pass" type="password" autocomplete="new-password"></label>
       <button type="button" class="btn" id="nb-pass-ok">Cambiar contraseña</button>
       <label>Resetear el PIN de un músico<select id="nb-pin-quien"><option value="">— Elige —</option>${DB.miembros.map(m =>
         `<option value="${esc(m.id)}">${esc(m.nombre)}${seguridad && seguridad.pins && seguridad.pins[m.id] ? '' : ' (sin PIN)'}</option>`).join('')}</select></label>

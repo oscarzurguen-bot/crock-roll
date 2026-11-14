@@ -254,6 +254,35 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .conv-row span{flex:1;min-width:0;display:flex;flex-direction:column}
 .conv-row small{color:var(--muted);font-size:11.5px;font-weight:600}
 .conv-row .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.car{flex:none;width:34px;height:30px;border-radius:9px;border:1px solid var(--line);background:#120d1f;font-size:16px;line-height:1;display:grid;place-items:center;padding:0;filter:grayscale(1);opacity:.45}
+.car.on{filter:none;opacity:1;background:rgba(79,195,255,.15);border-color:rgba(79,195,255,.5)}
+.car.fijo{border-style:dashed;font-style:normal}
+.conv-row .pill{white-space:nowrap}
+.car.hueco{visibility:hidden;border:0}
+.pago-row{display:flex;align-items:center;gap:6px;padding:8px 0;border-top:1px solid var(--line)}.pago-row:first-child{border-top:0}
+.pago-nombre{flex:1;min-width:0;font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pago-box{flex:none;width:118px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0;padding:6px 7px 6px 9px;border-radius:12px;cursor:pointer;
+  text-transform:none;letter-spacing:0;color:var(--text);font-size:12px;font-weight:800;border:1px solid rgba(79,195,255,.35);background:rgba(79,195,255,.08)}
+.pago-box.on{border-color:rgba(163,230,53,.45);background:rgba(163,230,53,.1)}
+.pago-box.hueco{visibility:hidden}
+.pago-box.on{cursor:default}
+.confirm{position:fixed;inset:0;z-index:35;background:rgba(8,5,15,.72);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
+.confirm[hidden]{display:none!important}
+.confirm-box{width:min(100%,360px);background:var(--panel);border:2px solid #3a2d5c;border-radius:20px;padding:18px 16px 14px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.confirm-box p{margin:0 0 6px;font-size:16px;line-height:1.35}
+.confirm-box small{display:block;color:var(--orange);font-size:12.5px;font-weight:700;margin-bottom:12px}
+.confirm-box .row{justify-content:flex-end;margin-top:0}
+.pago-txt{display:flex;align-items:center;gap:5px;min-width:0;white-space:nowrap;font-size:15px}
+.pago-txt b{font-size:15.5px;font-weight:800}
+.pago-box.on .pago-txt b{color:var(--green)}
+.pago-box input{width:20px;height:20px;margin:0;display:inline-block;accent-color:var(--green);flex:none}
+.pago-box .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.pago-box .dot.on{width:22px;height:22px;border-radius:7px;background:var(--green);border-color:var(--green);display:grid;place-items:center;font-style:normal}
+.pago-box .dot.on::after{content:"✓";color:#14200a;font-weight:900;font-size:14px;line-height:1}
+.pago-row .conv-row{border-top:0}
+.conv-row.gas{padding:0 2px 8px 30px;font-size:13px;color:var(--muted)}
+.conv-row.gas input{width:18px;height:18px}
+.conv-row.gas.on{color:var(--green)}
 .ext-add{display:flex;gap:6px}.ext-add input{margin:0;flex:1;min-width:0}.ext-add .btn{flex:none;padding:10px 14px}
 .conv-row .dot.on{background:var(--green);border-color:var(--green)}
 .ico-box.flecha.sube{color:var(--green);background:rgba(163,230,53,.12);border-color:rgba(163,230,53,.4)}
@@ -493,6 +522,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
 
 <div class="modal" id="modal"><form id="form" autocomplete="off"></form></div>
 <div id="toast"></div>
+<div class="confirm" id="confirm" hidden><div class="confirm-box" role="alertdialog" aria-modal="true" aria-labelledby="cf-t"><p id="cf-t"></p><small id="cf-s"></small><div class="row"><button type="button" class="btn" id="cf-no">Cancelar</button><button type="button" class="btn primary" id="cf-si"></button></div></div></div>
 
 <script>
 /* ================= UTILIDADES ================= */
@@ -590,7 +620,7 @@ if (!DB.repertorio) {
 if (!DB.redes) DB.redes = { instagram: 'charanga_crocknroll', tiktok: 'charanga_crocknroll' };
 if (!DB.geo) DB.geo = {};
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} if (window.Nube) Nube.push(); refreshHud(); }
-// sin nube (o en la página de Claude) quien usa la app es la directiva; con nube, depende de la sesión
+// sin nube (o en la página de Claude) quien usa la app es el administrador; con nube, depende de la sesión
 const esAdmin = () => !window.Nube || Nube.esAdmin();
 const yo = () => window.Nube ? Nube.miembroId() : null;
 
@@ -806,7 +836,7 @@ $('#s-body').addEventListener('click', e => {
   if (a.dataset.act === 'cancion') return formCancion(DB.repertorio.canciones.find(x => x.id === a.dataset.id));
   if (a.dataset.act === 'statyear') { statYear = a.dataset.y; return rerender(); }
   const id = a.dataset.id, act = a.dataset.act;
-  if (!esAdmin() && ['estmenu', 'setest', 'mas', 'menos'].includes(act)) return toast('Solo la directiva puede cambiar esto');
+  if (!esAdmin() && ['estmenu', 'setest', 'mas', 'menos'].includes(act)) return toast('Solo el administrador puede cambiar esto');
   if (act === 'resp') return responder(id, a.dataset.v);
   if (act === 'estmenu') { estAbierto = estAbierto === id ? null : id; return rerender(); }
   if (act === 'setest') return cambiarEstado(DB.bolos.find(x => x.id === id), a.dataset.est);
@@ -860,10 +890,10 @@ function boloCard(b) {
       <button class="est ${e}" data-act="estmenu" data-id="${b.id}" aria-label="Cambiar estado">${ESTADOS[e][0]}</button></div>
     ${b.titulo && b.lugar ? `<p class="bolo-ev">${esc(b.titulo)}</p>` : ''}
     <p class="bolo-when">📅 ${fechaLarga(b.fecha)}${hor ? ` (${esc(hor)})` : ''}</p>
-    ${(() => { // fila 1: duración, caché por músico y nº de músicos (más vas / pagados); fila 2: solo "bote cobrado"
+    ${(() => { // fila 1: duración, caché por músico y nº de músicos (más vas / no vas); fila 2: músicos pagados y bote cobrado
       const cv = convChips(b), fila = cs => (cs = cs.filter(Boolean)).length ? `<div class="bolo-chips">${cs.join('')}</div>` : '';
       return fila([dur && `<span class="bchip">⏱️ ${dur}</span>`, +b.cacheMusico && `<span class="bchip">🎺 ${eur(+b.cacheMusico)}/músico</span>`, cv.van, ...cv.resto])
-        + fila([boteCobrado(b) && '<span class="bchip ok">🫙 Bote cobrado</span>']) + cv.botones;
+        + fila([cv.pagados, boteCobrado(b) && '<span class="bchip ok">🫙 Bote cobrado</span>']) + cv.botones;
     })()}
     <div class="bolo-foot"><span>Total charanga</span><b>${eur(+b.cachet)}</b></div>
     ${estAbierto === b.id ? `<div class="est-menu">${Object.entries(ESTADOS).map(([k, [t, d]]) =>
@@ -878,18 +908,18 @@ const vanDe = b => [...(convDe(b).sel || []), ...extrasDe(b).map(x => x.id)];
 const nombreMiembro = (id, b) => (DB.miembros.find(m => m.id === id) || (b && extrasDe(b).find(x => x.id === id)) || {}).nombre || '¿?';
 function convChips(b) {
   const c = convDe(b), si = Object.keys(c.resp || {}).filter(k => c.resp[k] === 'si').length, me = yo();
-  const chips = [];
+  const chips = []; let pagados = '';
   const van = c.abierta ? `<span class="bchip conv">✋ ${si} apuntado${si === 1 ? '' : 's'}</span>`
     : vanDe(b).length ? `<span class="bchip">👥 Van ${vanDe(b).length}</span>` : '';
   if (me && !c.abierta) chips.push((c.sel || []).includes(me) ? '<span class="bchip ok">✅ Vas</span>' : '<span class="bchip">No vas</span>');
   if (b.estado === 'cobrado' && vanDe(b).length) {
     const van = vanDe(b), pag = van.filter(id => c.pagos && c.pagos[id]).length;
-    chips.push(`<span class="bchip ${pag === van.length ? 'ok' : 'warn'}">💶 Pagados ${pag}/${van.length}</span>`);
+    pagados = `<span class="bchip ${pag === van.length ? 'ok' : 'warn'}">💶 Pagados ${pag}/${van.length}</span>`;
   }
   const botones = me && c.abierta ? `<div class="resp-row">
       <button class="resp si ${c.resp[me] === 'si' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="si">✋ Me apunto</button>
       <button class="resp no ${c.resp[me] === 'no' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="no">No puedo</button></div>` : '';
-  return { van, resto: chips, botones };
+  return { van, resto: chips, pagados, botones };
 }
 // un músico responde a la convocatoria (solo su propia respuesta)
 function responder(id, v) {
@@ -901,12 +931,39 @@ function responder(id, v) {
   rerender(); if ($('#modal').classList.contains('show') && $('#d-x')) verBolo(b);
   toast(c.resp[me] === 'si' ? '✋ Te has apuntado' : c.resp[me] === 'no' ? 'Anotado: no puedes' : 'Respuesta quitada');
 }
+// marcar / desmarcar que alguien lleva coche (solo el administrador y con la convocatoria abierta)
+function marcarCoche(boloId, mid) {
+  const b = DB.bolos.find(x => x.id === boloId); if (!b) return;
+  const c = convDe(b), me = yo();
+  if (!c.abierta) return toast('🔒 Convocatoria cerrada: reábrela para cambiarlo');
+  if (!esAdmin()) return toast('Solo el administrador puede marcar los coches');
+  c.coches = c.coches || {};
+  const lleva = !c.coches[mid];
+  if (lleva) c.coches[mid] = true; else delete c.coches[mid];
+  save();
+  rerender(); verBolo(b);
+  toast(lleva ? '🚗 Lleva coche' : 'Sin coche');
+}
+// importe corto para los recuadros: sin decimales si es una cantidad redonda (60 €), con ellos si no (22,50 €)
+const eurCorto = n => Math.round(n * 100) % 100 ? eur(n) : Math.round(n).toLocaleString('es-ES') + ' €';
+// diálogo de confirmación (devuelve una promesa: true si se acepta)
+function confirmar(texto, sub, ok) {
+  const d = $('#confirm');
+  $('#cf-t').innerHTML = texto; $('#cf-s').textContent = sub || ''; $('#cf-si').textContent = ok || 'Confirmar';
+  d.hidden = false; $('#cf-no').focus();
+  return new Promise(res => {
+    const fin = v => { d.hidden = true; $('#cf-si').onclick = $('#cf-no').onclick = d.onclick = null; res(v); };
+    $('#cf-si').onclick = () => fin(true); $('#cf-no').onclick = () => fin(false);
+    d.onclick = e => { if (e.target === d) fin(false); };
+  });
+}
 function convHtml(b) {
   const c = convDe(b), admin = esAdmin(), me = yo(), sel = c.sel || [], resp = c.resp || {};
   const orden = { si: 0, undefined: 1, no: 2 };
   const ms = [...DB.miembros].sort((a, z) => (orden[resp[a.id]] - orden[resp[z.id]]) || a.nombre.localeCompare(z.nombre, 'es'));
   const pill = r => r === 'si' ? '<span class="pill ok">Se apunta</span>' : r === 'no' ? '<span class="pill bad">No puede</span>' : '<span class="pill">Sin responder</span>';
-  let h = `<div class="conv-box"><div class="conv-head"><b>✋ Convocatoria</b><span class="pill ${c.abierta ? 'warn' : ''}">${c.abierta ? 'Abierta' : 'Cerrada'}</span>
+  const nCoches = Object.keys(c.coches || {}).filter(k => c.coches[k]).length;
+  let h = `<div class="conv-box"><div class="conv-head"><b>✋ Convocatoria</b>${nCoches ? `<span class="pill">🚗 ${nCoches}</span>` : ''}<span class="pill ${c.abierta ? 'warn' : ''}">${c.abierta ? 'Abierta' : 'Cerrada'}</span>
     ${admin ? `<button type="button" class="mini" data-dact="toggleconv">${c.abierta ? 'Cerrar' : 'Reabrir'}</button>` : ''}</div>`;
   if (me && c.abierta) h += `<div class="resp-row">
       <button type="button" class="resp si ${resp[me] === 'si' ? 'on' : ''}" data-dact="resp" data-v="si">✋ Me apunto</button>
@@ -914,16 +971,23 @@ function convHtml(b) {
   // con la convocatoria cerrada no se puede tocar la selección ni los extras (solo los pagos) hasta reabrirla
   const editable = admin && c.abierta;
   if (admin) h += `<p class="conv-tip">${c.abierta ? 'Marca quién va de entre los que se apuntan y cierra la convocatoria.' : '🔒 Cerrada (van ' + vanDe(b).length + '). Para cambiar la selección o los extras, pulsa Reabrir.'}</p>`;
+  // coche: solo lo marca el administrador, mientras la convocatoria está abierta; cerrada queda fijo
+  const coches = c.coches || {};
+  const coche = id => {
+    const lleva = !!coches[id], puede = c.abierta && admin;
+    if (!puede) return lleva ? '<i class="car on fijo" title="Lleva coche" aria-label="Lleva coche">🚗</i>' : '<i class="car hueco"></i>';
+    return `<button type="button" class="car ${lleva ? 'on' : ''}" data-dact="coche" data-m="${id}" aria-pressed="${lleva}" aria-label="${lleva ? 'Lleva coche' : 'No lleva coche'}">🚗</button>`;
+  };
   h += `<div class="conv-list">${ms.map(m => {
     const on = sel.includes(m.id);
     return `<label class="conv-row ${on ? 'on' : ''}">${editable ? `<input type="checkbox" data-dact="sel" data-m="${m.id}" ${on ? 'checked' : ''}>` : `<i class="dot ${on ? 'on' : ''}"></i>`}
-      <span>${esc(m.nombre)}<small>${esc(m.instrumento || '')}</small></span>${pill(resp[m.id])}</label>`;
+      <span>${esc(m.nombre)}<small>${esc(m.instrumento || '')}</small></span>${pill(resp[m.id])}${coche(m.id)}</label>`;
   }).join('') || '<p class="conv-tip">No hay músicos en La banda.</p>'}</div></div>`;
   // extras: músicos de fuera de la charanga para este bolo
   const ext = extrasDe(b);
   if (editable || ext.length) h += `<div class="conv-box"><div class="conv-head"><b>➕ Extras</b>${ext.length ? `<span class="pill">${ext.length}</span>` : ''}</div>
     ${editable ? '<p class="conv-tip">Músicos que no son de la charanga y vienen a este bolo.</p>' : ''}
-    ${ext.length ? `<div class="conv-list">${ext.map(x => `<div class="conv-row on"><i class="dot on"></i><span>${esc(x.nombre)}<small>Extra</small></span>
+    ${ext.length ? `<div class="conv-list">${ext.map(x => `<div class="conv-row on"><i class="dot on"></i><span>${esc(x.nombre)}<small>Extra</small></span>${coche(x.id)}
       ${editable ? `<button type="button" class="mini undo" data-dact="delextra" data-x="${x.id}" aria-label="Quitar ${esc(x.nombre)}">Quitar</button>` : ''}</div>`).join('')}</div>` : ''}
     ${editable ? `<div class="ext-add"><input id="ext-in" placeholder="Nombre e instrumento (ej. Luis · trompeta)" enterkeyhint="done" autocomplete="off">
       <button type="button" class="btn primary" data-dact="addextra">Añadir</button></div>` : ''}</div>`;
@@ -931,10 +995,20 @@ function convHtml(b) {
   const van = vanDe(b);
   if (van.length && b.estado === 'cobrado') {
     const sel = van, pag = sel.filter(id => c.pagos && c.pagos[id]).length;
+    const nCoches = sel.filter(id => coches[id]).length, porCoche = nCoches && +b.gasolina ? +b.gasolina / nCoches : 0; // gasolina repartida entre los coches
     h += `<div class="conv-box"><div class="conv-head"><b>💶 Pagos a músicos</b><span class="pill ${pag === sel.length ? 'ok' : 'warn'}">${pag}/${sel.length}</span></div>
-      <div class="conv-list">${sel.map(id => `<label class="conv-row ${c.pagos && c.pagos[id] ? 'on' : ''}">
-        ${admin ? `<input type="checkbox" data-dact="pago" data-m="${id}" ${c.pagos && c.pagos[id] ? 'checked' : ''}>` : `<i class="dot ${c.pagos && c.pagos[id] ? 'on' : ''}"></i>`}
-        <span>${esc(nombreMiembro(id, b))}</span><b>${+b.cacheMusico ? eur(+b.cacheMusico) : ''}</b></label>`).join('')}</div></div>`;
+      <div class="conv-list">${sel.map(id => {
+        const pagado = !!(c.pagos && c.pagos[id]), gas = !!(c.gasPag && c.gasPag[id]);
+        // una fila por músico: el nombre a la izquierda y, a la derecha, el recuadro del caché y (si llevó coche) el de la gasolina
+        // recuadro en una sola línea: icono + cifra (más grande)
+        const caja = (cls, act, on, icono, cifra, nombre) => `<label class="pago-box ${cls} ${on ? 'on' : ''}" aria-label="${nombre}">
+            <span class="pago-txt">${icono} <b>${cifra}</b></span>
+            ${admin && !on ? `<input type="checkbox" data-dact="${act}" data-m="${id}">` : `<i class="dot ${on ? 'on' : ''}" ${on ? 'title="Pagado"' : ''}></i>`}</label>`;
+        return `<div class="pago-row">
+          <span class="pago-nombre">${esc(nombreMiembro(id, b))}</span>
+          ${caja('cache', 'pago', pagado, '💶', +b.cacheMusico ? eurCorto(+b.cacheMusico) : '—', 'Caché')}
+          ${coches[id] ? caja('gas', 'gaspago', gas, '⛽', porCoche ? eurCorto(porCoche) : '—', 'Gasolina') : nCoches ? '<span class="pago-box hueco"></span>' : ''}</div>`;
+      }).join('')}</div></div>`;
   }
   return h;
 }
@@ -980,6 +1054,7 @@ function verBolo(b) {
     const t = ev.target.closest('[data-dact]'); if (!t) return;
     const bb = B(); if (!bb) return; const c = convDe(bb);
     if (t.dataset.dact === 'resp') return responder(id, t.dataset.v);
+    if (t.dataset.dact === 'coche') return marcarCoche(id, t.dataset.m);
     if (!esAdmin()) return;
     if (t.dataset.dact === 'toggleconv') {
       c.abierta = !c.abierta;
@@ -999,7 +1074,21 @@ function verBolo(b) {
       if (c.pagos) delete c.pagos[t.dataset.x];
       if (!c.abierta) bb.musicos = vanDe(bb).length;
     }
-    if (t.dataset.dact === 'pago') { c.pagos = c.pagos || {}; if (t.checked) c.pagos[t.dataset.m] = true; else delete c.pagos[t.dataset.m]; }
+    // pagos: piden confirmación y, una vez confirmados, son definitivos (no se pueden desmarcar)
+    if (t.dataset.dact === 'pago' || t.dataset.dact === 'gaspago') {
+      ev.preventDefault();
+      const gasolina = t.dataset.dact === 'gaspago', mid = t.dataset.m, quien = nombreMiembro(mid, bb);
+      const campo = gasolina ? 'gasPag' : 'pagos';
+      if (c[campo] && c[campo][mid]) return;
+      confirmar(`¿Confirmas que <b>${esc(quien)}</b> ha cobrado ${gasolina ? 'la <b>gasolina</b>' : 'su <b>caché</b>'}?`,
+        'Esta acción es definitiva: después no se podrá desmarcar.', gasolina ? '⛽ Sí, gasolina pagada' : '💶 Sí, caché pagado').then(ok => {
+        if (!ok) return;
+        const b2 = B(); if (!b2) return; const c2 = convDe(b2);
+        c2[campo] = c2[campo] || {}; c2[campo][mid] = true;
+        save(); rerender(); verBolo(b2); toast(gasolina ? '⛽ Gasolina pagada' : '💶 Caché pagado');
+      });
+      return;
+    }
     save(); rerender(); verBolo(bb);
     if (t.dataset.dact === 'addextra' && $('#ext-in')) $('#ext-in').focus();
   };
@@ -1593,7 +1682,7 @@ function prepararTags(box) {
   box.addEventListener('click', e => { const b = e.target.closest('.tagx button'); if (b) b.parentElement.remove(); else inp.focus(); });
 }
 function openForm({ title, fields, data, onSave, onDelete, libre }) {
-  if (!libre && !esAdmin()) return toast('Solo la directiva puede editar');
+  if (!libre && !esAdmin()) return toast('Solo el administrador puede editar');
   $('#form').onclick = null;
   const form = $('#form');
   form.innerHTML = `<h3>${title}</h3>` +
