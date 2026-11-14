@@ -5,7 +5,7 @@
      entra como Administrador (contraseña) o como Músico (su nombre + PIN de 4 cifras).
    Se carga DESPUÉS del script principal, así que puede usar DB, save, toast, etc.
    ===================================================================== */
-window.APP_VERSION = 'v31'; // se sube a la vez que VERSION en sw.js en cada cambio
+window.APP_VERSION = 'v32'; // se sube a la vez que VERSION en sw.js en cada cambio
 window.Nube = (() => {
   const cfg = window.FIREBASE_CONFIG || {};
   const configurada = !!(cfg.apiKey && cfg.projectId);
