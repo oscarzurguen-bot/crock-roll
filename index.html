@@ -211,17 +211,19 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .songlink{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#120d1f;border:1px solid var(--line);text-decoration:none;color:var(--green);font-weight:800}
 
 /* tarjetas de bolo */
-.card.bolo{flex-direction:column;align-items:stretch;gap:8px;padding:14px 14px 12px;position:relative}
+.card.bolo{flex-direction:column;align-items:stretch;gap:6px;padding:11px 12px 9px;position:relative}
 .bolo-top{display:flex;align-items:flex-start;gap:10px}
-.bolo-top h4{flex:1;min-width:0;margin:0;font-size:17px;line-height:1.25}
+.bolo-top h4{flex:1;min-width:0;margin:0;font-size:16px;line-height:1.25}
 .bolo-ev{margin:-4px 0 0;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bolo-when{margin:0;font-size:13.5px;color:var(--text)}
-.bolo-chips{display:flex;gap:6px;flex-wrap:wrap}
+.bolo-when .dur{color:var(--muted);white-space:nowrap}
+.bolo-chips{display:flex;gap:5px;flex-wrap:wrap}
+.bolo-chips .bchip{font-size:11.5px;padding:2px 8px}
 .bchip.ok{color:var(--green);border-color:rgba(163,230,53,.35);background:rgba(163,230,53,.1)}
 .bchip{font-size:12px;font-weight:800;padding:3px 9px;border-radius:9px;background:#120d1f;border:1px solid var(--line);color:var(--muted)}
-.bolo-foot{display:flex;align-items:baseline;justify-content:space-between;border-top:1px dashed rgba(255,255,255,.14);padding-top:9px;margin-top:2px}
+.bolo-foot{display:flex;align-items:baseline;justify-content:space-between;border-top:1px dashed rgba(255,255,255,.14);padding-top:6px;margin-top:1px}
 .bolo-foot span{color:var(--muted);font-size:13px}
-.bolo-foot b{font-size:21px;color:var(--green)}
+.bolo-foot b{font-size:19px;color:var(--green)}
 .est{flex:none;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:5px 10px;border-radius:10px;border:1px solid transparent}
 .est::after{content:"▾";font-size:10px;opacity:.8}
 .est.proximo{background:rgba(79,195,255,.14);color:var(--prox);border-color:rgba(79,195,255,.4)}
@@ -858,8 +860,11 @@ function boloCard(b) {
       <button class="est ${e}" data-act="estmenu" data-id="${b.id}" aria-label="Cambiar estado">${ESTADOS[e][0]}</button></div>
     ${b.titulo && b.lugar ? `<p class="bolo-ev">${esc(b.titulo)}</p>` : ''}
     <p class="bolo-when">📅 ${fechaLarga(b.fecha)}${hor ? ` (${esc(hor)})` : ''}</p>
-    ${dur || +b.cacheMusico || boteCobrado(b) ? `<div class="bolo-chips">${dur ? `<span class="bchip">⏱️ ${dur}</span>` : ''}${+b.cacheMusico ? `<span class="bchip">🎺 ${eur(+b.cacheMusico)} / músico</span>` : ''}${boteCobrado(b) ? '<span class="bchip ok">🫙 Bote cobrado</span>' : ''}</div>` : ''}
-    ${convChips(b)}
+    ${(() => { // fila 1: duración, caché por músico y nº de músicos (más vas / pagados); fila 2: solo "bote cobrado"
+      const cv = convChips(b), fila = cs => (cs = cs.filter(Boolean)).length ? `<div class="bolo-chips">${cs.join('')}</div>` : '';
+      return fila([dur && `<span class="bchip">⏱️ ${dur}</span>`, +b.cacheMusico && `<span class="bchip">🎺 ${eur(+b.cacheMusico)}/músico</span>`, cv.van, ...cv.resto])
+        + fila([boteCobrado(b) && '<span class="bchip ok">🫙 Bote cobrado</span>']) + cv.botones;
+    })()}
     <div class="bolo-foot"><span>Total charanga</span><b>${eur(+b.cachet)}</b></div>
     ${estAbierto === b.id ? `<div class="est-menu">${Object.entries(ESTADOS).map(([k, [t, d]]) =>
       `<button class="${k === e ? 'on' : ''}" data-act="setest" data-id="${b.id}" data-est="${k}">${t}<small>${d}</small></button>`).join('')}</div>` : ''}
@@ -874,8 +879,8 @@ const nombreMiembro = (id, b) => (DB.miembros.find(m => m.id === id) || (b && ex
 function convChips(b) {
   const c = convDe(b), si = Object.keys(c.resp || {}).filter(k => c.resp[k] === 'si').length, me = yo();
   const chips = [];
-  if (c.abierta) chips.push(`<span class="bchip conv">✋ ${si} apuntado${si === 1 ? '' : 's'}</span>`);
-  else if (vanDe(b).length) chips.push(`<span class="bchip">👥 Van ${vanDe(b).length}</span>`);
+  const van = c.abierta ? `<span class="bchip conv">✋ ${si} apuntado${si === 1 ? '' : 's'}</span>`
+    : vanDe(b).length ? `<span class="bchip">👥 Van ${vanDe(b).length}</span>` : '';
   if (me && !c.abierta) chips.push((c.sel || []).includes(me) ? '<span class="bchip ok">✅ Vas</span>' : '<span class="bchip">No vas</span>');
   if (b.estado === 'cobrado' && vanDe(b).length) {
     const van = vanDe(b), pag = van.filter(id => c.pagos && c.pagos[id]).length;
@@ -884,7 +889,7 @@ function convChips(b) {
   const botones = me && c.abierta ? `<div class="resp-row">
       <button class="resp si ${c.resp[me] === 'si' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="si">✋ Me apunto</button>
       <button class="resp no ${c.resp[me] === 'no' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="no">No puedo</button></div>` : '';
-  return (chips.length ? `<div class="bolo-chips">${chips.join('')}</div>` : '') + botones;
+  return { van, resto: chips, botones };
 }
 // un músico responde a la convocatoria (solo su propia respuesta)
 function responder(id, v) {
