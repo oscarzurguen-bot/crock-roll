@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Crock&amp;Roll HQ</title>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/rana-192.png">
+<link rel="apple-touch-icon" href="icons/rana-apple-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -385,6 +385,7 @@ body.in-menu .music{opacity:0;pointer-events:none}
   background:linear-gradient(rgba(18,13,31,.92),rgba(18,13,31,.6) 65%,transparent);transition:opacity .3s}
 .brand{display:flex;align-items:center;gap:8px;margin-right:auto;background:none;border:0;padding:0;text-align:left;color:inherit}
 .logo{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:#1a2a05;border:2px solid var(--green);box-shadow:0 0 12px rgba(163,230,53,.5)}
+.logo svg{width:74%;height:74%;display:block}
 .brand b{font-family:Bangers,cursive;font-size:20px;letter-spacing:1px;color:var(--green);display:block;line-height:1}
 .brand small{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px}
 .chip{display:flex;align-items:center;gap:5px;background:rgba(37,28,62,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;font-weight:800;font-size:13px;white-space:nowrap}
@@ -475,6 +476,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
   background:radial-gradient(ellipse at 50% 30%,rgba(42,29,69,.92),rgba(18,13,31,.97) 70%);backdrop-filter:blur(4px)}
 #login form{width:min(100%,380px);background:var(--panel);border:2px solid #3a2d5c;border-radius:22px;padding:22px 18px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
 .login-logo{width:64px;height:64px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font-size:36px;background:#1a2a05;border:2px solid var(--green);box-shadow:0 0 18px rgba(163,230,53,.5)}
+.login-logo svg{width:74%;height:74%;display:block}
 #login h1{margin:0;text-align:center;font-family:Bangers,cursive;font-weight:400;letter-spacing:1.5px;font-size:34px;color:var(--green)}
 .login-sub{margin:0 0 14px;text-align:center;color:var(--muted);font-size:13px}
 .login-tabs{padding:0;margin-bottom:12px}
@@ -518,7 +520,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
 <button class="music" id="music" aria-label="Música on/off"><i></i><i></i><i></i></button>
 
 <header class="hud">
-  <button class="brand" id="brand" aria-label="Ajustes y copia de seguridad"><span class="logo">🐸</span><span><b>Crock&amp;Roll</b><small id="brand-sub">Charanga</small></span></button>
+  <button class="brand" id="brand" aria-label="Ajustes y copia de seguridad"><span class="logo" id="logo-hud"></span><span><b>Crock&amp;Roll</b><small id="brand-sub">Charanga</small></span></button>
   <button class="chip" data-open="cuentas">🪙 <span id="hud-saldo"></span></button>
   <button class="chip" data-open="bolos">🎺 <span id="hud-next"></span></button>
 </header>
@@ -537,7 +539,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
 
 <script>
 /* ================= UTILIDADES ================= */
+// logo de la rana (el mismo que el icono de la app); k = sufijo para que cada copia tenga sus propios ids
+window.LOGO_SVG = k => `<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="rg-${k}" cx=".45" cy=".35" r=".75"><stop offset="0" stop-color="#7ef05a"/><stop offset="1" stop-color="#2f9e22"/></radialGradient></defs><g stroke="#1d5c14" stroke-width="2"><circle cx="30" cy="34" r="15" fill="url(#rg-${k})"/><circle cx="70" cy="34" r="15" fill="url(#rg-${k})"/><ellipse cx="50" cy="60" rx="41" ry="29" fill="url(#rg-${k})"/></g><ellipse cx="50" cy="60" rx="39" ry="27" fill="url(#rg-${k})"/><circle cx="30" cy="33" r="10" fill="#fff"/><circle cx="70" cy="33" r="10" fill="#fff"/><circle cx="31" cy="34" r="5.5" fill="#1b1b1b"/><circle cx="69" cy="34" r="5.5" fill="#1b1b1b"/><circle cx="33" cy="31.5" r="1.8" fill="#fff"/><circle cx="71" cy="31.5" r="1.8" fill="#fff"/><circle cx="44" cy="50" r="1.6" fill="#1d5c14"/><circle cx="56" cy="50" r="1.6" fill="#1d5c14"/><path d="M20 60 Q50 88 80 60 Q50 70 20 60Z" fill="#e32626" stroke="#8c1010" stroke-width="1.5" stroke-linejoin="round"/><path d="M24 61.5 Q50 70 76 61.5 Q50 75 24 61.5Z" fill="#fff"/></svg>`;
 const $ = s => document.querySelector(s);
+$('#logo-hud').innerHTML = LOGO_SVG('hud');
 const uid = () => Math.random().toString(36).slice(2, 9);
 const z = n => String(n).padStart(2, '0');
 const iso = d => `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`;

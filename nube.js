@@ -5,7 +5,7 @@
      entra como Administrador (contraseña) o como Músico (su nombre + PIN de 4 cifras).
    Se carga DESPUÉS del script principal, así que puede usar DB, save, toast, etc.
    ===================================================================== */
-window.APP_VERSION = 'v29'; // se sube a la vez que VERSION en sw.js en cada cambio
+window.APP_VERSION = 'v31'; // se sube a la vez que VERSION en sw.js en cada cambio
 window.Nube = (() => {
   const cfg = window.FIREBASE_CONFIG || {};
   const configurada = !!(cfg.apiKey && cfg.projectId);
@@ -156,7 +156,7 @@ window.Nube = (() => {
     const d = document.createElement('div');
     d.id = 'login'; d.hidden = true;
     d.innerHTML = `<form id="login-form" autocomplete="off">
-      <div class="login-logo">🐸</div>
+      <div class="login-logo">${window.LOGO_SVG ? LOGO_SVG('login') : '🐸'}</div>
       <h1>Crock&amp;Roll HQ</h1>
       <p class="login-sub">La app de la charanga</p>
       <div class="tabs login-tabs"><button type="button" data-lt="musico">Músico</button><button type="button" data-lt="admin">Administrador</button></div>
