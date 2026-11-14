@@ -296,6 +296,16 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .bolo-link .info b{display:block;font-size:15px}
 .bolo-link .info em{display:block;font-style:normal;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bolo-link .go{font-size:26px;color:var(--prox);font-weight:800}
+.bol-search{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.bol-search .search{margin:0;flex:1}
+.hamb{position:relative;flex:none;width:46px;height:46px;border-radius:12px;border:1px solid #3a2d5c;background:#120d1f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0}
+.hamb i{display:block;width:20px;height:2.5px;border-radius:2px;background:var(--text)}
+.hamb.on{background:var(--green);border-color:var(--green)}.hamb.on i{background:#14200a}
+.hamb-dot{position:absolute;right:6px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #120d1f}
+.bol-filtros{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;margin-bottom:12px}
+.bol-filtros label{margin-bottom:8px}
+.bol-filtros select{padding:9px 10px;font-size:15px}
+.bol-filtros .btn{grid-column:1/-1;padding:9px}
 /* detalles del bolo */
 .det-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .det-head h3{flex:1;margin:0}
@@ -826,6 +836,8 @@ $('#s-body').addEventListener('click', e => {
     if (calM < 0) { calM = 11; calY--; } if (calM > 11) { calM = 0; calY++; }
     return rerender();
   }
+  if (a.dataset.act === 'bolfiltros') { bolFOpen = !bolFOpen; return rerender(); }
+  if (a.dataset.act === 'bollimpiar') { bolQ = ''; bolF = { estado: '', anio: '', mes: '', musico: '', orden: 'reciente' }; return rerender(); }
   if (a.dataset.act === 'calday') { calSel = calSel === a.dataset.d ? null : a.dataset.d; return rerender(); } // tocar otra vez el mismo día vuelve a los próximos
   if (a.dataset.act === 'calprox') { calSel = null; return rerender(); }
   if (a.dataset.act === 'miembro') return formMiembro(DB.miembros.find(x => x.id === a.dataset.id));
@@ -846,7 +858,12 @@ $('#s-body').addEventListener('click', e => {
   if (act === 'mas' || act === 'menos') { const it = DB.inventario.find(x => x.id === id); it.cant = Math.max(0, it.cant + (act === 'mas' ? 1 : -1)); save(); rerender(); }
   if (act === 'botemov') verMov(DB.bote.find(x => x.id === id));
 });
-$('#s-body').addEventListener('input', e => { if (e.target.id === 'inv-q') { invQuery = e.target.value; renderInvList(); } if (e.target.id === 'rep-q') { repQuery = e.target.value; renderRepList(); } });
+$('#s-body').addEventListener('change', e => {
+  const f = e.target.dataset && e.target.dataset.f; if (!f) return;
+  bolF[f] = e.target.value; rerender();
+});
+$('#s-body').addEventListener('input', e => {
+  if (e.target.id === 'bol-q') { bolQ = e.target.value; return renderBolosRes(cur.tab); } if (e.target.id === 'inv-q') { invQuery = e.target.value; renderInvList(); } if (e.target.id === 'rep-q') { repQuery = e.target.value; renderRepList(); } });
 
 /* ================= BOLOS ================= */
 const ESTADOS = { proximo: ['Próximo', 'Bolo aún no realizado'], pendiente: ['Pendiente', 'Realizado, pendiente de cobrar'], cobrado: ['Cobrado', 'Ya cobrado'] };
@@ -871,18 +888,57 @@ const boteDe = b => DB.bote.filter(m => m.bolo === b.id && m.importe > 0).reduce
 // lo que queda por cobrar del bolo: el total menos lo que ya pasó al bote
 const porCobrar = b => b.estado === 'cobrado' ? 0 : Math.max(0, (+b.cachet || 0) - boteDe(b));
 let estAbierto = null;
+// buscador de bolos: texto + filtros (menú ☰). Mientras se busca, se busca en TODOS los bolos (pasados incluidos)
+let bolQ = '', bolF = { estado: '', anio: '', mes: '', musico: '', orden: 'reciente' }, bolFOpen = false;
+const filtrosActivos = () => !!(bolF.estado || bolF.anio || bolF.mes || bolF.musico);
 function renderBolos(tab) {
   avanzarEstados();
+  const anios = [...new Set(DB.bolos.map(b => b.fecha.slice(0, 4)))].sort().reverse();
+  const opt = (v, l, cur) => `<option value="${v}" ${String(cur) === String(v) ? 'selected' : ''}>${l}</option>`;
+  $('#s-body').innerHTML = `
+    <div class="bol-search">
+      <input class="search" id="bol-q" placeholder="Buscar bolo: lugar, evento, notas…" value="${esc(bolQ)}" enterkeyhint="search" autocomplete="off">
+      <button class="hamb ${bolFOpen ? 'on' : ''}" data-act="bolfiltros" aria-label="Filtros" aria-expanded="${bolFOpen}">
+        <i></i><i></i><i></i>${filtrosActivos() ? '<b class="hamb-dot"></b>' : ''}</button>
+    </div>
+    ${bolFOpen ? `<div class="bol-filtros">
+      <label>Estado<select data-f="estado">${opt('', 'Todos', bolF.estado)}${Object.entries(ESTADOS).map(([k, [t]]) => opt(k, t, bolF.estado)).join('')}</select></label>
+      <label>Año<select data-f="anio">${opt('', 'Todos', bolF.anio)}${anios.map(y => opt(y, y, bolF.anio)).join('')}</select></label>
+      <label>Mes<select data-f="mes">${opt('', 'Todos', bolF.mes)}${MESES.map((m, k) => opt(k + 1, m, bolF.mes)).join('')}</select></label>
+      <label>Músico que fue<select data-f="musico">${opt('', 'Cualquiera', bolF.musico)}${[...DB.miembros].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).map(m => opt(m.id, esc(m.nombre), bolF.musico)).join('')}</select></label>
+      <label>Orden<select data-f="orden">${opt('reciente', 'Recientes primero', bolF.orden)}${opt('antiguo', 'Antiguos primero', bolF.orden)}</select></label>
+      <button class="btn" data-act="bollimpiar">Quitar filtros</button>
+    </div>` : ''}
+    <div id="bol-res"></div>`;
+  renderBolosRes(tab);
+}
+function renderBolosRes(tab) {
+  const box = $('#bol-res'); if (!box) return;
+  if (bolQ.trim() || filtrosActivos()) {
+    const q = norm(bolQ), dir = bolF.orden === 'antiguo' ? 1 : -1;
+    const res = DB.bolos.filter(b =>
+      (!q || norm([b.lugar, b.titulo, b.notas].join(' ')).includes(q)) &&
+      (!bolF.estado || b.estado === bolF.estado) &&
+      (!bolF.anio || b.fecha.startsWith(bolF.anio)) &&
+      (!bolF.mes || +b.fecha.slice(5, 7) === +bolF.mes) &&
+      (!bolF.musico || vanDe(b).includes(bolF.musico))
+    ).sort((a, b) => dir * (a.fecha + (a.hora || '')).localeCompare(b.fecha + (b.hora || '')));
+    const total = res.reduce((a, b) => a + (+b.cachet || 0), 0);
+    box.innerHTML = `<div class="folder-bar"><h5>${res.length} bolo${res.length === 1 ? '' : 's'} encontrado${res.length === 1 ? '' : 's'}${res.length ? ' · ' + eur(total) : ''}</h5>
+        <button class="mini" data-act="bollimpiar">Limpiar</button></div>
+      <div class="list">${res.map(boloCard).join('') || '<div class="empty"><span>🔎</span>Ningún bolo coincide con la búsqueda.</div>'}</div>`;
+    return;
+  }
   const list = DB.bolos.filter(b => b.estado === tab)
     .sort((a, b) => (tab === 'proximo' ? 1 : -1) * (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
   const suma = est => DB.bolos.filter(b => est.includes(b.estado)).reduce((a, b) => a + porCobrar(b), 0);
   const vacio = { proximo: 'No hay bolos próximos.', pendiente: 'No hay bolos pendientes de cobro.', cobrado: 'Aún no hay bolos cobrados.' }[tab];
-  $('#s-body').innerHTML = `
+  box.innerHTML = `
     <div class="sum">
       <div class="stat warnbox"><small>Pendiente de cobro</small><b>${eur(suma(['pendiente']))}</b><span class="sub">Bolos tocados sin cobrar</span></div>
       <div class="stat bluebox"><small>Ganancia estimada</small><b>${eur(suma(['pendiente', 'proximo']))}</b><span class="sub">Pendientes + próximos</span></div>
     </div>
-    <div class="list">${list.map(boloCard).join('') || `<div class="empty"><span>🗓️</span>${vacio}<br>Pulsa + para añadir uno.</div>`}</div>`;
+    <div class="list">${list.map(boloCard).join('') || `<div class="empty"><span>🗓️</span>${vacio}${esAdmin() ? '<br>Pulsa + para añadir uno.' : ''}</div>`}</div>`;
 }
 function boloCard(b) {
   const dur = durTxt(duracion(b)), hor = horarioTxt(b), e = ESTADOS[b.estado] ? b.estado : 'proximo';
