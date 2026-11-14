@@ -896,19 +896,21 @@ function convHtml(b) {
   if (me && c.abierta) h += `<div class="resp-row">
       <button type="button" class="resp si ${resp[me] === 'si' ? 'on' : ''}" data-dact="resp" data-v="si">✋ Me apunto</button>
       <button type="button" class="resp no ${resp[me] === 'no' ? 'on' : ''}" data-dact="resp" data-v="no">No puedo</button></div>`;
-  if (admin) h += `<p class="conv-tip">${c.abierta ? 'Marca quién va de entre los que se apuntan y cierra la convocatoria.' : 'Seleccionados: ' + sel.length}</p>`;
+  // con la convocatoria cerrada no se puede tocar la selección ni los extras (solo los pagos) hasta reabrirla
+  const editable = admin && c.abierta;
+  if (admin) h += `<p class="conv-tip">${c.abierta ? 'Marca quién va de entre los que se apuntan y cierra la convocatoria.' : '🔒 Cerrada (van ' + vanDe(b).length + '). Para cambiar la selección o los extras, pulsa Reabrir.'}</p>`;
   h += `<div class="conv-list">${ms.map(m => {
     const on = sel.includes(m.id);
-    return `<label class="conv-row ${on ? 'on' : ''}">${admin ? `<input type="checkbox" data-dact="sel" data-m="${m.id}" ${on ? 'checked' : ''}>` : `<i class="dot ${on ? 'on' : ''}"></i>`}
+    return `<label class="conv-row ${on ? 'on' : ''}">${editable ? `<input type="checkbox" data-dact="sel" data-m="${m.id}" ${on ? 'checked' : ''}>` : `<i class="dot ${on ? 'on' : ''}"></i>`}
       <span>${esc(m.nombre)}<small>${esc(m.instrumento || '')}</small></span>${pill(resp[m.id])}</label>`;
   }).join('') || '<p class="conv-tip">No hay músicos en La banda.</p>'}</div></div>`;
   // extras: músicos de fuera de la charanga para este bolo
   const ext = extrasDe(b);
-  if (admin || ext.length) h += `<div class="conv-box"><div class="conv-head"><b>➕ Extras</b>${ext.length ? `<span class="pill">${ext.length}</span>` : ''}</div>
-    ${admin ? '<p class="conv-tip">Músicos que no son de la charanga y vienen a este bolo.</p>' : ''}
+  if (editable || ext.length) h += `<div class="conv-box"><div class="conv-head"><b>➕ Extras</b>${ext.length ? `<span class="pill">${ext.length}</span>` : ''}</div>
+    ${editable ? '<p class="conv-tip">Músicos que no son de la charanga y vienen a este bolo.</p>' : ''}
     ${ext.length ? `<div class="conv-list">${ext.map(x => `<div class="conv-row on"><i class="dot on"></i><span>${esc(x.nombre)}<small>Extra</small></span>
-      ${admin ? `<button type="button" class="mini undo" data-dact="delextra" data-x="${x.id}" aria-label="Quitar ${esc(x.nombre)}">Quitar</button>` : ''}</div>`).join('')}</div>` : ''}
-    ${admin ? `<div class="ext-add"><input id="ext-in" placeholder="Nombre e instrumento (ej. Luis · trompeta)" enterkeyhint="done" autocomplete="off">
+      ${editable ? `<button type="button" class="mini undo" data-dact="delextra" data-x="${x.id}" aria-label="Quitar ${esc(x.nombre)}">Quitar</button>` : ''}</div>`).join('')}</div>` : ''}
+    ${editable ? `<div class="ext-add"><input id="ext-in" placeholder="Nombre e instrumento (ej. Luis · trompeta)" enterkeyhint="done" autocomplete="off">
       <button type="button" class="btn primary" data-dact="addextra">Añadir</button></div>` : ''}</div>`;
   // pagos: una vez cobrado el bolo, lista de los que fueron (de la banda y extras)
   const van = vanDe(b);
@@ -969,6 +971,7 @@ function verBolo(b) {
       if (!c.abierta && vanDe(bb).length) bb.musicos = vanDe(bb).length;
       toast(c.abierta ? 'Convocatoria reabierta' : `Convocatoria cerrada · van ${vanDe(bb).length}`);
     }
+    if (!c.abierta && ['sel', 'addextra', 'delextra'].includes(t.dataset.dact)) return toast('🔒 Convocatoria cerrada: reábrela para cambiarla');
     if (t.dataset.dact === 'sel') { c.sel = c.sel || []; c.sel = t.checked ? [...new Set(c.sel.concat(t.dataset.m))] : c.sel.filter(x => x !== t.dataset.m); if (!c.abierta) bb.musicos = vanDe(bb).length; }
     if (t.dataset.dact === 'addextra') {
       const n = ($('#ext-in').value || '').trim(); if (!n) return $('#ext-in').focus();
