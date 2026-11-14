@@ -252,6 +252,7 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .conv-row span{flex:1;min-width:0;display:flex;flex-direction:column}
 .conv-row small{color:var(--muted);font-size:11.5px;font-weight:600}
 .conv-row .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.ext-add{display:flex;gap:6px}.ext-add input{margin:0;flex:1;min-width:0}.ext-add .btn{flex:none;padding:10px 14px}
 .conv-row .dot.on{background:var(--green);border-color:var(--green)}
 /* detalles del bolo */
 .det-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
@@ -856,16 +857,19 @@ function boloCard(b) {
 }
 /* ---- convocatoria, selección y pagos ---- */
 const convDe = b => b.conv || (b.conv = { abierta: true, resp: {}, sel: [], pagos: {} });
-const nombreMiembro = id => (DB.miembros.find(m => m.id === id) || {}).nombre || '¿?';
+// músicos que van: los seleccionados de La banda + los extras (gente de fuera que viene a ese bolo)
+const extrasDe = b => (convDe(b).extras || []);
+const vanDe = b => [...(convDe(b).sel || []), ...extrasDe(b).map(x => x.id)];
+const nombreMiembro = (id, b) => (DB.miembros.find(m => m.id === id) || (b && extrasDe(b).find(x => x.id === id)) || {}).nombre || '¿?';
 function convChips(b) {
   const c = convDe(b), si = Object.keys(c.resp || {}).filter(k => c.resp[k] === 'si').length, me = yo();
   const chips = [];
   if (c.abierta) chips.push(`<span class="bchip conv">✋ ${si} apuntado${si === 1 ? '' : 's'}</span>`);
-  else if ((c.sel || []).length) chips.push(`<span class="bchip">👥 Van ${c.sel.length}</span>`);
+  else if (vanDe(b).length) chips.push(`<span class="bchip">👥 Van ${vanDe(b).length}</span>`);
   if (me && !c.abierta) chips.push((c.sel || []).includes(me) ? '<span class="bchip ok">✅ Vas</span>' : '<span class="bchip">No vas</span>');
-  if (b.estado === 'cobrado' && (c.sel || []).length) {
-    const pag = c.sel.filter(id => c.pagos && c.pagos[id]).length;
-    chips.push(`<span class="bchip ${pag === c.sel.length ? 'ok' : 'warn'}">💶 Pagados ${pag}/${c.sel.length}</span>`);
+  if (b.estado === 'cobrado' && vanDe(b).length) {
+    const van = vanDe(b), pag = van.filter(id => c.pagos && c.pagos[id]).length;
+    chips.push(`<span class="bchip ${pag === van.length ? 'ok' : 'warn'}">💶 Pagados ${pag}/${van.length}</span>`);
   }
   const botones = me && c.abierta ? `<div class="resp-row">
       <button class="resp si ${c.resp[me] === 'si' ? 'on' : ''}" data-act="resp" data-id="${b.id}" data-v="si">✋ Me apunto</button>
@@ -898,13 +902,22 @@ function convHtml(b) {
     return `<label class="conv-row ${on ? 'on' : ''}">${admin ? `<input type="checkbox" data-dact="sel" data-m="${m.id}" ${on ? 'checked' : ''}>` : `<i class="dot ${on ? 'on' : ''}"></i>`}
       <span>${esc(m.nombre)}<small>${esc(m.instrumento || '')}</small></span>${pill(resp[m.id])}</label>`;
   }).join('') || '<p class="conv-tip">No hay músicos en La banda.</p>'}</div></div>`;
-  // pagos: una vez cobrado el bolo, lista de los que fueron
-  if (sel.length && b.estado === 'cobrado') {
-    const pag = sel.filter(id => c.pagos && c.pagos[id]).length;
+  // extras: músicos de fuera de la charanga para este bolo
+  const ext = extrasDe(b);
+  if (admin || ext.length) h += `<div class="conv-box"><div class="conv-head"><b>➕ Extras</b>${ext.length ? `<span class="pill">${ext.length}</span>` : ''}</div>
+    ${admin ? '<p class="conv-tip">Músicos que no son de la charanga y vienen a este bolo.</p>' : ''}
+    ${ext.length ? `<div class="conv-list">${ext.map(x => `<div class="conv-row on"><i class="dot on"></i><span>${esc(x.nombre)}<small>Extra</small></span>
+      ${admin ? `<button type="button" class="mini undo" data-dact="delextra" data-x="${x.id}" aria-label="Quitar ${esc(x.nombre)}">Quitar</button>` : ''}</div>`).join('')}</div>` : ''}
+    ${admin ? `<div class="ext-add"><input id="ext-in" placeholder="Nombre e instrumento (ej. Luis · trompeta)" enterkeyhint="done" autocomplete="off">
+      <button type="button" class="btn primary" data-dact="addextra">Añadir</button></div>` : ''}</div>`;
+  // pagos: una vez cobrado el bolo, lista de los que fueron (de la banda y extras)
+  const van = vanDe(b);
+  if (van.length && b.estado === 'cobrado') {
+    const sel = van, pag = sel.filter(id => c.pagos && c.pagos[id]).length;
     h += `<div class="conv-box"><div class="conv-head"><b>💶 Pagos a músicos</b><span class="pill ${pag === sel.length ? 'ok' : 'warn'}">${pag}/${sel.length}</span></div>
       <div class="conv-list">${sel.map(id => `<label class="conv-row ${c.pagos && c.pagos[id] ? 'on' : ''}">
         ${admin ? `<input type="checkbox" data-dact="pago" data-m="${id}" ${c.pagos && c.pagos[id] ? 'checked' : ''}>` : `<i class="dot ${c.pagos && c.pagos[id] ? 'on' : ''}"></i>`}
-        <span>${esc(nombreMiembro(id))}</span><b>${+b.cacheMusico ? eur(+b.cacheMusico) : ''}</b></label>`).join('')}</div></div>`;
+        <span>${esc(nombreMiembro(id, b))}</span><b>${+b.cacheMusico ? eur(+b.cacheMusico) : ''}</b></label>`).join('')}</div></div>`;
   }
   return h;
 }
@@ -953,14 +966,27 @@ function verBolo(b) {
     if (!esAdmin()) return;
     if (t.dataset.dact === 'toggleconv') {
       c.abierta = !c.abierta;
-      if (!c.abierta && (c.sel || []).length) bb.musicos = c.sel.length;
-      toast(c.abierta ? 'Convocatoria reabierta' : `Convocatoria cerrada · van ${(c.sel || []).length}`);
+      if (!c.abierta && vanDe(bb).length) bb.musicos = vanDe(bb).length;
+      toast(c.abierta ? 'Convocatoria reabierta' : `Convocatoria cerrada · van ${vanDe(bb).length}`);
     }
-    if (t.dataset.dact === 'sel') { c.sel = c.sel || []; c.sel = t.checked ? [...new Set(c.sel.concat(t.dataset.m))] : c.sel.filter(x => x !== t.dataset.m); if (!c.abierta) bb.musicos = c.sel.length; }
+    if (t.dataset.dact === 'sel') { c.sel = c.sel || []; c.sel = t.checked ? [...new Set(c.sel.concat(t.dataset.m))] : c.sel.filter(x => x !== t.dataset.m); if (!c.abierta) bb.musicos = vanDe(bb).length; }
+    if (t.dataset.dact === 'addextra') {
+      const n = ($('#ext-in').value || '').trim(); if (!n) return $('#ext-in').focus();
+      c.extras = (c.extras || []).concat({ id: 'x' + uid(), nombre: n });
+      if (!c.abierta) bb.musicos = vanDe(bb).length;
+      toast('➕ Extra añadido');
+    }
+    if (t.dataset.dact === 'delextra') {
+      c.extras = (c.extras || []).filter(x => x.id !== t.dataset.x);
+      if (c.pagos) delete c.pagos[t.dataset.x];
+      if (!c.abierta) bb.musicos = vanDe(bb).length;
+    }
     if (t.dataset.dact === 'pago') { c.pagos = c.pagos || {}; if (t.checked) c.pagos[t.dataset.m] = true; else delete c.pagos[t.dataset.m]; }
     save(); rerender(); verBolo(bb);
+    if (t.dataset.dact === 'addextra' && $('#ext-in')) $('#ext-in').focus();
   };
   form.onsubmit = e => e.preventDefault();
+  if ($('#ext-in')) $('#ext-in').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); form.querySelector('[data-dact=addextra]').click(); } });
   $('#d-x').onclick = closeForm;
   if ($('#d-edit')) $('#d-edit').onclick = () => formBolo(B());
   // deshacer el cobro del bote: se borra de la caja fuerte la aportación ligada a este bolo (pide confirmación)
