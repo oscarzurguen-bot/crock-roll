@@ -120,6 +120,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .social small{opacity:.85;font-size:13px}
 .social .go{margin-left:auto;font-size:22px}
 .ig{background:linear-gradient(45deg,#f9a73e 0%,#e1306c 45%,#833ab4 100%)}
+.wa{background:linear-gradient(135deg,#25d366,#128c7e)}
 .tt{background:#111;border-color:#000;box-shadow:0 5px 0 #000,-3px 0 0 #25f4ee inset,3px 0 0 #fe2c55 inset}
 .edit-links{display:block;margin:6px auto 0;background:none;border:1px dashed var(--line);color:var(--muted);padding:10px 16px;border-radius:12px;font-weight:700}
 
@@ -1230,8 +1231,9 @@ const handle = v => String(v || '').trim().replace(/^@/, '');
 const redUrl = (v, base) => /^https?:\/\//i.test(String(v).trim()) ? String(v).trim() : base + handle(v);
 const ICON_IG = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg>';
 const ICON_TT = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M16.5 3c.3 2.2 1.7 3.8 4 4v3.1c-1.5 0-2.9-.4-4-1.2v6.3c0 3.4-2.6 5.8-5.8 5.8S5 18.6 5 15.3c0-3.4 2.9-6 6.4-5.6v3.2c-1.6-.4-3.2.8-3.2 2.4 0 1.4 1.1 2.5 2.5 2.5s2.6-1 2.6-2.7V3h3.2z"/></svg>';
+const ICON_GRUPO = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>';
 function renderRedes() {
-  const ig = DB.redes.instagram, tt = DB.redes.tiktok;
+  const ig = DB.redes.instagram, tt = DB.redes.tiktok, wa = DB.redes.whatsapp;
   const card = (cls, ico, name, v, url) => v
     ? `<a class="social ${cls}" href="${esc(url)}" target="_blank" rel="noopener"><span class="logo-s">${ico}</span>
          <span><b>${name}</b><small>@${esc(handle(v).replace(/^https?:\/\/[^/]+\/@?/i, ''))}</small></span><span class="go">↗</span></a>`
@@ -1240,13 +1242,17 @@ function renderRedes() {
     <p style="color:var(--muted);margin:0 2px 14px">¡Síguenos y comparte nuestros bolos! 🐸🎺</p>
     ${card('ig', ICON_IG, 'Instagram', ig, redUrl(ig, 'https://www.instagram.com/'))}
     ${card('tt', ICON_TT, 'TikTok', tt, redUrl(tt, 'https://www.tiktok.com/@'))}
-    ${!ig && !tt ? '<div class="empty"><span>📵</span>No hay redes configuradas.</div>' : ''}
-    <button class="edit-links" data-act="redesedit">✏️ Editar enlaces</button>`;
+    ${wa ? `<h5>Solo para la charanga</h5>
+    <a class="social wa" href="${esc(redUrl(wa, 'https://chat.whatsapp.com/'))}" target="_blank" rel="noopener"><span class="logo-s">${ICON_GRUPO}</span>
+      <span><b>Grupo de WhatsApp</b><small>Entra al grupo de la charanga</small></span><span class="go">↗</span></a>` : ''}
+    ${!ig && !tt && !wa ? '<div class="empty"><span>📵</span>No hay redes configuradas.</div>' : ''}
+    ${esAdmin() ? '<button class="edit-links" data-act="redesedit">✏️ Editar enlaces</button>' : ''}`;
 }
 function formRedes() {
   openForm({
     title: 'Enlaces de redes', data: DB.redes,
-    fields: [{ k: 'instagram', l: 'Instagram (usuario o enlace)' }, { k: 'tiktok', l: 'TikTok (usuario o enlace)' }],
+    fields: [{ k: 'instagram', l: 'Instagram (usuario o enlace)' }, { k: 'tiktok', l: 'TikTok (usuario o enlace)' },
+      { k: 'whatsapp', l: 'Grupo de WhatsApp (enlace de invitación)', t: 'url' }],
     onSave: v => Object.assign(DB.redes, v)
   });
 }
