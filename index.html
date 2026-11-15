@@ -1380,11 +1380,11 @@ function renderRepList() {
     .filter(s => (s.titulo + ' ' + (s.autor || '')).toLowerCase().includes(q))
     .sort((a, b) => a.titulo.localeCompare(b.titulo, 'es'));
   $('#rep-list').innerHTML = list.map(s => {
-    const sub = [s.autor, s.tono && 'Tono: ' + s.tono].filter(Boolean).map(esc).join(' · ');
+    const sub = s.autor ? esc(s.autor) : '';
     const c = carpetaDe(s.carpeta);
     return `<div class="card" data-act="cancion" data-id="${s.id}" role="button">
       <div class="ico-box">${ICON_SONG}</div>
-      <div class="info"><h4>${esc(s.titulo)}</h4><p>${sub || '&nbsp;'}</p>
+      <div class="info"><h4>${esc(s.titulo)}</h4>${sub ? `<p>${sub}</p>` : ''}
         ${!enCarpeta && c ? `<span class="tag-carpeta" style="--c:${colorCarpeta(c)}">${esc(c.nombre)}</span>` : ''}</div>
       ${s.enlace ? `<div class="right acts"><a class="songlink" href="${esc(s.enlace)}" target="_blank" rel="noopener" aria-label="Abrir enlace">↗</a></div>` : ''}
     </div>`;
@@ -1397,7 +1397,7 @@ function formCancion(c) {
     title: c ? 'Editar canción' : 'Nueva canción', data: c || { carpeta: def },
     fields: [
       { k: 'titulo', l: 'Título', req: 1 }, { k: 'autor', l: 'Autor / versión' },
-      [{ k: 'carpeta', l: 'Carpeta', t: 'select', o: carpetas }, { k: 'tono', l: 'Tono' }],
+      { k: 'carpeta', l: 'Carpeta', t: 'select', o: carpetas },
       { k: 'enlace', l: 'Enlace (partitura, vídeo…)', t: 'url' },
       { k: 'notas', l: 'Notas (estructura, quién canta…)', t: 'textarea' }
     ],
