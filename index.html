@@ -368,7 +368,10 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .sw input:focus-visible+i{outline:2px solid var(--green);outline-offset:2px}
 
 /* miembros */
-.avatar{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:19px;color:#14200a;border:2px solid #14200a}
+.avatar{position:relative;flex:none;width:48px;height:48px;padding:0;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:19px;color:#14200a;border:2px solid #14200a}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.avatar .cam{position:absolute;right:-4px;bottom:-4px;width:20px;height:20px;border-radius:50%;background:var(--panel);border:1px solid var(--line);font-size:10px;font-style:normal;display:grid;place-items:center}
+.avatar.editable{cursor:pointer}
 .right.acts{flex-direction:row}
 .acts a{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#120d1f;border:1px solid var(--line);text-decoration:none;font-size:16px}
 
@@ -847,7 +850,8 @@ $('#s-body').addEventListener('click', e => {
   if (a.dataset.act === 'bollimpiar') { bolQ = ''; bolF = { estado: '', anio: '', mes: '', musico: '', orden: 'reciente' }; return rerender(); }
   if (a.dataset.act === 'calday') { calSel = calSel === a.dataset.d ? null : a.dataset.d; return rerender(); } // tocar otra vez el mismo día vuelve a los próximos
   if (a.dataset.act === 'calprox') { calSel = null; return rerender(); }
-  if (a.dataset.act === 'miembro') return formMiembro(DB.miembros.find(x => x.id === a.dataset.id));
+  if (a.dataset.act === 'foto') return elegirFoto(a.dataset.id);
+  if (a.dataset.act === 'miembro') return esAdmin() ? formMiembro(DB.miembros.find(x => x.id === a.dataset.id)) : null;
   if (a.dataset.act === 'redesedit') return formRedes();
   if (a.dataset.act === 'repfolder') { repFolder = a.dataset.id; repQuery = ''; return rerender(); }
   if (a.dataset.act === 'repback') { repFolder = null; repQuery = ''; return rerender(); }
@@ -1452,6 +1456,34 @@ function formRedes() {
 }
 
 /* ================= MIEMBROS (póster) ================= */
+// fotos de perfil: el administrador puede poner la de cualquiera; cada músico, la suya.
+// Se guardan pequeñas (192 px, JPEG) dentro del propio miembro, sin ocupar espacio de caché.
+const puedeFoto = id => esAdmin() || id === yo();
+function elegirFoto(id) {
+  if (!puedeFoto(id)) return;
+  const m = DB.miembros.find(x => x.id === id); if (!m) return;
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    const url = URL.createObjectURL(f), im = new Image();
+    im.onload = () => {
+      const S = 192, c = document.createElement('canvas'); c.width = c.height = S;
+      const lado = Math.min(im.width, im.height); // recorte cuadrado centrado
+      c.getContext('2d').drawImage(im, (im.width - lado) / 2, (im.height - lado) / 2, lado, lado, 0, 0, S, S);
+      URL.revokeObjectURL(url);
+      guardarFoto(m, c.toDataURL('image/jpeg', .82));
+    };
+    im.onerror = () => toast('⚠️ No se pudo leer la imagen');
+    im.src = url;
+  };
+  inp.click();
+}
+function guardarFoto(m, dato) {
+  m.foto = dato || '';
+  if (esAdmin()) save();
+  else { if (window.Nube) Nube.campo('miembros', m.id, 'foto', dato || null); try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} }
+  rerender(); toast(dato ? '📷 Foto actualizada' : 'Foto quitada');
+}
 const avatarColor = s => `hsl(${[...s].reduce((a, c) => a + c.charCodeAt(0), 0) * 37 % 360} 70% 65%)`;
 function renderMiembros() {
   const inst = new Set(DB.miembros.flatMap(m => instrumentosDe(m).map(i => i.toLowerCase()))).size;
@@ -1464,7 +1496,8 @@ function renderMiembros() {
       const items = DB.inventario.filter(i => i.asignado === m.nombre).length;
       const tel = (m.telefono || '').replace(/\D/g, ''), wa = tel.length === 9 ? '34' + tel : tel;
       return `<div class="card" data-act="miembro" data-id="${m.id}" role="button">
-        <div class="avatar" style="background:${avatarColor(m.nombre)}">${esc((m.nombre || '?')[0])}</div>
+        <button class="avatar ${puedeFoto(m.id) ? 'editable' : ''}" style="background:${avatarColor(m.nombre)}" ${puedeFoto(m.id) ? `data-act="foto" data-id="${m.id}" aria-label="Cambiar la foto de ${esc(m.nombre)}"` : 'tabindex="-1" aria-hidden="true"'}>
+          ${m.foto ? `<img src="${m.foto}" alt="">` : esc((m.nombre || '?')[0])}${puedeFoto(m.id) ? '<i class="cam">📷</i>' : ''}</button>
         <div class="info"><h4>${esc(m.nombre)}</h4><p class="wrap">🎵 ${esc(instrumentosDe(m).join(' · ')) || '—'}</p><p>🎒 ${items} cosas</p></div>
         <div class="right acts">${tel ? `<a href="tel:${tel}" aria-label="Llamar">📞</a><a href="https://wa.me/${wa}" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>` : '<span class="pill">Sin tlf</span>'}</div>
       </div>`;

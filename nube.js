@@ -5,7 +5,7 @@
      entra como Administrador (contraseña) o como Músico (su nombre + PIN de 4 cifras).
    Se carga DESPUÉS del script principal, así que puede usar DB, save, toast, etc.
    ===================================================================== */
-window.APP_VERSION = 'v33'; // se sube a la vez que VERSION en sw.js en cada cambio
+window.APP_VERSION = 'v34'; // se sube a la vez que VERSION en sw.js en cada cambio
 window.Nube = (() => {
   const cfg = window.FIREBASE_CONFIG || {};
   const configurada = !!(cfg.apiKey && cfg.projectId);
@@ -233,6 +233,7 @@ window.Nube = (() => {
     const txt = { conectando: 'Conectando…', subiendo: 'Guardando…', ok: 'Sincronizado', error: 'Problema de conexión' }[estado] || '';
     return `<div class="conv-box"><div class="conv-head"><b>☁️ Sesión</b><span class="pill ${estado === 'ok' ? 'ok' : estado === 'error' ? 'bad' : 'warn'}">${txt}</span></div>
       <p class="conv-tip">Has entrado como <b style="color:var(--text)">${admin ? 'Administrador' : esc(sesion && sesion.nombre || 'Músico')}</b>.${admin ? '' : ' Puedes ver todo y apuntarte a los bolos; lo demás lo gestional administrador.'}</p>
+      ${!admin && sesion && sesion.miembroId ? '<button type="button" class="btn" id="nb-foto">📷 Cambiar mi foto de perfil</button>' : ''}
       <button type="button" class="btn" id="nb-salir">Cerrar sesión</button>
       <p class="conv-tip" style="text-align:center">Versión de la app: ${window.APP_VERSION}</p></div>
     ${admin ? `<div class="conv-box"><div class="conv-head"><b>🔑 Accesos</b></div>
@@ -246,6 +247,7 @@ window.Nube = (() => {
   function ajustesBind(form) {
     const q = s => form.querySelector(s);
     if (q('#nb-salir')) q('#nb-salir').onclick = cerrarSesion;
+    if (q('#nb-foto')) q('#nb-foto').onclick = () => { closeForm(); elegirFoto(sesion.miembroId); };
     if (q('#nb-pass-ok')) q('#nb-pass-ok').onclick = async () => {
       const p = q('#nb-pass').value; if (p.length < 4) return toast('Mínimo 4 caracteres');
       await fs.doc('ajustes/seguridad').set({ adminHash: await sha('crocknroll|admin|' + p) }, { merge: true });
