@@ -290,6 +290,13 @@ body.in-menu .music{opacity:0;pointer-events:none}
 .ico-box.flecha.baja{color:var(--red);background:rgba(255,93,110,.12);border-color:rgba(255,93,110,.4)}
 .tipo-mov{display:inline-flex;align-items:center;gap:6px}.tipo-mov svg{width:16px;height:16px}
 .tipo-mov.sube svg{color:var(--green)}.tipo-mov.baja svg{color:var(--red)}
+.letra{white-space:pre-wrap;font-size:17px;line-height:1.6;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:6px}
+.letra b{color:var(--green);font-weight:800}
+.ta-tools{display:flex;align-items:center;gap:8px;margin-top:6px;text-transform:none;letter-spacing:0}
+.ta-tools small{color:var(--muted);font-weight:600;font-size:11.5px}
+.letra-big{width:100%;margin-bottom:10px}
+.letra-btn{width:auto!important;padding:0 10px!important;border:1px solid rgba(163,230,53,.45)!important;background:rgba(163,230,53,.1)!important;color:var(--green);font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.right.acts .songlink+.songlink{margin-left:6px}
 .mov-big{font-size:34px;font-weight:800;text-align:center;margin:2px 0 12px}
 .bolo-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--panel2);border:1px solid rgba(79,195,255,.4);border-radius:14px;padding:10px 12px;margin-bottom:10px}
 .bolo-link .info small{display:block;color:var(--prox);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
@@ -857,7 +864,8 @@ $('#s-body').addEventListener('click', e => {
   if (a.dataset.act === 'repback') { repFolder = null; repQuery = ''; return rerender(); }
   if (a.dataset.act === 'repnewfolder') return formCarpeta();
   if (a.dataset.act === 'repeditfolder') return formCarpeta(DB.repertorio.carpetas.find(x => x.id === repFolder));
-  if (a.dataset.act === 'cancion') return formCancion(DB.repertorio.canciones.find(x => x.id === a.dataset.id));
+  if (a.dataset.act === 'letra') return verLetra(DB.repertorio.canciones.find(x => x.id === a.dataset.id));
+  if (a.dataset.act === 'cancion') return verCancion(DB.repertorio.canciones.find(x => x.id === a.dataset.id));
   if (a.dataset.act === 'statyear') { statYear = a.dataset.y; return rerender(); }
   const id = a.dataset.id, act = a.dataset.act;
   if (!esAdmin() && ['estmenu', 'setest', 'mas', 'menos'].includes(act)) return toast('Solo el administrador puede cambiar esto');
@@ -1390,9 +1398,45 @@ function renderRepList() {
       <div class="ico-box">${ICON_SONG}</div>
       <div class="info"><h4>${esc(s.titulo)}</h4>${sub ? `<p>${sub}</p>` : ''}
         ${!enCarpeta && c ? `<span class="tag-carpeta" style="--c:${colorCarpeta(c)}">${esc(c.nombre)}</span>` : ''}</div>
-      ${s.enlace ? `<div class="right acts"><a class="songlink" href="${esc(s.enlace)}" target="_blank" rel="noopener" aria-label="Abrir enlace">↗</a></div>` : ''}
+      ${s.letra || s.enlace ? `<div class="right acts">${s.letra ? `<button class="songlink letra-btn" data-act="letra" data-id="${s.id}" aria-label="Ver la letra">📝 Letra</button>` : ''}${s.enlace ? `<a class="songlink" href="${esc(s.enlace)}" target="_blank" rel="noopener" aria-label="Abrir partitura">↗</a>` : ''}</div>` : ''}
     </div>`;
   }).join('') || `<div class="empty">${q ? 'No hay canciones que coincidan.' : 'No hay canciones aquí todavía.' + (esAdmin() ? '<br>Pulsa + para añadir una.' : '')}</div>`;
+}
+// detalles de una canción (al tocar su tarjeta)
+function verCancion(c) {
+  if (!c) return;
+  const f = carpetaDe(c.carpeta), form = $('#form');
+  form.onclick = null;
+  form.innerHTML = `
+    <div class="det-head"><h3>${esc(c.titulo)}</h3><button type="button" class="x" id="cn-x" aria-label="Cerrar">✕</button></div>
+    ${f ? `<span class="tag-carpeta" style="--c:${colorCarpeta(f)};margin:0 0 10px">${esc(f.nombre)}</span>` : ''}
+    <div class="det-rows">
+      <div><span>🎤 Autor / versión</span><b>${esc(c.autor) || '—'}</b></div>
+      <div><span>📁 Carpeta</span><b>${f ? esc(f.nombre) : 'Sin carpeta'}</b></div>
+      ${c.enlace ? `<div><span>🎼 Partitura</span><b><a href="${esc(c.enlace)}" target="_blank" rel="noopener" style="color:var(--prox)">Abrir ↗</a></b></div>` : ''}
+    </div>
+    ${c.notas ? `<div class="det-notes"><small>Notas</small>${esc(c.notas)}</div>` : ''}
+    ${c.letra ? '<button type="button" class="btn letra-big" id="cn-letra">📝 Ver la letra</button>' : ''}
+    ${esAdmin() ? '<div class="row"><button type="button" class="btn primary" id="cn-edit" style="flex:1">✏️ Editar canción</button></div>' : ''}`;
+  form.onsubmit = e => e.preventDefault();
+  $('#cn-x').onclick = closeForm;
+  if ($('#cn-letra')) $('#cn-letra').onclick = () => verLetra(c, true);
+  if ($('#cn-edit')) $('#cn-edit').onclick = () => formCancion(c);
+  $('#modal').classList.add('show');
+}
+// letra de la canción, en grande para leerla tocando
+function verLetra(c, desdeDetalles) {
+  if (!c || !c.letra) return;
+  const form = $('#form');
+  form.onclick = null;
+  form.innerHTML = `
+    <div class="det-head">${desdeDetalles ? '<button type="button" class="x" id="lt-back" aria-label="Volver">‹</button>' : ''}<h3>📝 ${esc(c.titulo)}</h3><button type="button" class="x" id="lt-x" aria-label="Cerrar">✕</button></div>
+    ${c.autor ? `<p class="conv-tip" style="margin:-4px 0 10px">${esc(c.autor)}</p>` : ''}
+    <div class="letra">${esc(c.letra).replace(/\*\*([^*\n][^*]*?)\*\*/g, '<b>$1</b>')}</div>`;
+  form.onsubmit = e => e.preventDefault();
+  $('#lt-x').onclick = closeForm;
+  if ($('#lt-back')) $('#lt-back').onclick = () => verCancion(c);
+  $('#modal').classList.add('show');
 }
 function formCancion(c) {
   const carpetas = [['', '— Sin carpeta']].concat([...DB.repertorio.carpetas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).map(x => [x.id, x.nombre]));
@@ -1402,8 +1446,9 @@ function formCancion(c) {
     fields: [
       { k: 'titulo', l: 'Título', req: 1 }, { k: 'autor', l: 'Autor / versión' },
       { k: 'carpeta', l: 'Carpeta', t: 'select', o: carpetas },
-      { k: 'enlace', l: 'Enlace (partitura, vídeo…)', t: 'url' },
-      { k: 'notas', l: 'Notas (estructura, quién canta…)', t: 'textarea' }
+      { k: 'enlace', l: 'Partitura (enlace)', t: 'url' },
+      { k: 'notas', l: 'Notas (estructura, quién canta…)', t: 'textarea' },
+      { k: 'letra', l: 'Letra (opcional)', t: 'textarea', rows: 8, negrita: true }
     ],
     onSave: v => { if (c) Object.assign(c, v); else DB.repertorio.canciones.push({ id: uid(), ...v }); },
     onDelete: c && (() => DB.repertorio.canciones = DB.repertorio.canciones.filter(x => x !== c))
@@ -1751,7 +1796,8 @@ function fieldHtml(f, data) {
   const req = f.req ? 'required' : '';
   let input;
   if (f.t === 'select') input = `<select name="${f.k}">${f.o.map(([val, lab]) => `<option value="${esc(val)}" ${String(data[f.k] ?? '') === String(val) ? 'selected' : ''}>${esc(lab)}</option>`).join('')}</select>`;
-  else if (f.t === 'textarea') input = `<textarea name="${f.k}" rows="2">${v}</textarea>`;
+  else if (f.t === 'textarea') input = `<textarea name="${f.k}" rows="${f.rows || 2}">${v}</textarea>` + (f.negrita
+    ? `<span class="ta-tools"><button type="button" class="mini" data-bold="${f.k}"><b>N</b> Negrita</button><small>Selecciona palabras y pulsa Negrita, o escríbelas **así**</small></span>` : '');
   else input = `<input name="${f.k}" type="${f.t || 'text'}" value="${v}" ${f.t === 'number' ? 'step="any" inputmode="decimal"' : ''} ${req}>`;
   return `<label>${f.l}${input}</label>`;
 }
@@ -1784,6 +1830,15 @@ function openForm({ title, fields, data, onSave, onDelete, libre }) {
     `<div class="row">${onDelete ? '<button type="button" class="btn danger" id="f-del">🗑️</button>' : ''}<span style="flex:1"></span>
      <button type="button" class="btn" id="f-cancel">Cancelar</button><button class="btn primary">Guardar</button></div>`;
   form.querySelectorAll('.tags').forEach(prepararTags);
+  // botón de negrita: envuelve lo seleccionado entre ** ** (o lo quita si ya lo estaba)
+  form.querySelectorAll('[data-bold]').forEach(btn => btn.onclick = () => {
+    const ta = form.querySelector(`[name="${btn.dataset.bold}"]`), a = ta.selectionStart, z = ta.selectionEnd, v = ta.value;
+    if (a === z) { toast('Selecciona primero las palabras'); return ta.focus(); }
+    const sel = v.slice(a, z), ya = v.slice(a - 2, a) === '**' && v.slice(z, z + 2) === '**';
+    if (ya) { ta.value = v.slice(0, a - 2) + sel + v.slice(z + 2); ta.setSelectionRange(a - 2, z - 2); }
+    else { ta.value = v.slice(0, a) + '**' + sel + '**' + v.slice(z); ta.setSelectionRange(a + 2, z + 2); }
+    ta.focus();
+  });
   form.onsubmit = e => {
     e.preventDefault();
     const fd = new FormData(form), v = Object.fromEntries(fd);
