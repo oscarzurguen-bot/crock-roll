@@ -1,6 +1,6 @@
 /* Crock&Roll HQ · service worker: guarda la app para que abra rápido y funcione sin conexión.
    Sube el número de VERSION cada vez que publiques cambios para que los móviles se actualicen. */
-const VERSION = 'crocknroll-v37';
+const VERSION = 'crocknroll-v38';
 const APP = ['./', './index.html', './nube.js', './manifest.json', './habitacion.webp', './espana.json',
   './icons/rana-192.png', './icons/rana-512.png', './icons/rana-apple-180.png'];
 const EXTERNOS = ['https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js',
